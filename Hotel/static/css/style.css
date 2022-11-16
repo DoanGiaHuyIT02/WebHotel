@@ -64,6 +64,22 @@
     height: 48px;
 }
 
+.btn-login {
+    display: flex;
+    margin-right: 60px;
+}
+
+.btn-DK-DN {
+    padding: 15px 0px;
+    margin: 0 20px;
+    width: 120px;
+    height: 30px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .btn-square,
 .btn-sm-square,
 .btn-lg-square {
