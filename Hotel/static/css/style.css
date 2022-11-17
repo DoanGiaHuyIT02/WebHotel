@@ -505,3 +505,213 @@
     padding-right: 0;
     border-right: none;
 }
+
+/* Rooms */
+
+#rooms {
+    position: relative;
+    padding: 45px 0 60px 0;
+}
+
+#rooms .room-img,
+#rooms .room-des,
+#rooms .room-rate {
+    position: relative;
+    top: 50%;
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+#rooms .room-des {
+    width: 100%;
+    text-align: center;
+}
+
+#rooms .room-img {
+    overflow: hidden;
+}
+
+#rooms .room-img img {
+    transition: 0.3s;
+}
+
+#rooms .room-img:hover img {
+    -ms-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.box12 .icon li a {
+    margin-right: 0;
+}
+
+#rooms h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+#rooms .room-size {
+    margin: 0 0 25px 0;
+    padding: 0;
+}
+
+#rooms .room-size li {
+    display: inline-block;
+    font-size: 14px;
+    margin-right: 15px;
+    list-style-type: none;
+}
+
+#rooms .room-size li i {
+    margin-right: 6px;
+}
+
+#rooms .room-icon {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+
+#rooms .room-icon li {
+    list-style-type: none;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: 0.5s;
+}
+
+@media (max-width: 575.98px) {
+    #rooms .room-icon li {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+#rooms .room-icon li.icon-1 {
+    background-image: url(../img/icon/shield.png);
+}
+
+#rooms .room-icon li.icon-1:hover {
+    background-image: url(../img/icon/shield-hover.png);
+}
+
+#rooms .room-icon li.icon-2 {
+    background-image: url(../img/icon/air-conditioner.png);
+}
+
+#rooms .room-icon li.icon-2:hover {
+    background-image: url(../img/icon/air-conditioner-hover.png);
+}
+
+#rooms .room-icon li.icon-3 {
+    background-image: url(../img/icon/bathtub.png);
+}
+
+#rooms .room-icon li.icon-3:hover {
+    background-image: url(../img/icon/bathtub-hover.png);
+}
+
+#rooms .room-icon li.icon-4 {
+    background-image: url(../img/icon/shower.png);
+}
+
+#rooms .room-icon li.icon-4:hover {
+    background-image: url(../img/icon/shower-hover.png);
+}
+
+#rooms .room-icon li.icon-5 {
+    background-image: url(../img/icon/towel.png);
+}
+
+#rooms .room-icon li.icon-5:hover {
+    background-image: url(../img/icon/towel-hover.png);
+}
+
+#rooms .room-icon li.icon-6 {
+    background-image: url(../img/icon/television.png);
+}
+
+#rooms .room-icon li.icon-6:hover {
+    background-image: url(../img/icon/television-hover.png);
+}
+
+#rooms .room-icon li.icon-7 {
+    background-image: url(../img/icon/wifi.png);
+}
+
+#rooms .room-icon li.icon-7:hover {
+    background-image: url(../img/icon/wifi-hover.png);
+}
+
+#rooms .room-icon li.icon-8 {
+    background-image: url(../img/icon/call.png);
+}
+
+#rooms .room-icon li.icon-8:hover {
+    background-image: url(../img/icon/call-hover.png);
+}
+
+#rooms .room-icon li.icon-9 {
+    background-image: url(../img/icon/minibar.png);
+}
+
+#rooms .room-icon li.icon-9:hover {
+    background-image: url(../img/icon/minibar-hover.png);
+}
+
+#rooms .room-icon li.icon-10 {
+    background-image: url(../img/icon/kitchen.png);
+}
+
+#rooms .room-icon li.icon-10:hover {
+    background-image: url(../img/icon/kitchen-hover.png);
+}
+
+#rooms .room-rate {
+    text-align: center;
+}
+
+#rooms .room-rate h3 {
+    color: #FFD700;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 15px 0;
+    background: #222222;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+#rooms .room-rate h1 {
+    color: #FFD700;
+    font-size: 50px;
+    font-weight: 900;
+    padding: 15px 0;
+    background: #353535;
+}
+
+#rooms .room-rate a {
+    display: block;
+    padding: 7px 30px;
+    color: #FFD700;
+    background: #222222;
+}
+
+#rooms .room-rate a:hover {
+    color: #222222;
+    background: #FFD700;
+}
+
+#rooms hr {
+    width: 300px;
+    margin: 30px auto;
+    text-align: center;
+}
