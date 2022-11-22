@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, Float, Boolean, Text, ForeignKey
 from sqlalchemy.orm import relationship
 from Hotel import db, app
 from enum import Enum as UserEnum
-from flask_login import UserMixin
+# from flask_login import UserMixin
 
 
 class UserRole(UserEnum):
