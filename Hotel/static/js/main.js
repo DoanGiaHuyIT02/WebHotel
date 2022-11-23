@@ -10,6 +10,8 @@
         }, 1);
     };
     spinner();
+
+
     
     
     // Initiate the wowjs
@@ -104,6 +106,29 @@
             }
         }
     });
+
+//       //formDk-DN
+//    var btnOpen = document.querySelector('.btn-OpenLogin')
+//    var btnIconClose = document.querySelector('.btn-iconClose i')
+//    var modal = document.querySelector('.modal')
+//
+//
+//    //toggle là cho một sự kiện ẩn và hiện
+//    function toggleModal(e) {
+//        modal.classList.toggle('hide')
+//    }
+//
+//
+//    //addEventListener là thêm sự kiện nhấp chuột vào button
+//    btnOpen.addEventListener('click', toggleModal)
+//    btnIconClose.addEventListener('click', toggleModal)
+//
+//    //Nếu mà 2 taget gần nhất thì bật tắt
+//    modal.addEventListener('click', function(e) {
+//        if(e.target == e.currentTarget) {
+//            toggleModal();
+//        }
+//    })
     
 })(jQuery);
 
