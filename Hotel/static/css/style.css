@@ -80,6 +80,10 @@
     justify-content: center;
 }
 
+.btn-login button a {
+    color: white;
+}
+
 .btn-square,
 .btn-sm-square,
 .btn-lg-square {
