@@ -7,6 +7,7 @@ from Hotel import db, app
 def index():
     return render_template('index.html')
 
+
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
@@ -25,6 +26,11 @@ def services():
 @app.route('/rooms')
 def rooms():
     return render_template('rooms.html')
+
+
+@app.route('/register')
+def register():
+    return render_template('register.html')
 
 
 if __name__ == '__main__':

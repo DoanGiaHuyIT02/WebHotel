@@ -716,4 +716,99 @@
     text-align: center;
 }
 
+/*** form ***/
+.formRegister{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 0;
+}
+
+.formDangKy {
+    width: 400px;
+    background-color: white;
+    padding: 40px 20px;
+    border-radius: 5px;
+    position: relative;
+    animation: ModalShow 0.3s linear;
+}
+
+.btn-iconClose {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.formDangKy h1 {
+    color: orange;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    display: flex;justify-content: center;
+}
+
+.control {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.control span {
+    position: absolute;
+    border-bottom: 3px solid orange;
+    left: 0;
+    top: 55px;
+    width: 0;
+    transition: 0.3s;
+}
+
+.control input:focus ~ span {
+    width: 100%;
+}
+
+.control input:focus  label {
+    display: none;
+}
+
+.control input {
+    width: 100%;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+}
+
+.avatar {
+    margin: 20px 0;
+}
+
+/* Nút đăng ký */
+.btn-XacNhan {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.btn-XacNhan input {
+    padding: 10px 20px;
+    font-size: 15px;
+    color: white;
+    background-color: orange;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+@keyframes ModalShow {
+    from {
+        top: -400px;
+        opacity: 0;
+    }
+
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
 
