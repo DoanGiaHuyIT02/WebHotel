@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, Float, Boolean, Text, ForeignKey
 from sqlalchemy.orm import relationship
 from Hotel import db, app
 from enum import Enum as UserEnum
-# from flask_login import UserMixin
+from flask_login import UserMixin
 
 
 class UserRole(UserEnum):
@@ -27,6 +27,8 @@ class ThongTinPhong(db.Model):
     ThongTinPhong_phieuDatPhong = relationship('ThongTinPhong_phieuDatPhong', backref='thontinphong', lazy=True)
     ThongTinPhong_phieuThuePhong = relationship('ThongTinPhong_phieuThuePhong', backref='thontinphong', lazy=True)
 
+    def __str__(self):
+        return self.maPhong
 
 class khachHang(db.Model):
     __tablename__ = 'khachhang'
@@ -67,7 +69,7 @@ class nhanVien(db.Model):
     taiKhoan = relationship('TaiKhoan', backref='nhanvien', lazy=True)
 
 
-class TaiKhoan (db.Model, UserMixin):
+class TaiKhoan(db.Model, UserMixin):
     __tablename__ = 'TaiKhoan'
     taiKhoan_id = Column(Integer, primary_key=True, nullable=False)
     name = Column(String(50), nullable=False)
@@ -164,3 +166,7 @@ class ChiTiet_baoCaoMatDoSuDung(db.Model):
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+
+        # t1 = ThongTinPhong(maPhong='HT01', soPhong='001', loaiPhong='BT', donGia=2000000)
+        # db.session.add_all(t1)
+        # db.session.commit()
