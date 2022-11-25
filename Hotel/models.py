@@ -18,17 +18,21 @@ class BaseModel(db.Model):
 
 class ThongTinPhong(db.Model):
     __tablename__ = 'thongTinPhong'
-    maPhong = Column(Integer,  primary_key=True, nullable=False)
+    maPhong = Column(Integer,  primary_key=True, nullable=False, autoincrement=True)
     soPhong = Column(String(50), nullable=False)
     loaiPhong = Column(String(50), nullable=False)
     donGia = Column(Float, nullable=False)
-    tinhTrang = Column(Boolean, nullable=False)
+    tinhTrang = Column(Boolean, nullable=False, default=True)
     hoaDon_ThongTinPhong = relationship('hoaDon_ThongTinPhong', backref='thontinphong', lazy=True)
     ThongTinPhong_phieuDatPhong = relationship('ThongTinPhong_phieuDatPhong', backref='thontinphong', lazy=True)
     ThongTinPhong_phieuThuePhong = relationship('ThongTinPhong_phieuThuePhong', backref='thontinphong', lazy=True)
 
     def __str__(self):
         return self.maPhong
+
+
+
+
 
 class khachHang(db.Model):
     __tablename__ = 'khachhang'
@@ -38,8 +42,8 @@ class khachHang(db.Model):
     phone = Column(String(20))
     CCCD = Column(String(20))
     LoaiKhach = Column(String(50))
-    taiKhoan = relationship('TaiKhoan', backref='khachhang', lazy=True)
-    phieuDatPhong = relationship('KhachHang', backref='phieudatphong', lazy=True)
+    taiKhoanKhachHang_id = relationship('TaiKhoan_KhachHang', backref='khachhang', lazy=True)
+    phieuDatPhong = relationship('phieuDatPhong', backref='khachhang', lazy=True)
 
 
 class hoaDon(db.Model):
@@ -56,6 +60,19 @@ class hoaDon_ThongTinPhong(db.Model):
     maPhong = Column(Integer, ForeignKey(ThongTinPhong.maPhong), nullable=False)
 
 
+class TaiKhoan(db.Model, UserMixin):
+    __tablename__ = 'taikhoan'
+    taiKhoan_id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    name = Column(String(50), nullable=False)
+    username = Column(String(50), nullable=False, unique=True)
+    password = Column(String(50), nullable=False)
+    avatar = Column(String(100), nullable=False)
+    active = Column(Boolean, default=True)
+    user_role = Column(Enum(UserRole), default=UserRole.USER)
+    taiKhoanKhachHang_id = relationship('TaiKhoan_KhachHang', backref='taikhoan', lazy=True)
+    maNhanVien = relationship('nhanVien', backref='taikhoan', lazy=True)
+
+
 class nhanVien(db.Model):
     __tablename__ = 'nhanvien'
     maNhanVien = Column(Integer, primary_key=True, nullable=False)
@@ -66,20 +83,15 @@ class nhanVien(db.Model):
     tuoi = Column(String(3))
     ngayVaoLam = Column(DATE)
     email = Column(String(50))
-    taiKhoan = relationship('TaiKhoan', backref='nhanvien', lazy=True)
+    taiKhoan = Column(Integer, ForeignKey(TaiKhoan.taiKhoan_id), unique=True, nullable=False)
 
 
-class TaiKhoan(db.Model, UserMixin):
-    __tablename__ = 'TaiKhoan'
-    taiKhoan_id = Column(Integer, primary_key=True, nullable=False)
-    name = Column(String(50), nullable=False)
-    username = Column(String(50), nullable=False, unique=True)
-    password = Column(String(50), nullable=False)
-    avatar = Column(String(100), nullable=False)
-    active = Column(Boolean, default=True)
-    user_role = Column(Enum(UserRole), default=UserRole.USER)
-    maNhanVien = Column(Integer, ForeignKey(nhanVien.maNhanVien), unique=True, nullable=False)
-    MaKhachHang = Column(Integer, ForeignKey(khachHang.MaKhachHang), nullable=False)
+
+class TaiKhoan_KhachHang(db.Model):
+    __tablename__ = 'taikhoan_khachhang'
+    TKKH_id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    KhachHang_id = Column(Integer, ForeignKey(khachHang.MaKhachHang), nullable=False)
+    taiKhoan_id = Column(Integer, ForeignKey(TaiKhoan.taiKhoan_id), nullable=False)
 
 
 class phieuDatPhong(db.Model):
@@ -88,7 +100,7 @@ class phieuDatPhong(db.Model):
     ngayNhanPhong = Column(DATETIME, nullable=False)
     ngayTraPhong = Column(DATETIME, nullable=False)
     maKhachHang = Column(Integer, ForeignKey(khachHang.MaKhachHang), nullable=False)
-    chiTiet_DSKhachHang = relationship('chiTietDSKhachHang', backref='phieudatphong', lazy=True)
+    chiTiet_DSKhachHang = relationship('chiTiet_DSKhachHang', backref='phieudatphong', lazy=True)
     ThongTinPhong_phieuDatPhong = relationship('ThongTinPhong_phieuDatPhong', backref='phieudatphong', lazy=True)
 
 
@@ -97,7 +109,7 @@ class phieuThuePhong(db.Model):
     maPhieuThuePhong = Column(Integer, primary_key=True, nullable=False)
     ngayNhanPhong = Column(DATETIME, nullable=False)
     ngayTraPhong = Column(DATETIME, nullable=False)
-    chiTiet_DSKhachHang = relationship('chiTietDSKhachHang', backref='phieuthuephong', lazy=True)
+    chiTiet_DSKhachHang = relationship('chiTiet_DSKhachHang', backref='phieuthuephong', lazy=True)
     ThongTinPhong_phieuThuePhong = relationship('ThongTinPhong_phieuThuePhong', backref='phieuthuephong', lazy=True)
 
 
@@ -167,6 +179,14 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
 
-        # t1 = ThongTinPhong(maPhong='HT01', soPhong='001', loaiPhong='BT', donGia=2000000)
-        # db.session.add_all(t1)
+        # import hashlib
+        # password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest())
+        # u = TaiKhoan(name='Huy', username='huy', password=password,
+        #              avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
+        #              active=True, user_role=UserRole.ADMIN)
+        # db.session.add(u)
         # db.session.commit()
+        # t1 = ThongTinPhong(soPhong='101', loaiPhong='BT', donGia=200000, tinhTrang=True)
+        # db.session.add(t1)
+        # db.session.commit()
+

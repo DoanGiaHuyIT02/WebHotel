@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request
 from flask_sqlalchemy import SQLAlchemy
-from Hotel import db, app
+from Hotel import db, app, admin
 
 
 @app.route('/')
