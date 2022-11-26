@@ -18,10 +18,12 @@ class BaseModel(db.Model):
 
 class LoaiPhong(db.Model):
     __tablename__ = 'loaiphong'
-    loaiPhongId = Column(Integer, primary_key=True, nullable=False)
+    loaiPhongId = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     loaiPhong = Column(String(50), nullable=False)
+    moTa = Column(String(10000))
     donGia = Column(Float, nullable=False)
     thongTinPhong = relationship('ThongTinPhong', backref='loaiphong', lazy=True)
+
 
 
 class ThongTinPhong(db.Model):
@@ -33,11 +35,6 @@ class ThongTinPhong(db.Model):
     hoaDon_ThongTinPhong = relationship('hoaDon_ThongTinPhong', backref='thontinphong', lazy=True)
     ThongTinPhong_phieuDatPhong = relationship('ThongTinPhong_phieuDatPhong', backref='thontinphong', lazy=True)
     ThongTinPhong_phieuThuePhong = relationship('ThongTinPhong_phieuThuePhong', backref='thontinphong', lazy=True)
-
-    def __str__(self):
-        return self.maPhong
-
-
 
 
 
@@ -189,14 +186,19 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
 
-        import hashlib
-        password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest())
-        u = TaiKhoan(name='Huy', username='huy', password=password,
-                     avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
-                     active=True, user_role=UserRole.ADMIN)
-        db.session.add(u)
-        db.session.commit()
-        # t1 = ThongTinPhong(soPhong='101', loaiPhong='BT', donGia=200000, tinhTrang=True)
+        # import hashlib
+        # password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest())
+        # u = TaiKhoan(name='Huy', username='huy', password=password,
+        #              avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
+        #              active=True, user_role=UserRole.ADMIN)
+        # db.session.add(u)
+        # db.session.commit()
+
+        # lp = LoaiPhong(loaiPhong='Standard', moTa='Một giường, máy lạnh, phòng tắm', donGia=1200000)
+        # db.session.add(lp)
+        # db.session.commit()
+
+        # t1 = ThongTinPhong(soPhong='101', tinhTrang=True, loaiPhong_id=1)
         # db.session.add(t1)
         # db.session.commit()
 
