@@ -164,108 +164,162 @@
         <!-- About End -->
 
 
-        <!-- Room Start -->
-        <div class="container-xxl py-5">
+        <!-- Room Section Start -->
+        <div id="rooms">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <h6 class="section-title text-center text-primary text-uppercase">Our rooms</h6>
-                    <h1 class="mb-5">Khám phá <span class="text-primary text-uppercase">Các loại phòng</span></h1>
+                    <h6 class="section-title text-center text-primary text-uppercase">Các loại phòng</h6>
+                    <h1 class="mb-5"><span class="text-primary text-uppercase">Đặt phòng </span></h1>
                 </div>
-                <div class="row g-4">
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="room-item shadow rounded overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="{{ url_for('static', filename='img/room-1.jpg') }}" alt="">
-                                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">2tr/1 Đêm</small>
-                            </div>
-                            <div class="p-4 mt-2">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <h5 class="mb-0">Junior Suite</h5>
-                                    <div class="ps-2">
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="room-img">
+                                    <div class="box12">
+                                        <img src="{{ url_for('static', filename='img/room/room-1.jpg') }}">
+                                        <div class="box-content">
+                                            <h3 class="title">Standard Single</h3>
+                                            <ul class="icon">
+                                                <li><a href="#" data-toggle="modal" data-target="#modal-id"><i class="fa fa-link"></i></a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="d-flex mb-3">
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>3 Giường</small>
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>2 Phòng tắm</small>
-                                    <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="room-des">
+                                    <h3><a href="#" data-toggle="modal" data-target="#modal-id">Standard Single</a></h3>
+                                    <p>Phòng tiêu chuẩn, đơn giản với mức giá trung bình</p>
+                                    <ul class="room-size">
+                                        <li><i class="fa fa-arrow-right"></i>Kích thước: 30m2 </li>
+                                        <li><i class="fa fa-arrow-right"></i>Giường: 2 Giường đơn </li>
+                                    </ul>
+                                    <ul class="room-icon">
+                                        <li class="icon-1"></li>
+                                        <li class="icon-2"></li>
+                                        <li class="icon-3"></li>
+                                        <li class="icon-4"></li>
+                                        <li class="icon-5"></li>
+                                        <li class="icon-6"></li>
+                                        <li class="icon-7"></li>
+                                        <li class="icon-8"></li>
+                                        <li class="icon-9"></li>
+                                        <li class="icon-10"></li>
+                                    </ul>
                                 </div>
-                                <p class="text-body mb-3">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                                <div class="d-flex justify-content-between">
-                                    <a class="btn btn-sm btn-primary rounded py-2 px-4" href="">Xem chi tiết</a>
-                                    <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Đặt ngay</a>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="room-rate">
+                                    <h3>GIÁ</h3>
+                                    <h1>3.5Tr</h1>
+                                    <a href="#">Đặt Ngay</a>
                                 </div>
                             </div>
                         </div>
+                        <hr>
                     </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="room-item shadow rounded overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="{{ url_for('static', filename='img/room-2.jpg') }}" alt="">
-                                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">1tr5/1 Đêm</small>
-                            </div>
-                            <div class="p-4 mt-2">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <h5 class="mb-0">Executive Suite</h5>
-                                    <div class="ps-2">
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
+
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="room-img">
+                                    <div class="box12">
+                                        <img src="{{ url_for('static', filename='img/room/room-2.jpg') }}">
+                                        <div class="box-content">
+                                            <h3 class="title">Standard Double</h3>
+                                            <ul class="icon">
+                                                <li><a href="#" data-toggle="modal" data-target="#modal-id"><i class="fa fa-link"></i></a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="d-flex mb-3">
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>2 Giường</small>
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>2 Phòng tắm</small>
-                                    <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="room-des">
+                                    <h3><a href="#" data-toggle="modal" data-target="#modal-id">Standard Double</a></h3>
+                                    <p>Phòng tiêu chuẩn, đơn giản với mức giá trung bình</p>
+                                    <ul class="room-size">
+                                        <li><i class="fa fa-arrow-right"></i>Kích thước: 35m2 </li>
+                                        <li><i class="fa fa-arrow-right"></i>Giường: 2 Giường đôi </li>
+                                    </ul>
+                                    <ul class="room-icon">
+                                        <li class="icon-1"></li>
+                                        <li class="icon-2"></li>
+                                        <li class="icon-3"></li>
+                                        <li class="icon-4"></li>
+                                        <li class="icon-5"></li>
+                                        <li class="icon-6"></li>
+                                        <li class="icon-7"></li>
+                                        <li class="icon-8"></li>
+                                        <li class="icon-9"></li>
+                                        <li class="icon-10"></li>
+                                    </ul>
                                 </div>
-                                <p class="text-body mb-3">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                                <div class="d-flex justify-content-between">
-                                    <a class="btn btn-sm btn-primary rounded py-2 px-4" href="">Xem chi tiết</a>
-                                    <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Đặt ngay</a>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="room-rate">
+                                    <h3>GIÁ</h3>
+                                    <h1>4Tr</h1>
+                                    <a href="#">Đặt Ngay</a>
                                 </div>
                             </div>
                         </div>
+                        <hr>
                     </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
-                        <div class="room-item shadow rounded overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="{{ url_for('static', filename='img/room-3.jpg') }}" alt="">
-                                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">1tr/1 Đêm</small>
-                            </div>
-                            <div class="p-4 mt-2">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <h5 class="mb-0">Super Deluxe</h5>
-                                    <div class="ps-2">
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
+
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="room-img">
+                                    <div class="box12">
+                                        <img src="{{ url_for('static', filename='img/room/room-3.jpg') }}">
+                                        <div class="box-content">
+                                            <h3 class="title">Premium Single</h3>
+                                            <ul class="icon">
+                                                <li><a href="#" data-toggle="modal" data-target="#modal-id"><i class="fa fa-link"></i></a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="d-flex mb-3">
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>1 Giường</small>
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>1 Phòng tắm</small>
-                                    <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="room-des">
+                                    <h3><a href="#" data-toggle="modal" data-target="#modal-id">Premium Single</a></h3>
+                                    <p>Phòng ở cao cấp với đầy đủ các tiện nghi, nội thất sang trọng</p>
+                                    <ul class="room-size">
+                                       <li><i class="fa fa-arrow-right"></i>Kích thước: 35m2 </li>
+                                        <li><i class="fa fa-arrow-right"></i>Giường: 2 Giường đơn </li>
+                                    </ul>
+                                    <ul class="room-icon">
+                                        <li class="icon-1"></li>
+                                        <li class="icon-2"></li>
+                                        <li class="icon-3"></li>
+                                        <li class="icon-4"></li>
+                                        <li class="icon-5"></li>
+                                        <li class="icon-6"></li>
+                                        <li class="icon-7"></li>
+                                        <li class="icon-8"></li>
+                                        <li class="icon-9"></li>
+                                        <li class="icon-10"></li>
+                                    </ul>
                                 </div>
-                                <p class="text-body mb-3">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                                <div class="d-flex justify-content-between">
-                                    <a class="btn btn-sm btn-primary rounded py-2 px-4" href="">Xem chi tiết</a>
-                                    <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Đặt ngay</a>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="room-rate">
+                                    <h3>GIÁ</h3>
+                                    <h1>5.5Tr</h1>
+                                    <a href="#">Đặt Ngay</a>
                                 </div>
                             </div>
                         </div>
+                        <hr>
                     </div>
+
                 </div>
             </div>
         </div>
-        <!-- Room End -->
+        <!-- Room Section End -->
 
 
         <!-- Video Start -->

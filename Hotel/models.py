@@ -70,6 +70,7 @@ class TaiKhoan(BaseModel, UserMixin):
     name = Column(String(50), nullable=False)
     username = Column(String(50), nullable=False, unique=True)
     password = Column(String(50), nullable=False)
+    phoneNumber = Column(String(12), nullable=False)
     avatar = Column(String(100), nullable=False)
     active = Column(Boolean, default=True)
     user_role = Column(Enum(UserRole), default=UserRole.USER)
@@ -188,7 +189,7 @@ if __name__ == '__main__':
 
         # import hashlib
         # password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest())
-        # u = TaiKhoan(name='Huy', username='huy', password=password,
+        # u = TaiKhoan(name='Huy', username='huy', password=password, phoneNumber='0123456789',
         #              avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
         #              active=True, user_role=UserRole.ADMIN)
         # db.session.add(u)
@@ -197,7 +198,7 @@ if __name__ == '__main__':
         # lp = LoaiPhong(loaiPhong='Standard', moTa='Một giường, máy lạnh, phòng tắm', donGia=1200000)
         # db.session.add(lp)
         # db.session.commit()
-
+        #
         # t1 = ThongTinPhong(soPhong='101', tinhTrang=True, loaiPhong_id=1)
         # db.session.add(t1)
         # db.session.commit()
