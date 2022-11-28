@@ -8,8 +8,8 @@ import cloudinary.uploader
 
 @app.route('/')
 def index():
-
-    return render_template('index.html')
+    rooms = dao.get_all_rooms()
+    return render_template('index.html', rooms=rooms)
 
 
 @app.route('/contact')
@@ -30,7 +30,7 @@ def services():
 @app.route('/rooms')
 def rooms():
     rooms = dao.get_all_rooms()
-    return render_template('rooms.html',     rooms=rooms)
+    return render_template('rooms.html', rooms=rooms)
 
 
 # @app.route('/login_my_user', methods=['get', 'post'])

@@ -64,13 +64,13 @@
                             <div class="row g-2">
                                 <div class="col-md-3">
                                     <div class="date" id="date1" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input"
+                                        <input type="text" onfocus="(this.type='date')" onblur="(this.type = 'text')" class="form-control datetimepicker-input"
                                             placeholder="Check in" data-target="#date1" data-toggle="datetimepicker" />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="date" id="date2" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" placeholder="Check out" data-target="#date2" data-toggle="datetimepicker"/>
+                                        <input type="text" onfocus="(this.type='date')" onblur="(this.type = 'text')" class="form-control datetimepicker-input" placeholder="Check out" data-target="#date2" data-toggle="datetimepicker"/>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -162,24 +162,24 @@
             </div>
         </div>
         <!-- About End -->
-    {{ rooms[0] }}
 
         <!-- Room Section Start -->
         <div id="rooms">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <h6 class="section-title text-center text-primary text-uppercase">Các loại phòng</h6>
-                    <h1 class="mb-5"><span class="text-primary text-uppercase">Đặt phòng </span></h1>
+                    <h6 class="section-title text-center text-primary text-uppercase">ROOMS</h6>
+                    <h1 class="mb-5">Các loại phòng</h1>
                 </div>
                 <div class="row">
+                    {% for r in rooms %}
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="room-img">
                                     <div class="box12">
-                                        <img src="{{ url_for('static', filename='img/room/room-1.jpg') }}">
+                                        <img src="{{ r.hinhAnh }}">
                                         <div class="box-content">
-                                            <h3 class="title">Standard Single</h3>
+                                            <h3 class="title">{{ r.loaiPhong }}</h3>
                                             <ul class="icon">
                                                 <li><a href="#" data-toggle="modal" data-target="#modal-id"><i class="fa fa-link"></i></a></li>
                                             </ul>
@@ -189,11 +189,11 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="room-des">
-                                    <h3><a href="#" data-toggle="modal" data-target="#modal-id">Standard Single</a></h3>
-                                    <p>Phòng tiêu chuẩn, đơn giản với mức giá trung bình</p>
+                                    <h3><a href="#" data-toggle="modal" data-target="#modal-id">{{ r.loaiPhong }}</a></h3>
+                                    <p>{{ r.moTa }}</p>
                                     <ul class="room-size">
-                                        <li><i class="fa fa-arrow-right"></i>Kích thước: 30m2 </li>
-                                        <li><i class="fa fa-arrow-right"></i>Giường: 2 Giường đơn </li>
+                                        <li><i class="fa fa-arrow-right"></i>Kích thước: {{ r.kichThuoc }}m2 </li>
+                                        <li><i class="fa fa-arrow-right"></i>Giường: {{ r.soGiuong }} </li>
                                     </ul>
                                     <ul class="room-icon">
                                         <li class="icon-1"></li>
@@ -212,109 +212,14 @@
                             <div class="col-md-3">
                                 <div class="room-rate">
                                     <h3>GIÁ</h3>
-                                    <h1>3.5Tr</h1>
+                                    <h1>{{ r.donGia }} Tr</h1>
                                     <a href="#">Đặt Ngay</a>
                                 </div>
                             </div>
                         </div>
                         <hr>
                     </div>
-
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="room-img">
-                                    <div class="box12">
-                                        <img src="{{ url_for('static', filename='img/room/room-2.jpg') }}">
-                                        <div class="box-content">
-                                            <h3 class="title">Standard Double</h3>
-                                            <ul class="icon">
-                                                <li><a href="#" data-toggle="modal" data-target="#modal-id"><i class="fa fa-link"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="room-des">
-                                    <h3><a href="#" data-toggle="modal" data-target="#modal-id">Standard Double</a></h3>
-                                    <p>Phòng tiêu chuẩn, đơn giản với mức giá trung bình</p>
-                                    <ul class="room-size">
-                                        <li><i class="fa fa-arrow-right"></i>Kích thước: 35m2 </li>
-                                        <li><i class="fa fa-arrow-right"></i>Giường: 2 Giường đôi </li>
-                                    </ul>
-                                    <ul class="room-icon">
-                                        <li class="icon-1"></li>
-                                        <li class="icon-2"></li>
-                                        <li class="icon-3"></li>
-                                        <li class="icon-4"></li>
-                                        <li class="icon-5"></li>
-                                        <li class="icon-6"></li>
-                                        <li class="icon-7"></li>
-                                        <li class="icon-8"></li>
-                                        <li class="icon-9"></li>
-                                        <li class="icon-10"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="room-rate">
-                                    <h3>GIÁ</h3>
-                                    <h1>4Tr</h1>
-                                    <a href="#">Đặt Ngay</a>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="room-img">
-                                    <div class="box12">
-                                        <img src="{{ url_for('static', filename='img/room/room-3.jpg') }}">
-                                        <div class="box-content">
-                                            <h3 class="title">Premium Single</h3>
-                                            <ul class="icon">
-                                                <li><a href="#" data-toggle="modal" data-target="#modal-id"><i class="fa fa-link"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="room-des">
-                                    <h3><a href="#" data-toggle="modal" data-target="#modal-id">Premium Single</a></h3>
-                                    <p>Phòng ở cao cấp với đầy đủ các tiện nghi, nội thất sang trọng</p>
-                                    <ul class="room-size">
-                                       <li><i class="fa fa-arrow-right"></i>Kích thước: 35m2 </li>
-                                        <li><i class="fa fa-arrow-right"></i>Giường: 2 Giường đơn </li>
-                                    </ul>
-                                    <ul class="room-icon">
-                                        <li class="icon-1"></li>
-                                        <li class="icon-2"></li>
-                                        <li class="icon-3"></li>
-                                        <li class="icon-4"></li>
-                                        <li class="icon-5"></li>
-                                        <li class="icon-6"></li>
-                                        <li class="icon-7"></li>
-                                        <li class="icon-8"></li>
-                                        <li class="icon-9"></li>
-                                        <li class="icon-10"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="room-rate">
-                                    <h3>GIÁ</h3>
-                                    <h1>5.5Tr</h1>
-                                    <a href="#">Đặt Ngay</a>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
+                    {% endfor %}
 
                 </div>
             </div>

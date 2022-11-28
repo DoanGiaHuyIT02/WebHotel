@@ -21,10 +21,12 @@ class LoaiPhong(db.Model):
     __tablename__ = 'loaiphong'
     loaiPhongId = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     loaiPhong = Column(String(50), nullable=False)
-    moTa = Column(String(10000))
+    moTa = Column(String(10000), nullable=False)
+    kichThuoc = Column(String(100), nullable=False)
+    soGiuong = Column(String(100), nullable=False)
     donGia = Column(Float, nullable=False)
+    hinhAnh = Column(String(100), nullable=False)
     thongTinPhong = relationship('ThongTinPhong', backref='loaiphong', lazy=True)
-
 
 
 class ThongTinPhong(db.Model):
@@ -186,6 +188,7 @@ class ChiTiet_baoCaoMatDoSuDung(db.Model):
 
 if __name__ == '__main__':
     with app.app_context():
+        db.drop_all()
         db.create_all()
 
         import hashlib
