@@ -8,6 +8,7 @@ from flask_login import UserMixin
 class UserRole(UserEnum):
     USER = 1
     ADMIN = 2
+    EMPLOYEE = 3
 
 
 class BaseModel(db.Model):
@@ -78,7 +79,7 @@ class TaiKhoan(BaseModel, UserMixin):
     maNhanVien = relationship('nhanVien', backref='taikhoan', lazy=True)
 
     def __str__(self):
-        return self.name
+        return self.username
 
 
 class nhanVien(db.Model):
@@ -187,13 +188,13 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
 
-        # import hashlib
-        # password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest())
-        # u = TaiKhoan(name='Huy', username='huy', password=password, phoneNumber='0123456789',
-        #              avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
-        #              active=True, user_role=UserRole.ADMIN)
-        # db.session.add(u)
-        # db.session.commit()
+        import hashlib
+        password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest())
+        u = TaiKhoan(name='Huy', username='huy', password=password, phoneNumber='0123456789',
+                     avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
+                     active=True, user_role=UserRole.ADMIN)
+        db.session.add(u)
+        db.session.commit()
 
         # lp = LoaiPhong(loaiPhong='Standard', moTa='Một giường, máy lạnh, phòng tắm', donGia=1200000)
         # db.session.add(lp)

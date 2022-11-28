@@ -1,4 +1,4 @@
-from Hotel.models import TaiKhoan
+from Hotel.models import TaiKhoan, LoaiPhong
 from Hotel import db
 from flask_login import current_user
 import hashlib
@@ -20,3 +20,7 @@ def register(name, username, password, phoneNumber, avatar):
 
 def get_user_by_id(user_id):
     return TaiKhoan.query.get(user_id)
+
+
+def get_all_rooms():
+    return LoaiPhong.query.all()

@@ -9,10 +9,13 @@
     font-weight: 500 !important;
 }
 
+.btn:focus {
+box-shadow: none !important}
 .fw-semi-bold {
     font-weight: 600 !important;
 }
-
+.dropdown-toggle{
+color:white;}
 .back-to-top {
     position: fixed;
     display: none;
