@@ -33,6 +33,11 @@ def rooms():
     return render_template('rooms.html', rooms=rooms)
 
 
+@app.route('/detail_room')
+def detail_room():
+    return render_template('detailRoom.html')
+
+
 # @app.route('/login_my_user', methods=['get', 'post'])
 # @annonynous_user
 # def login_my_user():
