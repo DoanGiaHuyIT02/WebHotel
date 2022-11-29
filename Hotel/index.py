@@ -124,6 +124,12 @@ def employee_search():
     return render_template('/employee/search.html')
 
 
+@app.route('/employee/book')
+def employee_book():
+    return render_template('/employee/book.html')
+
+
+
 @login.user_loader
 def load_user(user_id):
     return dao.get_user_by_id(user_id)
