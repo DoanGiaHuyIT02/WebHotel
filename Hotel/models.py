@@ -25,9 +25,16 @@ class LoaiPhong(db.Model):
     kichThuoc = Column(String(100), nullable=False)
     soGiuong = Column(String(100), nullable=False)
     donGia = Column(Float, nullable=False)
-    hinhAnh = Column(String(100), nullable=False)
+    hinhAnhChinh = Column(String(100), nullable=False)
     thongTinPhong = relationship('ThongTinPhong', backref='loaiphong', lazy=True)
+    hinhAnh = relationship('hinhAnhPhong', backref='loaiphong', lazy=True)
 
+
+class hinhAnhPhong(db.Model):
+    __tablename__ = 'hinhanhphong'
+    hinhAnhID = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    hinhAnh = Column(String(100), nullable=False)
+    loaiPhong_id = Column(Integer, ForeignKey(LoaiPhong.loaiPhongId), nullable=False)
 
 class ThongTinPhong(db.Model):
     __tablename__ = 'thongTinPhong'
@@ -199,11 +206,39 @@ if __name__ == '__main__':
         db.session.add(u)
         db.session.commit()
 
-        # lp = LoaiPhong(loaiPhong='Standard', moTa='Một giường, máy lạnh, phòng tắm', donGia=1200000)
-        # db.session.add(lp)
-        # db.session.commit()
-        #
-        # t1 = ThongTinPhong(soPhong='101', tinhTrang=True, loaiPhong_id=1)
-        # db.session.add(t1)
-        # db.session.commit()
+        lp1 = LoaiPhong(loaiPhong='Standard Single', moTa='Phòng tiêu chuẩn, đơn giản với mức giá trung bình',
+                        kichThuoc='30', soGiuong='2 giường đơn', donGia='3.5',
+                        hinhAnhChinh='https://res.cloudinary.com/dgkrvmsli/image/upload/v1669642480/room-1_skeg8g.jpg')
+        lp2 = LoaiPhong(loaiPhong='Standard Double', moTa='Phòng tiêu chuẩn, đơn giản với mức giá trung bình',
+                        kichThuoc='35', soGiuong='1 giường đơn, 1 giường đôi', donGia='4.0',
+                        hinhAnhChinh='https://res.cloudinary.com/dgkrvmsli/image/upload/v1669642479/room-2_ieduxp.jpg')
+        lp3 = LoaiPhong(loaiPhong='Prenium', moTa='Phòng ở cao cấp với đầy đủ các tiện nghi, nội thất sang trọng',
+                        kichThuoc='45', soGiuong='2 giường đôi', donGia='5.0',
+                        hinhAnhChinh='https://res.cloudinary.com/dgkrvmsli/image/upload/v1669642490/room-3_k5e12i.jpg')
+        db.session.add_all([lp1, lp2, lp3])
+        db.session.commit()
+
+        t1 = ThongTinPhong(soPhong='001', tinhTrang=True, loaiPhong_id=1)
+        t2 = ThongTinPhong(soPhong='002', tinhTrang=True, loaiPhong_id=1)
+        t3 = ThongTinPhong(soPhong='003', tinhTrang=True, loaiPhong_id=1)
+        t4 = ThongTinPhong(soPhong='101', tinhTrang=True, loaiPhong_id=2)
+        t5 = ThongTinPhong(soPhong='102', tinhTrang=True, loaiPhong_id=2)
+        t6 = ThongTinPhong(soPhong='103', tinhTrang=True, loaiPhong_id=2)
+        t7 = ThongTinPhong(soPhong='201', tinhTrang=True, loaiPhong_id=3)
+        t8 = ThongTinPhong(soPhong='202', tinhTrang=True, loaiPhong_id=3)
+        t9 = ThongTinPhong(soPhong='203', tinhTrang=True, loaiPhong_id=3)
+        db.session.add_all([t1, t2, t3, t4, t5, t6, t7, t8, t9])
+        db.session.commit()
+
+        h1 = hinhAnhPhong(hinhAnh='https://res.cloudinary.com/dgkrvmsli/image/upload/v1669642480/room-1_skeg8g.jpg', loaiPhong_id=1)
+        h2 = hinhAnhPhong(hinhAnh='https://res.cloudinary.com/dgkrvmsli/image/upload/v1669642479/room-2_ieduxp.jpg',
+                          loaiPhong_id=2)
+        h3 = hinhAnhPhong(hinhAnh='https://res.cloudinary.com/dgkrvmsli/image/upload/v1669642490/room-3_k5e12i.jpg',
+                          loaiPhong_id=3)
+        h4 = hinhAnhPhong(hinhAnh='https://res.cloudinary.com/dgkrvmsli/image/upload/v1669645332/room1.1_esrtbt.jpg',
+                          loaiPhong_id=1)
+        h5 = hinhAnhPhong(hinhAnh='https://res.cloudinary.com/dgkrvmsli/image/upload/v1669645333/room1.2_rmi0sj.jpg',
+                          loaiPhong_id=1)
+        db.session.add_all([h1, h2, h3, h4, h5])
+        db.session.commit()
 

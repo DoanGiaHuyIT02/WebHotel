@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for,session
+from flask import render_template, redirect, request, url_for, session
 from Hotel import db, app, admin, dao, login
 from flask_login import login_user, logout_user, current_user, login_required
 from Hotel.models import UserRole
@@ -9,7 +9,8 @@ import cloudinary.uploader
 @app.route('/')
 def index():
     rooms = dao.get_all_rooms()
-    return render_template('index.html', rooms=rooms)
+    images = dao.get_all_images()
+    return render_template('index.html', rooms=rooms, images=images)
 
 
 @app.route('/contact')
@@ -30,7 +31,8 @@ def services():
 @app.route('/rooms')
 def rooms():
     rooms = dao.get_all_rooms()
-    return render_template('rooms.html', rooms=rooms)
+    images = dao.get_all_images()
+    return render_template('rooms.html', rooms=rooms, images=images)
 
 
 @app.route('/detail_room')
@@ -132,7 +134,6 @@ def employee_search():
 @login.user_loader
 def load_user(user_id):
     return dao.get_user_by_id(user_id)
-
 
 
 if __name__ == '__main__':
