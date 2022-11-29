@@ -28,6 +28,12 @@ def services():
     return render_template('services.html')
 
 
+<<<<<<< HEAD
+# @app.route('/rooms')
+# def rooms():
+#     rooms = dao.get_all_rooms()
+#     return render_template('rooms.html',     rooms=rooms)
+=======
 @app.route('/rooms')
 def rooms():
     rooms = dao.get_all_rooms()
@@ -38,6 +44,7 @@ def rooms():
 @app.route('/detail_room')
 def detail_room():
     return render_template('detailRoom.html')
+>>>>>>> 370a2ef61b0b9f4aa5d0dc10a5808e340f6a0e7d
 
 
 # @app.route('/login_my_user', methods=['get', 'post'])
