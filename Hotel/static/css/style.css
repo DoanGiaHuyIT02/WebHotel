@@ -830,11 +830,6 @@ color:white;}
 
 }
 
-.btn:hover{
-    background-color:white;
-    border-color: #ced4da;
-    border-color:gray;
-}
 .btn:active{
     background-color:white;
 
@@ -843,55 +838,55 @@ color:white;}
     text-align: end;
 }
 #dropdown{
-    margin-left:6em;
-    margin-top: 6em;
+    margin-left:4em;
+    margin-top: 5em;
 }
-#text:hover{
-    border-color:gray;
-}
+
 #text{
     margin-left:1.5em;
     margin-top: 3em;
     width: 200px;
     height: 35px;
-    position: relative;
 }
 #info{
-    margin-left:6em;
+    margin-left:4em;
     margin-top: 3em;
 }
 .table1{
-    width: 820px;
     height: 70px;
-    margin-left: 37em;
-    margin-top: -11.7em;
+    margin-top:5em;
+    margin-bottom:10em;
     border-color: gray;
 }
 .table2{
-    margin-top: 10em;
+    margin-top: 5em;
     border-color: gray;
     width: 100%;
+    margin-bottom:10em;
 }
 .btn1{
-    margin-left: 20.5em;
+    margin-left: 18.5em;
     margin-top: 2em;
     width: 100px;
     border-radius: 5px;
-    position: relative;
 }
 .btn2{
-    margin-left: 82em;
-    margin-top: -47em;
-    width: 100px;
-    border-radius: 5px;
-}
-.btn3{
-    margin-left:75em;
-    margin-top: 0em;
+    margin-left: 72.5em;
+    margin-top: -70em;
     width: 120px;
     border-radius: 5px;
 }
-
+.btn3{
+    margin-left:72em;
+    margin-top: -17em;
+    width: 120px;
+    border-radius: 5px;
+}
+#select{
+width: 200px;
+    height: 35px;
+    margin-left:2.5em;
+}
 .table, th, td {
     text-align:center;
 }
