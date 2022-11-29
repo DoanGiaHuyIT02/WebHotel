@@ -27,10 +27,10 @@ def services():
     return render_template('services.html')
 
 
-@app.route('/rooms')
-def rooms():
-    rooms = dao.get_all_rooms()
-    return render_template('rooms.html',     rooms=rooms)
+# @app.route('/rooms')
+# def rooms():
+#     rooms = dao.get_all_rooms()
+#     return render_template('rooms.html',     rooms=rooms)
 
 
 # @app.route('/login_my_user', methods=['get', 'post'])

@@ -817,5 +817,99 @@ color:white;}
         opacity: 1;
     }
 }
+.dropdown-toggle{
+    width: 200px;
+    height: 35px;
+    text-align: end;
+    background-color: white;
+    border-color: #ced4da;
+    margin-left: 40px;
+}
+.btn:focus {
+    box-shadow: none !important;
+
+}
+
+.btn:hover{
+    background-color:white;
+    border-color: #ced4da;
+    border-color:gray;
+}
+.btn:active{
+    background-color:white;
+
+}
+.dropdown-item{
+    text-align: end;
+}
+#dropdown{
+    margin-left:6em;
+    margin-top: 6em;
+}
+#text:hover{
+    border-color:gray;
+}
+#text{
+    margin-left:1.5em;
+    margin-top: 3em;
+    width: 200px;
+    height: 35px;
+    position: relative;
+}
+#info{
+    margin-left:6em;
+    margin-top: 3em;
+}
+.table1{
+    width: 820px;
+    height: 70px;
+    margin-left: 37em;
+    margin-top: -11.7em;
+    border-color: gray;
+}
+.table2{
+    margin-top: 10em;
+    border-color: gray;
+    width: 100%;
+}
+.btn1{
+    margin-left: 20.5em;
+    margin-top: 2em;
+    width: 100px;
+    border-radius: 5px;
+    position: relative;
+}
+.btn2{
+    margin-left: 82em;
+    margin-top: -47em;
+    width: 100px;
+    border-radius: 5px;
+}
+.btn3{
+    margin-left:75em;
+    margin-top: 0em;
+    width: 120px;
+    border-radius: 5px;
+}
+
+.table, th, td {
+    text-align:center;
+}
+
+.table-row1 > td {
+    text-align: left;
+}
+.col10 {
+    width:10%;
+}
+
+.col15 {
+    width:15%;
+}
+
+.col25 {
+    width:25%;
+}
+
 
 
