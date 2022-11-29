@@ -818,6 +818,13 @@ color:white;}
     }
 }
 
+
+/*booking_line*/
+.book_line_items {
+    display:flex;
+    align-items:center;
+}
+
 /*Detail Rooms*/
 .page {
     position: relative;
@@ -829,3 +836,50 @@ color:white;}
 
 
 
+.booking_line-item {
+    display:flex;
+    margin: 1rem;
+    width:30%;
+}
+
+.booking_line-item1 {
+    width:40%;
+}
+
+
+.booking_line-item-btnx {
+    height: 80%;
+}
+
+.booking_line-item-margin {
+    margin-right: 1rem;
+}
+
+
+.book_line_items-right {
+    justify-content:right;
+}
+
+.table {
+    width:100%;
+}
+
+.table, th, td {
+    text-align:center;
+}
+
+.table-row1 > td {
+    text-align: left;
+}
+
+.col10 {
+    width:10%;
+}
+
+.col15 {
+    width:15%;
+}
+
+.col25 {
+    width:25%;
+}
