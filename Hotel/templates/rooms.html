@@ -2,149 +2,236 @@
 {% block content %}
 
 
-    <div class="container-xxl bg-white p-0">
-        <!-- Spinner Start -->
-        <div id="spinner"
-             class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
+<div class="container-xxl bg-white p-0">
+    <!-- Spinner Start -->
+    <div id="spinner"
+         class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header mb-5 p-0"
+         style="background-image: url({{ url_for('static', filename='img/carousel-1.jpg') }});">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center pb-5">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Đặt phòng</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center text-uppercase">
+                        <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Trang chủ</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Đặt phòng</li>
+                    </ol>
+                </nav>
             </div>
         </div>
-        <!-- Spinner End -->
+    </div>
+    <!-- Page Header End -->
 
 
-        <!-- Page Header Start -->
-        <div class="container-fluid page-header mb-5 p-0" style="background-image: url({{ url_for('static', filename='img/carousel-1.jpg') }});">
-            <div class="container-fluid page-header-inner py-5">
-                <div class="container text-center pb-5">
-                    <h1 class="display-3 text-white mb-3 animated slideInDown">Đặt phòng</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center text-uppercase">
-                            <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Trang chủ</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">Đặt phòng</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <!-- Page Header End -->
-
-
-          <!-- Booking Start -->
-        <div class="container-fluid booking pb-5 wow fadeIn" data-wow-delay="0.1s">
-            <div class="container">
-                <div class="bg-white shadow" style="padding: 35px;">
-                    <div class="row g-2">
-                        <div class="col-md-10">
-                            <div class="row g-2">
-                                <div class="col-md-3">
-                                    <div class="date" id="date1" data-target-input="nearest">
-                                        <input type="text" onfocus="(this.type='date')" onblur="(this.type = 'text')" class="form-control datetimepicker-input"
-                                            placeholder="Check in" data-target="#date1" data-toggle="datetimepicker" />
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="date" id="date2" data-target-input="nearest">
-                                        <input type="text" onfocus="(this.type='date')" onblur="(this.type = 'text')" class="form-control datetimepicker-input" placeholder="Check out" data-target="#date2" data-toggle="datetimepicker"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <select class="form-select">
-                                        <option selected>Người lớn</option>
-                                        <option value="1">Adult 1</option>
-                                        <option value="2">Adult 2</option>
-                                        <option value="3">Adult 3</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <select class="form-select">
-                                        <option selected>Trẻ em</option>
-                                        <option value="1">Child 1</option>
-                                        <option value="2">Child 2</option>
-                                        <option value="3">Child 3</option>
-                                    </select>
+    <!-- Booking Start -->
+    <div class="container-fluid booking pb-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="bg-white shadow" style="padding: 35px;">
+                <div class="row g-2">
+                    <div class="col-md-10">
+                        <div class="row g-2">
+                            <div class="col-md-3">
+                                <div class="date" id="date1" data-target-input="nearest">
+                                    <input type="text" onfocus="(this.type='date')" onblur="(this.type = 'text')"
+                                           class="form-control datetimepicker-input"
+                                           placeholder="Check in" data-target="#date1" data-toggle="datetimepicker"/>
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="date" id="date2" data-target-input="nearest">
+                                    <input type="text" onfocus="(this.type='date')" onblur="(this.type = 'text')"
+                                           class="form-control datetimepicker-input" placeholder="Check out"
+                                           data-target="#date2" data-toggle="datetimepicker"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option selected>Người lớn</option>
+                                    <option value="1">Adult 1</option>
+                                    <option value="2">Adult 2</option>
+                                    <option value="3">Adult 3</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option selected>Trẻ em</option>
+                                    <option value="1">Child 1</option>
+                                    <option value="2">Child 2</option>
+                                    <option value="3">Child 3</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-primary w-100">Tìm phòng</button>
-                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary w-100">Tìm phòng</button>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Booking End -->
+    </div>
+    <!-- Booking End -->
 
 
-
-        <!-- Room Section Start -->
-        <div id="rooms">
-            <div class="container">
-                <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <h6 class="section-title text-center text-primary text-uppercase">ROOMS</h6>
-                    <h1 class="mb-5">Các loại phòng</h1>
-                    <span class="text-uppercase">Khách sạn của chúng tôi phục vụ đa dạng các loại phòng theo nhu
+    <!-- Room Section Start -->
+    <div id="rooms">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="section-title text-center text-primary text-uppercase">ROOMS</h6>
+                <h1 class="mb-5">Các loại phòng</h1>
+                <span class="text-uppercase">Khách sạn của chúng tôi phục vụ đa dạng các loại phòng theo nhu
                         cầu cũng như tài chính của quý khách hàng. Xin vui lòng tham khảo danh sách dưới đây:</span>
-                </div>
-                <div class="row">
-                    {% for r in rooms %}
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="room-img">
-                                    <div class="box12">
-                                        <img src="{{ r.hinhAnh }}">
-                                        <div class="box-content">
-                                            <h3 class="title">{{ r.loaiPhong }}</h3>
-                                            <ul class="icon">
-                                                <li><a href="#" data-toggle="modal" data-target="#modal-id"><i class="fa fa-link"></i></a></li>
-                                            </ul>
-                                        </div>
+            </div>
+            <div class="row">
+                {% for r in rooms %}
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="room-img">
+                                <div class="box12">
+                                    <img src="{{ r.hinhAnhChinh }}">
+                                    <div class="box-content">
+                                        <h3 class="title">{{ r.loaiPhong }}</h3>
+                                        <ul class="icon">
+                                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#myModal"><i
+                                                    class="fa fa-link"></i></a></li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="room-des">
-                                    <h3><a href="#" data-toggle="modal" data-target="#modal-id">{{ r.loaiPhong }}</a></h3>
-                                    <p>{{ r.moTa }}</p>
-                                    <ul class="room-size">
-                                        <li><i class="fa fa-arrow-right"></i>Kích thước: {{ r.kichThuoc }}m2 </li>
-                                        <li><i class="fa fa-arrow-right"></i>Giường: {{ r.soGiuong }} </li>
-                                    </ul>
-                                    <ul class="room-icon">
-                                        <li class="icon-1"></li>
-                                        <li class="icon-2"></li>
-                                        <li class="icon-3"></li>
-                                        <li class="icon-4"></li>
-                                        <li class="icon-5"></li>
-                                        <li class="icon-6"></li>
-                                        <li class="icon-7"></li>
-                                        <li class="icon-8"></li>
-                                        <li class="icon-9"></li>
-                                        <li class="icon-10"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="room-rate">
-                                    <h3>GIÁ</h3>
-                                    <h1>{{ r.donGia }} Tr</h1>
-                                    <a href="#">Đặt Ngay</a>
-                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="room-des">
+                                <h3><a href="#" data-toggle="modal" data-target="#modal-id">{{ r.loaiPhong }}</a></h3>
+                                <p>{{ r.moTa }}</p>
+                                <ul class="room-size">
+                                    <li><i class="fa fa-arrow-right"></i>Kích thước: {{ r.kichThuoc }}m2</li>
+                                    <li><i class="fa fa-arrow-right"></i>Giường: {{ r.soGiuong }}</li>
+                                </ul>
+                                <ul class="room-icon">
+                                    <li class="icon-1"></li>
+                                    <li class="icon-2"></li>
+                                    <li class="icon-3"></li>
+                                    <li class="icon-4"></li>
+                                    <li class="icon-5"></li>
+                                    <li class="icon-6"></li>
+                                    <li class="icon-7"></li>
+                                    <li class="icon-8"></li>
+                                    <li class="icon-9"></li>
+                                    <li class="icon-10"></li>
+                                </ul>
                             </div>
                         </div>
-                        <hr>
+                        <div class="col-md-3">
+                            <div class="room-rate">
+                                <h3>GIÁ</h3>
+                                <h1>{{ r.donGia }} Tr</h1>
+                                <a href="#">Đặt Ngay</a>
+                            </div>
+                        </div>
                     </div>
-                    {% endfor %}
-
+                    <hr>
                 </div>
+                {% endfor %}
+
             </div>
         </div>
-        <!-- Room Section End -->
+    </div>
+    <!-- Room Section End -->
 
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+</div>
+
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog" style="max-width: 1000px">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="page">
+                    <!-- Carousel -->
+                    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+                        <!-- Indicators/dots -->
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                            <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                            <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                        </div>
+
+                        <!-- The slideshow/carousel -->
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="https://res.cloudinary.com/dgkrvmsli/image/upload/v1669642480/room-1_skeg8g.jpg"
+                                     alt="Los Angeles" class="d-block w-100">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://res.cloudinary.com/dgkrvmsli/image/upload/v1669645332/room1.1_esrtbt.jpg"
+                                     alt="Chicago" class="d-block w-100">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://res.cloudinary.com/dgkrvmsli/image/upload/v1669645333/room1.2_rmi0sj.jpg"
+                                     alt="New York" class="d-block w-100">
+                            </div>
+                        </div>
+
+                        <!-- Left and right controls/icons -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                    </div>
+                    <div id="rooms">
+                        <div class="col-md-6" style="width: 100%">
+                            <div class="room-des" style="margin-top: 50px">
+                                <h3><a href="#" data-toggle="modal" data-target="#modal-id">Standard Single</a></h3>
+                                <ul class="room-size">
+                                    <li><i class="fa fa-arrow-right"></i>Kích thước: 30m2</li>
+                                    <li><i class="fa fa-arrow-right"></i>Giường: 2 đôi</li>
+                                </ul>
+                                <ul class="room-icon">
+                                    <li class="icon-1"></li>
+                                    <li class="icon-2"></li>
+                                    <li class="icon-3"></li>
+                                    <li class="icon-4"></li>
+                                    <li class="icon-5"></li>
+                                    <li class="icon-6"></li>
+                                    <li class="icon-7"></li>
+                                    <li class="icon-8"></li>
+                                    <li class="icon-9"></li>
+                                    <li class="icon-10"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
     </div>
 
 
-{% endblock %}
+    {% endblock %}

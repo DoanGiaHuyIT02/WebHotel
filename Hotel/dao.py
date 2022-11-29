@@ -1,4 +1,4 @@
-from Hotel.models import TaiKhoan, LoaiPhong
+from Hotel.models import TaiKhoan, LoaiPhong, hinhAnhPhong
 from Hotel import db
 from flask_login import current_user
 import hashlib
@@ -24,3 +24,7 @@ def get_user_by_id(user_id):
 
 def get_all_rooms():
     return LoaiPhong.query.all()
+
+
+def get_all_images():
+    return hinhAnhPhong.query.all()
