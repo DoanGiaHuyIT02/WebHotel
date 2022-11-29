@@ -195,7 +195,7 @@ class ChiTiet_baoCaoMatDoSuDung(db.Model):
 
 if __name__ == '__main__':
     with app.app_context():
-        # db.drop_all()
+        db.drop_all()
         db.create_all()
 
         import hashlib
@@ -230,7 +230,8 @@ if __name__ == '__main__':
         db.session.add_all([t1, t2, t3, t4, t5, t6, t7, t8, t9])
         db.session.commit()
 
-        h1 = hinhAnhPhong(hinhAnh='https://res.cloudinary.com/dgkrvmsli/image/upload/v1669642480/room-1_skeg8g.jpg', loaiPhong_id=1)
+        h1 = hinhAnhPhong(hinhAnh='https://res.cloudinary.com/dgkrvmsli/image/upload/v1669642480/room-1_skeg8g.jpg',
+                          loaiPhong_id=1)
         h2 = hinhAnhPhong(hinhAnh='https://res.cloudinary.com/dgkrvmsli/image/upload/v1669642479/room-2_ieduxp.jpg',
                           loaiPhong_id=2)
         h3 = hinhAnhPhong(hinhAnh='https://res.cloudinary.com/dgkrvmsli/image/upload/v1669642490/room-3_k5e12i.jpg',

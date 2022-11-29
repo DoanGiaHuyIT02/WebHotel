@@ -28,3 +28,4 @@ def get_all_rooms():
 
 def get_all_images():
     return hinhAnhPhong.query.all()
+

@@ -4,6 +4,7 @@ from flask_admin import Admin, BaseView, expose
 from flask_admin.contrib.sqla import ModelView
 from flask import redirect
 from flask_login import logout_user, current_user
+import hashlib
 
 admin = Admin(app=app, name="Trang quản trị", template_mode='bootstrap4')
 
@@ -29,6 +30,15 @@ class LogoutView(AuthenticatedView):
     def index(self):
         logout_user()
         return redirect('/')
+
+
+class accountView(AuthenticatedModelView):
+    def create_model(self, form):
+        pw = form.password.data
+        password = str(hashlib.md5(pw.strip().encode('utf-8')).hexdigest())
+        u = TaiKhoan(name=form.name.data, username=form.username.data, password=password, phoneNumber=form.phonenumber,
+                     avatar=form.avatar.data,
+                     active=form.active.data, user_role=UserRole.ADMIN)
 
 
 admin.add_view(AuthenticatedModelView(ThongTinPhong, db.session, name='Thông tin phòng'))
