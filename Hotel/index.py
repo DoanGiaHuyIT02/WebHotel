@@ -108,7 +108,7 @@ def login_page():
             if current_user.user_role == UserRole.ADMIN:
                 return redirect('/admin')
             elif current_user.user_role == UserRole.EMPLOYEE:
-                return redirect(url_for('employee_index'))
+                return redirect('/employee/index')
             return redirect('/')
 
     return render_template('login.html')
