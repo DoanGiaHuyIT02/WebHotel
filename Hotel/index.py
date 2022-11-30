@@ -28,10 +28,6 @@ def services():
     return render_template('services.html')
 
 
-# @app.route('/rooms')
-# def rooms():
-#     rooms = dao.get_all_rooms()
-#     return render_template('rooms.html',     rooms=rooms)
 
 @app.route('/rooms')
 def rooms():
@@ -43,6 +39,7 @@ def rooms():
 @app.route('/detail_room')
 def detail_room():
     return render_template('detailRoom.html')
+
 
 
 # @app.route('/login_my_user', methods=['get', 'post'])
@@ -141,10 +138,24 @@ def employee_book():
     return render_template('/employee/book.html')
 
 
+@app.route('/employee/pay')
+def employee_pay():
+    return render_template('/employee/pay.html')
+
+
 
 @login.user_loader
 def load_user(user_id):
     return dao.get_user_by_id(user_id)
+
+
+def load_room(room_id):
+    return dao.get_all_rooms(room_id)
+
+
+def load_image(image_id):
+    return dao.get_all_images(image_id)
+
 
 
 if __name__ == '__main__':
