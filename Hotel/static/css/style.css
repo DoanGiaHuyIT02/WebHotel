@@ -929,6 +929,14 @@ color:white;}
 
 
 
+/* booking employee */
+
+.header_booking {
+    color: #fea116;
+    text-align:center;
+    margin: 2rem 0 3rem 0;
+}
+
 
 .booking_line-item {
     display:flex;
@@ -956,6 +964,9 @@ color:white;}
 
 .table {
     width:100%;
+    background-color: white;
+    margin: 5rem 0 5rem 0;
+
 }
 
 .table, th, td {
@@ -976,4 +987,10 @@ color:white;}
 
 .col25 {
     width:25%;
+}
+
+/* pay employee */
+
+.search_employee {
+    margin: 5rem 0 5rem 0;
 }

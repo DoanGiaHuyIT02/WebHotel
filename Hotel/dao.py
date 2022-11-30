@@ -1,4 +1,4 @@
-from Hotel.models import TaiKhoan, LoaiPhong, hinhAnhPhong
+from Hotel.models import TaiKhoan, LoaiPhong, hinhAnhPhong, ThongTinPhong, khachHang, hoaDon, hoaDon_ThongTinPhong, nhanVien, TaiKhoan_KhachHang, phieuDatPhong, phieuThuePhong
 from Hotel import db
 from flask_login import current_user
 import hashlib
@@ -28,3 +28,35 @@ def get_all_rooms():
 
 def get_all_images():
     return hinhAnhPhong.query.all()
+
+
+# def get_all_rooms_info():
+#     return ThongTinPhong.query.all()
+#
+#
+# def customer():
+#     return khachHang.query.all()
+#
+#
+# def bill():
+#     return hoaDon.query.all()
+#
+#
+# def bill_rooms_info():
+#     return hoaDon_ThongTinPhong.query.all()
+#
+#
+# def employee():
+#     return nhanVien.query.all()
+#
+#
+# def account_customer():
+#     return TaiKhoan_KhachHang.query.all()
+#
+#
+# def reservation_ticket():
+#     return phieuDatPhong.query.all()
+#
+#
+# def rent_ticket():
+#     return phieuThuePhong.query.all()
