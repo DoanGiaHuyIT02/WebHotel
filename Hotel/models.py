@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from Hotel import db, app
 from enum import Enum as UserEnum
 from flask_login import UserMixin
-import datetime
+from datetime import datetime
 
 
 class UserRole(UserEnum):
@@ -122,8 +122,8 @@ class TaiKhoan_KhachHang(db.Model):
 class phieuDatPhong(db.Model):
     __tablename__ = 'phieuDatPhong'
     maPhieuDatPhong = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    ngayNhanPhong = Column(DATETIME, nullable=False)
-    ngayTraPhong = Column(DATETIME, nullable=False)
+    ngayNhanPhong = Column(DATE, nullable=False)
+    ngayTraPhong = Column(DATE, nullable=False)
     maKhachHang = Column(Integer, ForeignKey(khachHang.MaKhachHang), nullable=False)
     chiTiet_DSKhachHang = relationship('chiTiet_DSKhachHang', backref='phieudatphong', lazy=True)
     ThongTinPhong_phieuDatPhong = relationship('ThongTinPhong_phieuDatPhong', backref='phieudatphong', lazy=True)
@@ -272,8 +272,8 @@ if __name__ == '__main__':
         # db.session.add(phieuDatPhong1)
         # db.session.commit()
 
-        # phieuDatPhong1 = phieuDatPhong(ngayNhanPhong=datetime(2022, 11, 26), ngayTraPhong=datetime(2022, 11, 29), maKhachHang=1)
-        # db.session.add(phieuDatPhong1)
-        # db.session.commit()
+        phieuDatPhong1 = phieuDatPhong(ngayNhanPhong=datetime(2022, 10, 26), ngayTraPhong=datetime(2022, 11, 29), maKhachHang=1)
+        db.session.add(phieuDatPhong1)
+        db.session.commit()
 
 
