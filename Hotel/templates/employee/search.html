@@ -1,20 +1,18 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-<div>
-    <div class="dropdown" id="dropdown">
-        <span>Tra cứu theo</span>
-        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" id="btn1">
-            Tên
-        </button>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Tên</a></li>
-            <li><a class="dropdown-item" href="#">Số điện thoại</a></li>
-            <li><a class="dropdown-item" href="#">Số CCCD</a></li>
-        </ul>
-    </div>
-    <span id="info">Nhập thông tin</span>
-    <input type="text" id="text">
-    <div>
+
+        <div class="dropdown" id="dropdown">
+            <span>Tra cứu theo</span>
+            <select id="select">
+                <option selected>Tên</option>
+                <option value="1">SĐT</option>
+                <option value="1">Số CCCD</option>
+            </select>
+          </div>
+        <span id="info">Nhập thông tin</span>
+        <input type="text" id="text">
+        <div>
+
         <button type="button" class="btn btn-primary btn1">Tra cứu</button>
     </div>
 </div>
@@ -36,6 +34,7 @@
             <td></td>
         </tr>
         </tbody>
+
     </table>
     <button type="button" class="btn btn-primary btn_lap-phieu">Lập phiếu</button>
 </div>
@@ -90,4 +89,5 @@
 </div>
 
 <button type="button" class="btn btn-primary btn3">Xuất phiếu</button>
+
 {% endblock %}

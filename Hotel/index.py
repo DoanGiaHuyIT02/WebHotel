@@ -132,6 +132,9 @@ def logout_my_user():
 def employee_search():
     return render_template('/employee/search.html')
 
+@app.route('/employee/lapphieuthuephong')
+def employee_lapphieuthuephong():
+    return render_template('/employee/lapphieuthuephong.html')
 
 @app.route('/employee/book')
 def employee_book():
