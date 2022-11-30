@@ -1,25 +1,27 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-<div>
+<form action="/employee/search" method="post">
     <div class="dropdown" id="dropdown">
         <span>Tra cứu theo</span>
-        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" id="btn1">
-            Tên
-        </button>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Tên</a></li>
-            <li><a class="dropdown-item" href="#">Số điện thoại</a></li>
-            <li><a class="dropdown-item" href="#">Số CCCD</a></li>
-        </ul>
+        <select id="select" name="luaChon">
+            <option selected value="ten">Tên</option>
+            <option value="sdt">SĐT</option>
+            <option value="cccd">Số CCCD</option>
+        </select>
     </div>
     <span id="info">Nhập thông tin</span>
-    <input type="text" id="text">
+    <input type="text" id="text" name="thongTin">
     <div>
-        <button type="button" class="btn btn-primary btn1">Tra cứu</button>
+        <button type="submit" class="btn btn-primary btn1">Tra cứu</button>
     </div>
-</div>
+</form>
+
+{% for r in list %}
+    <span>{{ r }}</span>
+{% endfor %}
+
 <div class="table_search-customer">
-    <table class="table table-bordered table-sm table1_1">
+    <table class="tableLapPhieu table-bordered table-sm table1_1">
         <thead>
         <tr>
             <th>Tên khách hàng</th>
@@ -29,20 +31,23 @@
         </tr>
         </thead>
         <tbody>
+        {% for t in khachhang %}
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{ t[1] }}</td>
+            <td>{{ t[2] }}</td>
+            <td>{{ t[3] }}</td>
+            <td>101, 102, 103</td>
         </tr>
+        {% endfor %}
         </tbody>
+
     </table>
-    <button type="button" class="btn btn-primary btn_lap-phieu">Lập phiếu</button>
+    <button type="button" class="btn btn-primary btn_phieu" onclick="">Lập phiếu</button>
 </div>
 
 
-<div class="container mt-3" style="width:1200px">
-    <table class="table table-bordered table2">
+<div class="table_search-customer">
+    <table class="tableLapPhieu table-bordered table1_1">
         <thead>
         <tr>
             <th colspan="5">PHIẾU ĐẶT PHÒNG</th>
@@ -50,12 +55,12 @@
         </thead>
         <tbody>
         <tr class="table-row1">
-            <td colspan="3">Họ tên người đặt:</td>
-            <td colspan="2">Các phòng đặt:</td>
+            <td colspan="3" style="padding-left: 10px">Họ tên người đặt: {{ current_user.name }}</td>
+            <td colspan="2" style="padding-left: 10px">Các phòng đặt:</td>
         </tr>
-        <tr class="table-row1">
-            <td colspan="3">Ngày nhận phòng:</td>
-            <td colspan="2">Ngày trả phòng:</td>
+        <tr class="table-row1" >
+            <td colspan="3" style="padding-left: 10px">Ngày nhận phòng:</td>
+            <td colspan="2" style="padding-left: 10px">Ngày trả phòng:</td>
         </tr>
         <tr>
             <td class="col10">STT</td>
@@ -87,7 +92,8 @@
         </tr>
         </tbody>
     </table>
+    <button type="button" class="btn btn-primary btn3 btn_phieu">Xuất phiếu</button>
 </div>
 
-<button type="button" class="btn btn-primary btn3">Xuất phiếu</button>
+
 {% endblock %}

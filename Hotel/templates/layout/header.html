@@ -45,13 +45,13 @@
                                             Chức năng
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="{{ url_for('employee_search') }}">Tra cứu</a></li>
+                                            <li><a class="dropdown-item" href="{{ url_for('employee_search')}}">Tra cứu</a></li>
                                             <li><hr class="dropdown-divider"></hr></li>
-                                            <li><a class="dropdown-item" href="{{ url_for('employee_book') }}">Đặt phòng</a></li>
+                                            <li><a class="dropdown-item" href="{{ url_for('employee_book')}}">Đặt phòng</a></li>
                                             <li><hr class="dropdown-divider"></hr></li>
-                                            <li><a class="dropdown-item" href="#">Lập phiếu thuê phòng</a></li>
+                                            <li><a class="dropdown-item" href="{{ url_for('employee_lapphieuthuephong') }}">Lập phiếu thuê phòng</a></li>
                                             <li><hr class="dropdown-divider"></hr></li>
-                                            <li><a class="dropdown-item" href="#">Lập hóa đơn</a></li>
+                                            <li><a class="dropdown-item" href="{{ url_for('employee_pay')}}">Lập hóa đơn</a></li>
                                         </ul>
                                     </div>
                                 {% else %}

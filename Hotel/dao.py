@@ -1,4 +1,4 @@
-from Hotel.models import TaiKhoan, LoaiPhong, hinhAnhPhong
+from Hotel.models import TaiKhoan, LoaiPhong, hinhAnhPhong, ThongTinPhong, khachHang, hoaDon, hoaDon_ThongTinPhong, nhanVien, TaiKhoan_KhachHang, phieuDatPhong, phieuThuePhong
 from Hotel import db
 from flask_login import current_user
 import hashlib
@@ -30,6 +30,55 @@ def get_all_images():
     return hinhAnhPhong.query.all()
 
 
+def load_Khach_Hang(luaChon=None, thongTin=None):
+    query = db.session.query(khachHang.MaKhachHang, khachHang.name, phieuDatPhong.ngayNhanPhong, phieuDatPhong.ngayTraPhong, phieuDatPhong.maPhieuDatPhong)
 
+    if luaChon:
+        if luaChon == 'ten':
+            query = query.join(phieuDatPhong, phieuDatPhong.maKhachHang.__eq__(khachHang.MaKhachHang)).filter(khachHang.name.contains(thongTin))
+
+        if luaChon == 'sdt':
+            query = query.join(phieuDatPhong, phieuDatPhong.maKhachHang.__eq__(khachHang.MaKhachHang)).filter(khachHang.phone.contains(thongTin))
+        if luaChon == 'cccd':
+            query = query.join(phieuDatPhong, phieuDatPhong.maKhachHang.__eq__(khachHang.MaKhachHang)).filter(
+                khachHang.CCCD.contains(thongTin))
+
+    return query.all()
+
+
+def phieu_dat_phong_by_khach_hang_id(khachhang_id):
+    return phieuDatPhong.query.filter(maKhachHang=khachhang_id)
+
+
+# def get_all_rooms_info():
+#     return ThongTinPhong.query.all()
+#
+#
+# def customer():
+#     return khachHang.query.all()
+#
+#
+# def bill():
+#     return hoaDon.query.all()
+#
+#
+# def bill_rooms_info():
+#     return hoaDon_ThongTinPhong.query.all()
+#
+#
+# def employee():
+#     return nhanVien.query.all()
+#
+#
+# def account_customer():
+#     return TaiKhoan_KhachHang.query.all()
+#
+#
+# def reservation_ticket():
+#     return phieuDatPhong.query.all()
+#
+#
+# def rent_ticket():
+#     return phieuThuePhong.query.all()
 
 
