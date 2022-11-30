@@ -29,11 +29,6 @@ def services():
 
 
 
-# @app.route('/rooms')
-# def rooms():
-#     rooms = dao.get_all_rooms()
-#     return render_template('rooms.html',     rooms=rooms)
-
 @app.route('/rooms')
 def rooms():
     rooms = dao.get_all_rooms()

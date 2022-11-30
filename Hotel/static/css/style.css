@@ -831,9 +831,9 @@ color:white;}
 }
 
 .btn:hover{
-    background-color:white;
+    background-color: #fead33;
     border-color: #ced4da;
-    border-color:gray;
+    border-color: black;
 }
 .btn:active{
     background-color:white;
@@ -989,8 +989,27 @@ color:white;}
     width:25%;
 }
 
+
 /* pay employee */
 
 .search_employee {
     margin: 5rem 0 5rem 0;
 }
+
+/*Bảng lập phiếu trong search.html*/
+.table_search-customer {
+    margin-top: 50px;
+    position: relative;
+}
+
+.table1_1{
+    height: 70px;
+    border-color: gray;
+}
+
+.btn_lap-phieu {
+    border-radius: 5px;
+    position:absolute;
+    right: 0;
+}
+

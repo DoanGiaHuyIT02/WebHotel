@@ -30,6 +30,7 @@ def get_all_images():
     return hinhAnhPhong.query.all()
 
 
+
 # def get_all_rooms_info():
 #     return ThongTinPhong.query.all()
 #
@@ -60,3 +61,5 @@ def get_all_images():
 #
 # def rent_ticket():
 #     return phieuThuePhong.query.all()
+
+
