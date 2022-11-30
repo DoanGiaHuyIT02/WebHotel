@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from Hotel import db, app
 from enum import Enum as UserEnum
 from flask_login import UserMixin
+import datetime
 
 
 class UserRole(UserEnum):
@@ -47,15 +48,21 @@ class ThongTinPhong(db.Model):
     ThongTinPhong_phieuThuePhong = relationship('ThongTinPhong_phieuThuePhong', backref='thontinphong', lazy=True)
 
 
+class LoaiKhach(db.Model):
+    __tablename__ = 'loaikhach'
+    loaiKhachId = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    loaiKhach = Column(String(50))
+    khachHang = relationship('khachHang', backref='loaikhach', lazy=True)
+
 
 class khachHang(db.Model):
     __tablename__ = 'khachhang'
-    MaKhachHang = Column(Integer,  primary_key=True, nullable=False)
+    MaKhachHang = Column(Integer,  primary_key=True, nullable=False, autoincrement=True)
     name = Column(String(50), nullable=False)
     address = Column(String(200))
     phone = Column(String(20))
     CCCD = Column(String(20))
-    LoaiKhach = Column(String(50))
+    loaiKhach_id = Column(Integer, ForeignKey(LoaiKhach.loaiKhachId), nullable=False)
     taiKhoanKhachHang_id = relationship('TaiKhoan_KhachHang', backref='khachhang', lazy=True)
     phieuDatPhong = relationship('phieuDatPhong', backref='khachhang', lazy=True)
 
@@ -114,7 +121,7 @@ class TaiKhoan_KhachHang(db.Model):
 
 class phieuDatPhong(db.Model):
     __tablename__ = 'phieuDatPhong'
-    maPhieuDatPhong = Column(Integer, primary_key=True, nullable=False)
+    maPhieuDatPhong = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     ngayNhanPhong = Column(DATETIME, nullable=False)
     ngayTraPhong = Column(DATETIME, nullable=False)
     maKhachHang = Column(Integer, ForeignKey(khachHang.MaKhachHang), nullable=False)
@@ -203,7 +210,13 @@ if __name__ == '__main__':
         u = TaiKhoan(name='Huy', username='huy', password=password, phoneNumber='0123456789',
                      avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
                      active=True, user_role=UserRole.ADMIN)
-        db.session.add(u)
+        e = TaiKhoan(name='Hieu', username='hieu', password=password, phoneNumber='0123456789',
+                     avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
+                     active=True, user_role=UserRole.EMPLOYEE)
+        c = TaiKhoan(name='Thanh', username='thanh', password=password, phoneNumber='0123456789',
+                     avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
+                     active=True, user_role=UserRole.USER)
+        db.session.add_all([u, e, c])
         db.session.commit()
 
         lp1 = LoaiPhong(loaiPhong='Standard Single', moTa='Phòng tiêu chuẩn, đơn giản với mức giá trung bình',
@@ -242,4 +255,25 @@ if __name__ == '__main__':
                           loaiPhong_id=1)
         db.session.add_all([h1, h2, h3, h4, h5])
         db.session.commit()
+
+        lk1 = LoaiKhach(loaiKhach='Nội địa')
+        lk2 = LoaiKhach(loaiKhach='Nước ngoài')
+        db.session.add_all([lk1, lk2])
+        db.session.commit()
+
+        k1 = khachHang(name='Gia Huy', address='371 Nguyễn Kiệm', phone='0123456', CCCD='1456789', loaiKhach_id=1)
+        k2 = khachHang(name='Minh Thành', address='483 Nguyễn Kiệm', phone='0123456', CCCD='14567895653', loaiKhach_id=2)
+        k3 = khachHang(name='Đức Hiếu', address='456 Nguyễn Kiệm', phone='0123456', CCCD='14567898132', loaiKhach_id=1)
+        k4 = khachHang(name='Quang Tới', address='459 Nguyễn Kiệm', phone='0123456', CCCD='1456789568', loaiKhach_id=2)
+        db.session.add_all([k1, k2, k3, k4])
+        db.session.commit()
+
+        # phieuDatPhong1 = phieuDatPhong(ngayNhanPhong='2022-11-26', ngayTraPhong='2022-11-29', maKhachHang=1)
+        # db.session.add(phieuDatPhong1)
+        # db.session.commit()
+
+        # phieuDatPhong1 = phieuDatPhong(ngayNhanPhong=datetime(2022, 11, 26), ngayTraPhong=datetime(2022, 11, 29), maKhachHang=1)
+        # db.session.add(phieuDatPhong1)
+        # db.session.commit()
+
 
