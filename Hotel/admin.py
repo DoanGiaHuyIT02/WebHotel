@@ -36,13 +36,16 @@ class accountView(AuthenticatedModelView):
     def create_model(self, form):
         pw = form.password.data
         password = str(hashlib.md5(pw.strip().encode('utf-8')).hexdigest())
-        u = TaiKhoan(name=form.name.data, username=form.username.data, password=password, phoneNumber=form.phonenumber,
+        u = TaiKhoan(name=form.name.data, username=form.username.data, password=password, phoneNumber=form.phoneNumber.data,
                      avatar=form.avatar.data,
-                     active=form.active.data, user_role=UserRole.ADMIN)
+                     active=form.active.data, user_role=form.user_role.data)
+        db.session.add(u)
+        db.session.commit()
+        return True
 
 
 admin.add_view(AuthenticatedModelView(ThongTinPhong, db.session, name='Thông tin phòng'))
-admin.add_view(AuthenticatedModelView(TaiKhoan, db.session, name='Tài khoản'))
+admin.add_view(accountView(TaiKhoan, db.session, name='Tài khoản'))
 admin.add_view(AuthenticatedModelView(LoaiPhong, db.session, name='Loại phòng'))
 admin.add_view(StatsView(name='Thống Kê - Báo Cáo'))
 admin.add_view(LogoutView(name='Đăng xuất'))
