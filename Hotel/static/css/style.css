@@ -859,11 +859,20 @@ color:white;}
     margin-left:4em;
     margin-top: 3em;
 }
+.tb1{
+position:relative;
+}
+.tb2{
+position:relative;
+margin-top:10em;
+margin-bottom:12em;
+}
 .table1{
     height: 70px;
     margin-top:5em;
     margin-bottom:10em;
     border-color: gray;
+    position:relative;
 }
 .table2{
     margin-top: 5em;
@@ -871,23 +880,23 @@ color:white;}
     width: 100%;
     margin-bottom:10em;
 }
-.btn1{
+.btnTraCuu{
     margin-left: 18.5em;
     margin-top: 2em;
     width: 100px;
     border-radius: 5px;
 }
-.btn2{
-    margin-left: 72.5em;
-    margin-top: -70em;
+.btnLapPhieu{
     width: 120px;
     border-radius: 5px;
+    position:absolute;
+    right:0;
 }
-.btn3{
-    margin-left:72em;
-    margin-top: -17em;
+.btnXuatPhieu{
     width: 120px;
     border-radius: 5px;
+    position:absolute;
+    right:0;
 }
 #select{
 width: 200px;
@@ -1007,6 +1016,7 @@ width: 200px;
 .table1_1{
     height: 70px;
     border-color: gray;
+    margin-bottom:10em;
 }
 
 .btn_lap-phieu {
