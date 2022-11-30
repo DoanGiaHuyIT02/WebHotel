@@ -11,9 +11,11 @@
         <span id="info">Nhập thông tin</span>
         <input type="text" id="text">
         <div>
-        <button type="button" class="btn btn-primary btn1">Tra cứu</button>
+        <button type="button" class="btn btn-primary btnTraCuu">Tra cứu</button>
        </div>
 
+
+        <div class="tb1">
        <table class="table table-bordered table-sm table1" >
         <thead>
           <tr>
@@ -32,16 +34,19 @@
           </tr>
         </tbody>
       </table>
-<div class="container mt-3">
+            <button type="button" class="btn btn-primary btnLapPhieu">Lập phiếu</button>
+    </div>
+
+<div class="tb2">
     <table class="table table-bordered table2">
         <thead>
             <tr>
-                <th colspan="5">PHIẾU ĐẶT PHÒNG</th>
+                <th colspan="5">PHIẾU THUÊ PHÒNG</th>
             </tr>
         </thead>
         <tbody>
             <tr class="table-row1">
-                <td colspan="3">Họ tên người đặt:</td>
+                <td colspan="3">Các phòng đặt:</td>
                 <td colspan="2">Các phòng đặt:</td>
             </tr>
             <tr class="table-row1">
@@ -78,7 +83,6 @@
             </tr>
         </tbody>
     </table>
-    <button type="button" class="btn btn-primary btn2">Lập phiếu</button>
-      <button type="button" class="btn btn-primary btn3">Xuất phiếu</button>
+      <button type="button" class="btn btn-primary btnXuatPhieu">Xuất phiếu</button>
 </div>
 {% endblock %}
