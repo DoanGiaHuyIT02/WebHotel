@@ -22,10 +22,14 @@ def get_user_by_id(user_id):
     return TaiKhoan.query.get(user_id)
 
 
-def get_all_rooms():
+def get_all_loai_phong():
     return LoaiPhong.query.all()
 
 
 def get_all_images():
     return hinhAnhPhong.query.all()
+
+
+
+
 

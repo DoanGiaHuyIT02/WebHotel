@@ -8,7 +8,7 @@ import cloudinary.uploader
 
 @app.route('/')
 def index():
-    rooms = dao.get_all_rooms()
+    rooms = dao.get_all_loai_phong()
     images = dao.get_all_images()
     return render_template('index.html', rooms=rooms, images=images)
 
@@ -35,7 +35,7 @@ def services():
 
 @app.route('/rooms')
 def rooms():
-    rooms = dao.get_all_rooms()
+    rooms = dao.get_all_loai_phong()
     images = dao.get_all_images()
     return render_template('rooms.html', rooms=rooms, images=images)
 
