@@ -1,5 +1,6 @@
 {% extends 'layout/base.html' %}
 {% block content %}
+
         <div class="dropdown" id="dropdown">
             <span>Tra cứu theo</span>
             <select id="select">
@@ -11,25 +12,82 @@
         <span id="info">Nhập thông tin</span>
         <input type="text" id="text">
         <div>
-        <button type="button" class="btn btn-primary btn1">Tra cứu</button>
-       </div>
 
-       <table class="table table-bordered table-sm table1" >
+        <button type="button" class="btn btn-primary btn1">Tra cứu</button>
+    </div>
+</div>
+<div class="table_search-customer">
+    <table class="table table-bordered table-sm table1_1">
         <thead>
-          <tr>
+        <tr>
             <th>Tên khách hàng</th>
             <th>Ngày nhận phòng</th>
             <th>Ngày trả phòng</th>
             <th>Các phòng đặt</th>
-          </tr>
+        </tr>
         </thead>
         <tbody>
-          <tr>
+        <tr>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-          </tr>
+        </tr>
         </tbody>
-      </table>
+
+    </table>
+    <button type="button" class="btn btn-primary btn_lap-phieu">Lập phiếu</button>
+</div>
+
+
+<div class="container mt-3" style="width:1200px">
+    <table class="table table-bordered table2">
+        <thead>
+        <tr>
+            <th colspan="5">PHIẾU ĐẶT PHÒNG</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="table-row1">
+            <td colspan="3">Họ tên người đặt:</td>
+            <td colspan="2">Các phòng đặt:</td>
+        </tr>
+        <tr class="table-row1">
+            <td colspan="3">Ngày nhận phòng:</td>
+            <td colspan="2">Ngày trả phòng:</td>
+        </tr>
+        <tr>
+            <td class="col10">STT</td>
+            <td class="col25">Khách hàng</td>
+            <td class="col15">Loại khách</td>
+            <td class="col25">CCCD</td>
+            <td class="col25">Địa chỉ</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+            <td>john@example.com</td>
+            <td>john@example.com</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+            <td>john@example.com</td>
+            <td>john@example.com</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+            <td>john@example.com</td>
+            <td>john@example.com</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<button type="button" class="btn btn-primary btn3">Xuất phiếu</button>
+
 {% endblock %}
