@@ -50,6 +50,10 @@ def phieu_dat_phong_by_khach_hang_id(khachhang_id):
     return phieuDatPhong.query.filter(maKhachHang=khachhang_id)
 
 
+def cac_phong_get_id(phong_id):
+    return ThongTinPhong.query.get(phong_id)
+
+
 # def get_all_rooms_info():
 #     return ThongTinPhong.query.all()
 #

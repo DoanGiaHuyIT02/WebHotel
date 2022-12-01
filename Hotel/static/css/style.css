@@ -1022,11 +1022,9 @@ width: 200px;
 .table1_1{
     height: 70px;
     border-color: gray;
-<<<<<<< HEAD
     line-height: 3rem;
-=======
     margin-bottom:10em;
->>>>>>> 4527748e4121fd47921e1c64fd5ab6973ea54320
+
 }
 
 .btn_phieu {
@@ -1035,4 +1033,34 @@ width: 200px;
     right: 0;
     bottom: 0;
 }
+
+/*form thanh toán khách hàng*/
+.form-pay, .thongTinPhong {
+    margin-top: 40px;
+    background-color: white;
+    padding: 20px 10px;
+    border-radius: 5px;
+    box-shadow: 1px 3px 4px 3px #8080803b;
+}
+
+.form-pay input {
+    border-radius: 10px;
+    border: 1px solid orange;
+}
+
+.thongTinKhachHang {
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.thongTinKhachHang .btn-Xác-nhận {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.select-Loai-Khach {
+    margin: 20px 0;
+}
+/*end form thanh toán khách hàng*/
 

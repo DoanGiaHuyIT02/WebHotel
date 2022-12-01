@@ -17,7 +17,6 @@
 </form>
 
 
-
 <div class="table_search-customer" id="table1">
     <table class="table table-bordered table-sm table1_1">
 
@@ -35,7 +34,14 @@
             <td>{{ t[1] }}</td>
             <td>{{ t[2] }}</td>
             <td>{{ t[3] }}</td>
-            <td>101, 102, 103</td>
+
+            <td id="xemCacPhong">
+                <form>
+                    <input hidden name="ma" value="{{ t[4] }}">
+                    <input type="submit" value="Xem phòng đã đặt" class="btn btn-info">
+                </form>
+
+            </td>
         </tr>
         {% endfor %}
         </tbody>

@@ -1,0 +1,118 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+
+<div id="pay">
+    <div class="row">
+        <div class="col-md-5 col-sm-12">
+            <form action="" class="form-pay">
+                <h2 class="text-center">Thông tin khách hàng</h2>
+                <div class="form-floating mb-3 mt-3 control form-group">
+                    <input type="text" class="form-control" required id="name"
+                           placeholder="Họ tên khách hàng" name="name">
+                    <label for="username">Họ tên khách hàng</label>
+                    <span></span>
+                </div>
+                <div class="form-floating mb-3 mt-3 control form-group">
+                    <input type="text" class="form-control" required id="phone"
+                           placeholder="Số điện thoại" name="phone">
+                    <label for="SDT">Số điện thoại</label>
+                    <span></span>
+                </div>
+                <div class="form-floating mb-3 mt-3 control form-group">
+                    <input type="text" class="form-control" required id="CCCD"
+                           placeholder="CCCD" name="CCCD">
+                    <label for="CCCD">CCCD</label>
+                    <span></span>
+                </div>
+                <div class="form-floating mb-3 mt-3 control form-group">
+                    <input type="text" class="form-control" required id="address"
+                           placeholder="address" name="address">
+                    <label for="address">Địa chỉ</label>
+                    <span></span>
+                </div>
+                <div class="select-Loai-Khach">
+                    <span>Loại khách</span>
+                    <select id="select-LoaiKhach" >
+                        <option selected>Nội địa</option>
+                        <option >Nước ngoài</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary" onclick="danhSachKhachHang()">Thêm khách hàng</button>
+                </div>
+                <script src="{{ url_for('static', filename='js/load_kh.js') }}"></script>
+            </form>
+        </div>
+
+        <div class="col-md-7 col-sm-12">
+            <div class="thongTinPhong">
+                <h2>Thông tin phòng</h2>
+                <form action="">
+                    <div class="select-Loai-Khach">
+                        <span>Loại phòng</span>
+                        <select id="select-loaiPhong" >
+                            <option selected>Standard Single</option>
+                            <option >Standard Double</option>
+                            <option >Prenium</option>
+                        </select>
+                    </div>
+                    <div class="select-Loai-Khach" >
+                        <span>Số lượng</span>
+                        <input id="soLuongPhong" type="number" value="0"/>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary" onclick="danhSachPhong()">Thêm phòng</button>
+                    </div>
+                    <script src="{{ url_for('static', filename='js/load_phong.js') }}"></script>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="thongTinKhachHang">
+                <table class="table" >
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên khách hàng</th>
+                        <th>Số điện thoại</th>
+                        <th>CCCD</th>
+                        <th>Địa chỉ</th>
+                        <th>Loai khách</th>
+                    </tr>
+                    <tbody id="table">
+
+                    </tbody>
+<!--                    <tr>-->
+<!--                        <td></td>-->
+<!--                        <td></td>-->
+<!--                        <td></td>-->
+<!--                        <td></td>-->
+<!--                        <td></td>-->
+<!--                        <td></td>-->
+<!--                    </tr>-->
+                </table>
+                <table class="table">
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên phòng</th>
+                        <th>Số lượng</th>
+                    </tr>
+                    <tbody id="table1">
+<!--                    <tr>-->
+<!--                        <td></td>-->
+<!--                        <td></td>-->
+<!--                        <td></td>-->
+<!--                    </tr>-->
+                    </tbody>
+                </table>
+                <div class="btn-Xác-nhận">
+                    <button class="btn btn-primary">Xác nhận đặt phòng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

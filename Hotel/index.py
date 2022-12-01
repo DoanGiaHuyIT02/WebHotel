@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, session
+from flask import render_template, redirect, request, url_for, session, jsonify
 from Hotel import db, app, admin, dao, login
 from flask_login import login_user, logout_user, current_user, login_required
 from Hotel.models import UserRole
@@ -109,7 +109,9 @@ def employee_search():
             list.append(l[4])
 
         return render_template('/employee/search.html', khachhang=khachhang, list=list)
-
+    if request.args.get("ma"):
+        cacphong = dao.cac_phong_get_id(request.args.get("ma"))
+        return render_template('/employee/search.html', cacphong=cacphong)
     return render_template('/employee/search.html')
 
 
@@ -125,7 +127,7 @@ def employee_book():
 
 @app.route('/employee/pay')
 def employee_pay():
-    return render_template('/employee/pay.html')
+    return render_template('/employee/payCustomer.html')
 
 
 @login.user_loader
@@ -133,12 +135,18 @@ def load_user(user_id):
     return dao.get_user_by_id(user_id)
 
 
-# def load_room(room_id):
-#     return dao.get_all_rooms(room_id)
-#
-#
-# def load_image(image_id):
-#     return dao.get_all_images(image_id)
+@app.route('/api_get_phong_dat/')
+def api_get_phong_dat():
+    data = request.json
+    phongDaDat = dao.get_all_loai_phong(data['maDatPhong'])
+    return jsonify(
+        {'maPhong': phongDaDat.maPhong, 'soPhong': phongDaDat.soPhong}
+    )
+
+
+@app.route('/thanh_toan')
+def thanh_toan():
+    return render_template('payCustomer.html')
 
 
 if __name__ == '__main__':

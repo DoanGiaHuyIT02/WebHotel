@@ -107,28 +107,26 @@
         }
     });
 
-//       //formDk-DN
-//    var btnOpen = document.querySelector('.btn-OpenLogin')
-//    var btnIconClose = document.querySelector('.btn-iconClose i')
-//    var modal = document.querySelector('.modal')
-//
-//
-//    //toggle là cho một sự kiện ẩn và hiện
-//    function toggleModal(e) {
-//        modal.classList.toggle('hide')
-//    }
-//
-//
-//    //addEventListener là thêm sự kiện nhấp chuột vào button
-//    btnOpen.addEventListener('click', toggleModal)
-//    btnIconClose.addEventListener('click', toggleModal)
-//
-//    //Nếu mà 2 taget gần nhất thì bật tắt
-//    modal.addEventListener('click', function(e) {
-//        if(e.target == e.currentTarget) {
-//            toggleModal();
-//        }
-//    })
+
     
 })(jQuery);
+
+function xemCacPhong(maDatPhong) {
+    fetch('/api/get_all_loai_phong', {
+      method: "post",
+      dataType: 'json',
+      body: JSON.stringify({
+                "maDatPhong": maDatPhong
+            }),
+      headers: {
+                "Content-Type": "application/json"
+            }
+    }).then(res => res.json()).then(data => {
+        xemCacPhong = document.getElementById("xemCacPhong");
+        xemCacPhong.html = `<td>ạka</td>`
+    }).catch((err) => {
+      console.log(err)
+    })
+}
+
 
