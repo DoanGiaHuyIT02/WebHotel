@@ -859,14 +859,17 @@ color:white;}
     margin-left:4em;
     margin-top: 3em;
 }
+
 .tb1{
-position:relative;
+    position:relative;
 }
+
 .tb2{
-position:relative;
-margin-top:10em;
-margin-bottom:12em;
+    position:relative;
+    margin-top:10em;
+    margin-bottom:12em;
 }
+
 .table1{
     height: 70px;
     margin-top:5em;
@@ -874,30 +877,35 @@ margin-bottom:12em;
     border-color: gray;
     position:relative;
 }
+
 .table2{
     margin-top: 5em;
     border-color: gray;
     width: 100%;
     margin-bottom:10em;
 }
+
 .btnTraCuu{
     margin-left: 18.5em;
     margin-top: 2em;
     width: 100px;
     border-radius: 5px;
 }
+
 .btnLapPhieu{
     width: 120px;
     border-radius: 5px;
     position:absolute;
     right:0;
 }
+
 .btnXuatPhieu{
     width: 120px;
     border-radius: 5px;
     position:absolute;
     right:0;
 }
+
 #select{
 width: 200px;
     height: 35px;
@@ -1068,5 +1076,19 @@ width: 200px;
     justify-content: space-around;
 }
 /*end form thanh toán khách hàng*/
+
+/*form tra cứu*/
+.form-TraCuu {
+    position: relative;
+    width: 40%;
+    margin-top: 50px;
+}
+
+.btn-TraCuu {
+    position: absolute;
+    right: 0;
+    bottom: 40px;
+}
+/*end form tra cứu*/
 
 

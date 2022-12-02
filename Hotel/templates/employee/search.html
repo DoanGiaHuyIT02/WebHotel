@@ -1,18 +1,20 @@
 {% extends 'layout/base.html' %}
 {% block content %}
 <form action="/employee/search" method="post">
-    <div class="dropdown" id="dropdown">
-        <span>Tra cứu theo</span>
-        <select id="select" name="luaChon">
-            <option selected value="ten">Tên</option>
-            <option value="sdt">SĐT</option>
-            <option value="cccd">Số CCCD</option>
-        </select>
-    </div>
-    <span id="info">Nhập thông tin</span>
-    <input type="text" id="text" name="thongTin">
-    <div>
-        <button type="submit" class="btn btn-primary btn1">Tra cứu</button>
+    <div class="form-TraCuu">
+        <div  >
+            <span>Tra cứu theo</span>
+            <select id="select" name="luaChon">
+                <option selected value="ten">Tên</option>
+                <option value="sdt">SĐT</option>
+                <option value="cccd">Số CCCD</option>
+            </select>
+        </div>
+        <span>Nhập thông tin</span>
+        <input type="text" id="text" name="thongTin">
+        <div class="btn-TraCuu">
+            <button type="submit" class="btn btn-primary btn1">Tra cứu</button>
+        </div>
     </div>
 </form>
 
