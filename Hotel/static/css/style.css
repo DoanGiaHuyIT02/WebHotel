@@ -1050,7 +1050,7 @@ width: 200px;
 
 .thongTinKhachHang {
     position: relative;
-    padding-bottom: 10px;
+    padding-bottom: 40px;
 }
 
 .thongTinKhachHang .btn-Xác-nhận {
@@ -1062,5 +1062,11 @@ width: 200px;
 .select-Loai-Khach {
     margin: 20px 0;
 }
+
+.inputDate {
+    display: flex;
+    justify-content: space-around;
+}
 /*end form thanh toán khách hàng*/
+
 

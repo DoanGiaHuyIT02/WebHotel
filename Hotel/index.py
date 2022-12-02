@@ -146,7 +146,8 @@ def api_get_phong_dat():
 
 @app.route('/thanh_toan')
 def thanh_toan():
-    return render_template('payCustomer.html')
+    loaiPhong = dao.get_all_loai_phong()
+    return render_template('payCustomer.html', loaiPhong=loaiPhong)
 
 
 if __name__ == '__main__':

@@ -33,9 +33,17 @@ function danhSachKhachHang() {
                         <td>${dskh[i].CCCD}</td>
                         <td>${dskh[i].address}</td>
                         <td>${dskh[i].loaiKhach}</td>
+                        <td><button class="btn btn-danger" type="button" onclick="deleteRow1(this)">X</button></td>
                     </tr>`
     }
 
 }
+
+function deleteRow1(r) {
+  var i = r.parentNode.parentNode.parentNode.rowIndex;
+  if (confirm("Bạn có chắc muốn xóa!") == true)
+    document.getElementById("table").deleteRow(i-1);
+}
+
 
 
