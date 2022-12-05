@@ -1071,6 +1071,10 @@ width: 200px;
     margin: 20px 0;
 }
 
+.select-Loai-Khach1 {
+    margin: 50px 0 0 0;
+}
+
 .inputDate {
     display: flex;
     justify-content: space-around;
@@ -1090,5 +1094,15 @@ width: 200px;
     bottom: 40px;
 }
 /*end form tra cứu*/
+
+/*form nhập thông tin khách hàng*/
+#formInputCus {
+    display: flex;
+    justify-content: space-around;
+}
+/*end form nhập thông tin khách hàng*/
+
+/*Ẩn dòng table*/
+
 
 

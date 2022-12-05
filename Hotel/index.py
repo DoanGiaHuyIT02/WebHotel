@@ -122,7 +122,9 @@ def employee_lapphieuthuephong():
 
 @app.route('/employee/book')
 def employee_book():
-    return render_template('/employee/book.html')
+    loaiPhong = dao.get_all_loai_phong()
+    soPhong = dao.get_all_so_phong()
+    return render_template('/employee/book.html', loaiPhong=loaiPhong, soPhong=soPhong)
 
 
 @app.route('/employee/pay')
@@ -148,6 +150,28 @@ def api_get_phong_dat():
 def thanh_toan():
     loaiPhong = dao.get_all_loai_phong()
     return render_template('payCustomer.html', loaiPhong=loaiPhong)
+
+
+@app.route('/thanhToanDatPhong', methods=['GET', 'POST'])
+@login_required
+def test():
+    if request.method == 'POST':
+        name = request.form.getlist('name')
+        phone = request.form.getlist('phone')
+        CCCD = request.form.getlist('CCCD')
+        address = request.form.getlist('address')
+        loaiKhach = request.form.getlist('loaiKhach')
+        ngayNhanPhong = request.form['ngayNhan']
+        ngayTraPhong = request.form['ngayTra']
+
+        tkkh = dao.get_khach_hang_va_tai_khoan_by_id(current_user.id)
+        dao.load_khach_hang_dat_phong(name=name, address=address, phone=phone,
+                                CCCD=CCCD, loaiKhach_id=loaiKhach, khachHang_id=tkkh[0].KhachHang_id,
+                                ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong)
+        return redirect('/thanhToanDatPhong')
+
+    loaiPhong = dao.get_all_loai_phong()
+    return render_template('test.html', loaiPhong=loaiPhong)
 
 
 if __name__ == '__main__':

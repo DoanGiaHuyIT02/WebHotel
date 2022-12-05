@@ -1,6 +1,6 @@
-from Hotel.models import TaiKhoan, LoaiPhong, hinhAnhPhong, ThongTinPhong, khachHang, hoaDon, hoaDon_ThongTinPhong, nhanVien, TaiKhoan_KhachHang, phieuDatPhong, phieuThuePhong
+from Hotel.models import TaiKhoan, LoaiPhong, hinhAnhPhong, ThongTinPhong, khachHang, LoaiKhach,\
+    nhanVien, TaiKhoan_KhachHang, phieuDatPhong, phieuThuePhong, ThongTinPhong_phieuDatPhong, chiTiet_DSKhachHang
 from Hotel import db
-from flask_login import current_user
 import hashlib
 
 
@@ -18,6 +18,36 @@ def register(name, username, password, phoneNumber, avatar):
     db.session.commit()
 
 
+def load_CTDSKH(name, phone, CCCD, address, loaiKhach_id, phieuThue_id):
+    DSKH = chiTiet_DSKhachHang(name=name, address=address, phone=phone, CCCD=CCCD, loaiKhach_id=loaiKhach_id,\
+                               phieuThue_id=phieuThue_id)
+    db.session.add(DSKH)
+
+
+def load_khach_hang_dat_phong(name, phone, CCCD, address, loaiKhach_id, khachHang_id, ngayNhanPhong, ngayTraPhong):
+    print(khachHang_id)
+    pdp = phieuDatPhong(ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong, maKhachHang=khachHang_id)
+    db.session.add(pdp)
+    db.session.commit()
+    for l in range(len(name)):
+        c = chiTiet_DSKhachHang(name=name[l], address=address[l], phone=phone[l],
+                                CCCD=CCCD[l], loaiKhach_id=loaiKhach_id[l], maPhieuDatPhong=pdp.maPhieuDatPhong)
+        db.session.add(c)
+    db.session.commit()
+
+
+def load_loai_khach(loaiKhach):
+    loaiKhach = LoaiKhach(loaiKhach=loaiKhach)
+    db.session.add(loaiKhach)
+    db.session.commit()
+
+
+def load_TTP_PDP(loaiPhong_id, phieuDatPhong_id):
+    TTP_PDP = ThongTinPhong_phieuDatPhong(phieuDatPhong_id=phieuDatPhong_id, loaiPhong_id=loaiPhong_id)
+    db.session.add(TTP_PDP)
+    db.session.commit()
+
+
 def get_user_by_id(user_id):
     return TaiKhoan.query.get(user_id)
 
@@ -26,8 +56,17 @@ def get_all_loai_phong():
     return LoaiPhong.query.all()
 
 
+def get_all_so_phong():
+    return ThongTinPhong.query.all()
+
+
 def get_all_images():
     return hinhAnhPhong.query.all()
+
+
+def get_khach_hang_va_tai_khoan_by_id(taikhoan_id):
+    tk_kh = TaiKhoan_KhachHang.query.filter(TaiKhoan_KhachHang.taiKhoan_id.__eq__(taikhoan_id)).all()
+    return tk_kh
 
 
 def load_Khach_Hang(luaChon=None, thongTin=None):
@@ -52,6 +91,11 @@ def phieu_dat_phong_by_khach_hang_id(khachhang_id):
 
 def cac_phong_get_id(phong_id):
     return ThongTinPhong.query.get(phong_id)
+
+
+
+
+
 
 
 # def get_all_rooms_info():

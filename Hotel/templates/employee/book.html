@@ -10,20 +10,18 @@
         <div class="booking_line-item">
             <div id="margin" class="booking_line-item-margin">Số phòng:</div>
             <select>
-                <option selected></option>
-                <option value="1">101</option>
-                <option value="2">102</option>
-                <option value="3">103</option>
-                <option value="3">10000</option>
+                {% for p in soPhong %}
+                <option selected value="1">{{ p.soPhong }}</option>
+                {% endfor %}
             </select>
         </div>
 
-        <div class="booking_line-item">
-            <div class="booking_line-item-margin">Loại phòng:</div>
-            <select>
-                <option selected>Standard Single</option>
-                <option value="1">Standard Double</option>
-                <option value="2">Prenium</option>
+        <div class="select-Loai-Khach">
+            <span>Loại phòng</span>
+            <select id="select-loaiPhong">
+                {% for lp in loaiPhong %}
+                <option value="{{ lp.loaiPhongId }}">{{ lp.loaiPhong }}</option>
+                {% endfor %}
             </select>
         </div>
     </div>
@@ -33,13 +31,13 @@
             <div class="col-md-3">
                 <div class="date" id="#date1" data-target-input="nearest">
                     <input type="text" onfocus="(this.type='date')" onblur="(this.type = 'text')"
-                           class="form-control datetimepicker-input"
+                           class="form-control datetimepicker-input" id="e_ngayNhanPhong"
                            placeholder="Ngày nhận phòng" data-target="#date1" data-toggle="datetimepicker"/>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="date" id="#date2" data-target-input="nearest">
-                    <input type="text" onfocus="(this.type='date')" onblur="(this.type = 'text')"
+                    <input type="text" onfocus="(this.type='date')" onblur="(this.type = 'text')" id="e_ngayTraPhong"
                            class="form-control datetimepicker-input" placeholder="Ngày trả phòng" data-target="#date2"
                            data-toggle="datetimepicker"/>
                 </div>
@@ -50,33 +48,33 @@
 
     <div class="book_line_items">
         <div class="booking_line-item booking_line-item1">
-            <span class="booking_line-item-margin">Khách hàng 1: </span>
-            <input type="text" placeholder="Nhập tên"/>
+            <span class="booking_line-item-margin">Khách hàng: </span>
+            <input type="text" required id="e_name" placeholder="Họ tên khách hàng" name="name"/>
         </div>
 
-        <div class="booking_line-item">
+        <div class="select-Loai-Khach booking_line-item">
             <span class="booking_line-item-margin">Loại khách: </span>
-            <select>
+            <select id="e_select_LoaiKhach">
                 <option selected>Nội địa</option>
-                <option value="1">Nước ngoài</option>
+                <option>Nước ngoài</option>
             </select>
         </div>
 
         <div class="booking_line-item">
             <span class="booking_line-item-margin">CCCD: </span>
-            <input type="text" placeholder="Nhập CCCD"/>
+            <input type="text" required id="e_CCCD" placeholder="CCCD" name="CCCD"/>
         </div>
 
         <div class="booking_line-item">
             <span class="booking_line-item-margin">Địa chỉ: </span>
-            <input type="text" placeholder="Nhập địa chỉ"/>
+            <input type="text" required id="e_address" placeholder="address" name="address"/>
         </div>
         <button type="button" class="btn btn-primary booking_line-item-btns">X</button>
     </div>
 
 
     <div class="book_line_items">
-        <button type="button" class="btn btn-primary booking_line-item-margin">Thêm</button>
+        <button type="button" class="btn btn-primary booking_line-item-margin" onclick="addCusOfEmloyee()">Thêm</button>
     </div>
 
     <div class="book_line_items book_line_items-right">
@@ -84,6 +82,24 @@
         <button type="button" class="btn btn-primary booking_line-item-margin">Đặt phòng</button>
     </div>
 </div>
+    <div class="thongTinKhachHang">
+        <table class="table">
+            <tr class="table-row1" id="timeBook">
+
+            </tr>
+            <tr>
+                <th>STT</th>
+                <th>Tên khách hàng</th>
+                <th>CCCD</th>
+                <th>Địa chỉ</th>
+                <th>Loại khách</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tbody id="e_table">
+            </tbody>
+        </table>
+    </div>
 <!--End customer -->
 
 
@@ -92,51 +108,51 @@
 <div class="container mt-3">
     <table class="table table-bordered">
         <thead>
-            <tr>
-                <th colspan="5">PHIẾU ĐẶT PHÒNG</th>
-            </tr>
+        <tr>
+            <th colspan="5">PHIẾU ĐẶT PHÒNG</th>
+        </tr>
         </thead>
         <tbody>
-            <tr class="table-row1">
-                <td colspan="3">Họ tên người đặt:</td>
-                <td colspan="2">Các phòng đặt:</td>
-            </tr>
-            <tr class="table-row1">
-                 <td colspan="3">Ngày nhận phòng:</td>
-                <td colspan="2">Ngày trả phòng:</td>
-            </tr>
-            <tr>
-                <td class="col10">STT</td>
-                <td class="col25" >Khách hàng</td>
-                <td class="col15">Loại khách</td>
-                <td class="col25">CCCD</td>
-                <td class="col25">Địa chỉ</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
-            </tr>
+        <tr class="table-row1">
+            <td colspan="3">Họ tên người đặt:</td>
+            <td colspan="2">Các phòng đặt:</td>
+        </tr>
+        <tr class="table-row1">
+            <td colspan="3">Ngày nhận phòng:</td>
+            <td colspan="2">Ngày trả phòng:</td>
+        </tr>
+        <tr>
+            <td class="col10">STT</td>
+            <td class="col25">Khách hàng</td>
+            <td class="col15">Loại khách</td>
+            <td class="col25">CCCD</td>
+            <td class="col25">Địa chỉ</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+            <td>john@example.com</td>
+            <td>john@example.com</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+            <td>john@example.com</td>
+            <td>john@example.com</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+            <td>john@example.com</td>
+            <td>john@example.com</td>
+        </tr>
         </tbody>
     </table>
 </div>
 <!--End table -->
 
-
+<script src="{{ url_for('static', filename='js/addCustomerOfEmployee.js') }}"></script>
 {% endblock %}

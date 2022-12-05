@@ -1,10 +1,9 @@
 from sqlalchemy import Column, Integer, String, Float, Boolean, Text, ForeignKey, Enum, DATE, DATETIME
-from datetime import datetime
 from sqlalchemy.orm import relationship
 from Hotel import db, app
 from enum import Enum as UserEnum
 from flask_login import UserMixin
-from datetime import datetime
+from datetime import datetime, date
 
 
 class UserRole(UserEnum):
@@ -54,6 +53,7 @@ class LoaiKhach(db.Model):
     loaiKhachId = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     loaiKhach = Column(String(50))
     khachHang = relationship('khachHang', backref='loaikhach', lazy=True)
+    ChiTiet_DSKH = relationship('chiTiet_DSKhachHang', backref='loaikhach', lazy=True)
 
 
 class khachHang(db.Model):
@@ -106,8 +106,8 @@ class nhanVien(db.Model):
     address = Column(String(200))
     phone = Column(String(20))
     CCCD = Column(String(20))
-    tuoi = Column(String(3))
-    ngayVaoLam = Column(DATE)
+    namSinh = Column(DATE, nullable=False)
+    ngayVaoLam = Column(DATE, nullable=False)
     email = Column(String(50))
     taiKhoan = Column(Integer, ForeignKey(TaiKhoan.id), unique=True, nullable=False)
 
@@ -134,7 +134,7 @@ class phieuThuePhong(db.Model):
     maPhieuThuePhong = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     ngayNhanPhong = Column(DATETIME, nullable=False)
     ngayTraPhong = Column(DATETIME, nullable=False)
-    chiTiet_DSKhachHang = relationship('chiTiet_DSKhachHang', backref='phieuthuephong', lazy=True)
+    chiTiet_DSKH_PhieuThue = relationship('chiTiet_DSKH_PhieuThue', backref='phieuthuephong', lazy=True)
     ThongTinPhong_phieuThuePhong = relationship('ThongTinPhong_phieuThuePhong', backref='phieuthuephong', lazy=True)
 
 
@@ -145,9 +145,19 @@ class chiTiet_DSKhachHang(db.Model):
     address = Column(String(200))
     phone = Column(String(20))
     CCCD = Column(String(20))
-    LoaiKhach = Column(String(50))
-    maPhieuThuePhong = Column(Integer, ForeignKey(phieuThuePhong.maPhieuThuePhong), nullable=False)
+    loaiKhach_id = Column(Integer, ForeignKey(LoaiKhach.loaiKhachId), nullable=False)
     maPhieuDatPhong = Column(Integer, ForeignKey(phieuDatPhong.maPhieuDatPhong), nullable=False)
+
+
+class chiTiet_DSKH_PhieuThue(db.Model):
+    __tablename__ = 'chiTiet_dskh_phieuthue'
+    chiTiet_DSKH_PhieuThue_ID = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    name = Column(String(50), nullable=False)
+    address = Column(String(200))
+    phone = Column(String(20))
+    CCCD = Column(String(20))
+    loaiKhach_id = Column(Integer, ForeignKey(LoaiKhach.loaiKhachId), nullable=False)
+    maPhieuThuePhong = Column(Integer, ForeignKey(phieuThuePhong.maPhieuThuePhong), nullable=False)
 
 
 class ThongTinPhong_phieuDatPhong(db.Model):
@@ -208,13 +218,19 @@ if __name__ == '__main__':
         u = TaiKhoan(name='Huy', username='huy', password=password, phoneNumber='0123456789',
                      avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
                      active=True, user_role=UserRole.ADMIN)
-        e = TaiKhoan(name='Hieu', username='hieu', password=password, phoneNumber='0123456789',
+        e = TaiKhoan(name='Kim Tài', username='tai', password=password, phoneNumber='0123456789',
                      avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
                      active=True, user_role=UserRole.EMPLOYEE)
-        c = TaiKhoan(name='Thanh', username='thanh', password=password, phoneNumber='0123456789',
+        e1 = TaiKhoan(name='Nguyên Thụy', username='thuy', password=password, phoneNumber='0123456789',
+                     avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
+                     active=True, user_role=UserRole.EMPLOYEE)
+        e2 = TaiKhoan(name='Đức Hiếu', username='hieu', password=password, phoneNumber='0123456789',
+                     avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
+                     active=True, user_role=UserRole.EMPLOYEE)
+        c = TaiKhoan(name='thanh', username='thanh', password=password, phoneNumber='0123456789',
                      avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
                      active=True, user_role=UserRole.USER)
-        db.session.add_all([u, e, c])
+        db.session.add_all([u, e, e1, e2, c])
         db.session.commit()
 
         lp1 = LoaiPhong(loaiPhong='Standard Single', moTa='Phòng tiêu chuẩn, đơn giản với mức giá trung bình',
@@ -246,11 +262,20 @@ if __name__ == '__main__':
         db.session.add_all([lk1, lk2])
         db.session.commit()
 
-        k1 = khachHang(name='Gia Huy', address='371 Nguyễn Kiệm', phone='0123456', CCCD='1456789', loaiKhach_id=1)
-        k2 = khachHang(name='Minh Thành', address='483 Nguyễn Kiệm', phone='0123456', CCCD='14567895653', loaiKhach_id=2)
-        k3 = khachHang(name='Đức Hiếu', address='456 Nguyễn Kiệm', phone='0123456', CCCD='14567898132', loaiKhach_id=1)
-        k4 = khachHang(name='Quang Tới', address='459 Nguyễn Kiệm', phone='0123456', CCCD='1456789568', loaiKhach_id=2)
+        k1 = khachHang(name='Gia Huy', address='371 Nguyễn Kiệm', phone='01234536', CCCD='1456789', loaiKhach_id=1)
+        k2 = khachHang(name='Minh Thành', address='483 Nguyễn Kiệm', phone='01233456', CCCD='14567895653', loaiKhach_id=2)
+        k3 = khachHang(name='Đức Hiếu', address='456 Nguyễn Kiệm', phone='01232456', CCCD='14567898132', loaiKhach_id=1)
+        k4 = khachHang(name='Quang Tới', address='459 Nguyễn Kiệm', phone='01523456', CCCD='1456789568', loaiKhach_id=2)
         db.session.add_all([k1, k2, k3, k4])
+        db.session.commit()
+
+        nv1 = nhanVien(name='Kim Tài', address='123 Nguyễn Kiệm', phone='01649552', CCCD='072202123',
+                       namSinh=datetime(2002, 3, 1), ngayVaoLam=datetime(2020, 10, 10), email='kt@gmail.com', taiKhoan=2)
+        nv2 = nhanVien(name='Nguyên Thụy', address='124 Nguyễn Kiệm', phone='01674952', CCCD='07220256123',
+                       namSinh=datetime(2002, 4, 1), ngayVaoLam=datetime(2021, 10, 20), email='nt@gmail.com', taiKhoan=3)
+        nv3 = nhanVien(name='Đức Hiếu', address='125 Nguyễn Kiệm', phone='01645952', CCCD='07220212123',
+                       namSinh=datetime(2002, 5, 1), ngayVaoLam=datetime(2022, 10, 20), email='dt@gmail.com', taiKhoan=4)
+        db.session.add_all([nv1, nv2, nv3])
         db.session.commit()
 
         h1 = hinhAnhPhong(hinhAnh='https://res.cloudinary.com/dgkrvmsli/image/upload/v1669642480/room-1_skeg8g.jpg',
@@ -286,12 +311,12 @@ if __name__ == '__main__':
         db.session.add_all([phieuTP1, phieuTP2, phieuTP3])
         db.session.commit()
 
-        ct_dsKH1 = chiTiet_DSKhachHang(machiTietDSKhachHang='111', name='Báo Hiếu', address='Tân Bình', phone='123456789',
-                                       CCCD='87545624', LoaiKhach=1, maPhieuThuePhong=1, maPhieuDatPhong=1)
-        ct_dsKH2 = chiTiet_DSKhachHang(machiTietDSKhachHang='222', name='Thành', address='Nguyễn Kiệm', phone='789556214',
-                                       CCCD='202556155', LoaiKhach=1, maPhieuThuePhong=2, maPhieuDatPhong=2)
-        ct_dsKH3 = chiTiet_DSKhachHang(machiTietDSKhachHang='333', name='Huy', address='Bình Tân', phone='6666666',
-                                       CCCD='777777', LoaiKhach=2, maPhieuThuePhong=3, maPhieuDatPhong=3)
+        ct_dsKH1 = chiTiet_DSKhachHang(name='Báo Hiếu', address='Tân Bình', phone='123456789',
+                                       CCCD='87545624', loaiKhach_id=1, maPhieuDatPhong=1)
+        ct_dsKH2 = chiTiet_DSKhachHang(name='Thành', address='Nguyễn Kiệm', phone='789556214',
+                                       CCCD='202556155', loaiKhach_id=1, maPhieuDatPhong=2)
+        ct_dsKH3 = chiTiet_DSKhachHang(name='Huy', address='Bình Tân', phone='6666666',
+                                       CCCD='777777', loaiKhach_id=2, maPhieuDatPhong=3)
         db.session.add_all([ct_dsKH1, ct_dsKH2, ct_dsKH3])
         db.session.commit()
 
@@ -307,18 +332,25 @@ if __name__ == '__main__':
         db.session.add_all([hd_ttp1, hd_ttp2, hd_ttp3])
         db.session.commit()
 
+        pdt_tdp1 = ThongTinPhong_phieuDatPhong(maPhieuDatPhong=1, maPhong=1)
+        pdt_tdp2 = ThongTinPhong_phieuDatPhong(maPhieuDatPhong=1, maPhong=2)
+        pdt_tdp3 = ThongTinPhong_phieuDatPhong(maPhieuDatPhong=2, maPhong=3)
+        pdt_tdp4 = ThongTinPhong_phieuDatPhong(maPhieuDatPhong=2, maPhong=4)
+        db.session.add_all([pdt_tdp1, pdt_tdp2, pdt_tdp3, pdt_tdp4])
+        db.session.commit()
 
-
-        # phieuDatPhong1 = phieuDatPhong(ngayNhanPhong='2022-11-26', ngayTraPhong='2022-11-29', maKhachHang=1)
-        # db.session.add(phieuDatPhong1)
-        # db.session.commit()
-
-        pdt_ttp1 = ThongTinPhong_phieuDatPhong(maPhieuDatPhong=1, maPhong=1)
-        pdt_ttp2 = ThongTinPhong_phieuDatPhong(maPhieuDatPhong=1, maPhong=2)
-        pdt_ttp3 = ThongTinPhong_phieuDatPhong(maPhieuDatPhong=2, maPhong=3)
-        pdt_ttp4 = ThongTinPhong_phieuDatPhong(maPhieuDatPhong=2, maPhong=4)
+        pdt_ttp1 = ThongTinPhong_phieuThuePhong(maPhieuThuePhong=1, maPhong=1)
+        pdt_ttp2 = ThongTinPhong_phieuThuePhong(maPhieuThuePhong=1, maPhong=2)
+        pdt_ttp3 = ThongTinPhong_phieuThuePhong(maPhieuThuePhong=2, maPhong=3)
+        pdt_ttp4 = ThongTinPhong_phieuThuePhong(maPhieuThuePhong=2, maPhong=4)
         db.session.add_all([pdt_ttp1, pdt_ttp2, pdt_ttp3, pdt_ttp4])
         db.session.commit()
+
+        tk_kh = TaiKhoan_KhachHang(KhachHang_id=1, taiKhoan_id=5)
+        db.session.add(tk_kh)
+        db.session.commit()
+
+
 
 
 
