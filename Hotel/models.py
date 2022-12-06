@@ -29,6 +29,7 @@ class LoaiPhong(db.Model):
     hinhAnhChinh = Column(String(100), nullable=False)
     thongTinPhong = relationship('ThongTinPhong', backref='loaiphong', lazy=True)
     hinhAnh = relationship('hinhAnhPhong', backref='loaiphong', lazy=True)
+    phieuDatPhong_id = relationship('phieuDatPhong', backref='loaikhach', lazy=True)
 
 
 class hinhAnhPhong(db.Model):
@@ -52,7 +53,6 @@ class LoaiKhach(db.Model):
     __tablename__ = 'loaikhach'
     loaiKhachId = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     loaiKhach = Column(String(50))
-    khachHang = relationship('khachHang', backref='loaikhach', lazy=True)
     ChiTiet_DSKH = relationship('chiTiet_DSKhachHang', backref='loaikhach', lazy=True)
 
 
@@ -63,7 +63,6 @@ class khachHang(db.Model):
     address = Column(String(200))
     phone = Column(String(20))
     CCCD = Column(String(20))
-    loaiKhach_id = Column(Integer, ForeignKey(LoaiKhach.loaiKhachId), nullable=False)
     taiKhoanKhachHang_id = relationship('TaiKhoan_KhachHang', backref='khachhang', lazy=True)
     phieuDatPhong = relationship('phieuDatPhong', backref='khachhang', lazy=True)
 
@@ -124,6 +123,8 @@ class phieuDatPhong(db.Model):
     maPhieuDatPhong = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     ngayNhanPhong = Column(DATE, nullable=False)
     ngayTraPhong = Column(DATE, nullable=False)
+    thanhTien = Column(String(20))
+    loaiPhong_id = Column(Integer, ForeignKey(LoaiPhong.loaiPhongId), nullable=False)
     maKhachHang = Column(Integer, ForeignKey(khachHang.MaKhachHang), nullable=False)
     chiTiet_DSKhachHang = relationship('chiTiet_DSKhachHang', backref='phieudatphong', lazy=True)
     ThongTinPhong_phieuDatPhong = relationship('ThongTinPhong_phieuDatPhong', backref='phieudatphong', lazy=True)
@@ -172,40 +173,6 @@ class ThongTinPhong_phieuThuePhong(db.Model):
     ThongTinPhong_phieuThuePhong_id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     maPhieuThuePhong = Column(Integer, ForeignKey(phieuThuePhong.maPhieuThuePhong), nullable=False)
     maPhong = Column(Integer, ForeignKey(ThongTinPhong.maPhong), nullable=False)
-
-
-class baoCaoDoanhThuTheoThang(db.Model):
-    __tablename__ = 'baoCaoDoanhThuTheoThang'
-    maBaoCao = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    thoiGian = Column(DATE, nullable=False)
-    tongDoanhThu = Column(Float, nullable=False)
-    ChiTiet_baoCaoDoanhThuTheoThang = relationship('ChiTiet_baoCaoDoanhThuTheoThang', backref='baocaodoanhthutheothang', lazy=True)
-
-
-class ChiTiet_baoCaoDoanhThuTheoThang(db.Model):
-    __tablename__ = 'ChiTiet_baoCaoDoanhThuTheoThang'
-    maChiTietBaoCao = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    loaiPhong = Column(String(50), nullable=False)
-    DoanhThu = Column(Float, nullable=False)
-    soLuotThue = Column(Float, nullable=False)
-    tiLe = Column(Float, nullable=False)
-    maBaoCao = Column(Integer, ForeignKey(baoCaoDoanhThuTheoThang.maBaoCao, ondelete='CASCADE'), nullable=False)
-
-
-class baoCaoMatDoSuDung(db.Model):
-    __tablename__ = 'baoCaoMatDoSuDung'
-    mabaoCaoMatDoSuDung = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    thoiGian = Column(DATE, nullable=False)
-    ChiTiet_baoCaoMatDoSuDung = relationship('ChiTiet_baoCaoMatDoSuDung', backref='baocaomatdosudung', lazy=True)
-
-
-class ChiTiet_baoCaoMatDoSuDung(db.Model):
-    __tablename__ = 'ChiTiet_baoCaoMatDoSuDung'
-    maChiTietBaoCaoMatDoSuDung = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    Phong = Column(Integer, nullable=False)
-    soNgayThue = Column(Float, nullable=False)
-    tiLe = Column(Float, nullable=False)
-    mabaoCaoMatDoSuDung = Column(Integer, ForeignKey(baoCaoMatDoSuDung.mabaoCaoMatDoSuDung, ondelete='CASCADE'), nullable=False)
 
 
 if __name__ == '__main__':
@@ -262,10 +229,10 @@ if __name__ == '__main__':
         db.session.add_all([lk1, lk2])
         db.session.commit()
 
-        k1 = khachHang(name='Gia Huy', address='371 Nguyễn Kiệm', phone='01234536', CCCD='1456789', loaiKhach_id=1)
-        k2 = khachHang(name='Minh Thành', address='483 Nguyễn Kiệm', phone='01233456', CCCD='14567895653', loaiKhach_id=2)
-        k3 = khachHang(name='Đức Hiếu', address='456 Nguyễn Kiệm', phone='01232456', CCCD='14567898132', loaiKhach_id=1)
-        k4 = khachHang(name='Quang Tới', address='459 Nguyễn Kiệm', phone='01523456', CCCD='1456789568', loaiKhach_id=2)
+        k1 = khachHang(name='Gia Huy', address='371 Nguyễn Kiệm', phone='01234536', CCCD='1456789')
+        k2 = khachHang(name='Minh Thành', address='483 Nguyễn Kiệm', phone='01233456', CCCD='14567895653')
+        k3 = khachHang(name='Đức Hiếu', address='456 Nguyễn Kiệm', phone='01232456', CCCD='14567898132')
+        k4 = khachHang(name='Quang Tới', address='459 Nguyễn Kiệm', phone='01523456', CCCD='1456789568')
         db.session.add_all([k1, k2, k3, k4])
         db.session.commit()
 
@@ -299,9 +266,12 @@ if __name__ == '__main__':
         db.session.add_all([h1, h2, h3, h4, h5, h6, h7, h8, h9])
         db.session.commit()
 
-        phieuDP1 = phieuDatPhong(ngayNhanPhong=datetime(2022, 12, 3), ngayTraPhong=datetime(2022, 12, 5), maKhachHang=1)
-        phieuDP2 = phieuDatPhong(ngayNhanPhong=datetime(2022, 12, 4), ngayTraPhong=datetime(2022, 12, 6), maKhachHang=2)
-        phieuDP3 = phieuDatPhong(ngayNhanPhong=datetime(2022, 12, 5), ngayTraPhong=datetime(2022, 12, 7), maKhachHang=3)
+        phieuDP1 = phieuDatPhong(ngayNhanPhong=datetime(2022, 12, 3), ngayTraPhong=datetime(2022, 12, 5), maKhachHang=1,
+                                 loaiPhong_id=1, thanhTien='3500000')
+        phieuDP2 = phieuDatPhong(ngayNhanPhong=datetime(2022, 12, 4), ngayTraPhong=datetime(2022, 12, 6), maKhachHang=2,
+                                 loaiPhong_id=2, thanhTien='4000000')
+        phieuDP3 = phieuDatPhong(ngayNhanPhong=datetime(2022, 12, 5), ngayTraPhong=datetime(2022, 12, 7), maKhachHang=3,
+                                 loaiPhong_id=3, thanhTien='5000000')
         db.session.add_all([phieuDP1, phieuDP2, phieuDP3])
         db.session.commit()
 

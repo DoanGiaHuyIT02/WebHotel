@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, session, jsonify
+from flask import render_template, redirect, request, url_for, session, jsonify, flash
 from Hotel import db, app, admin, dao, login
 from flask_login import login_user, logout_user, current_user, login_required
 from Hotel.models import UserRole
@@ -55,7 +55,8 @@ def register():
             try:
                 dao.register(name=request.form['name'],
                              password=password,
-                             username=request.form['username'], phoneNumber=request.form['number'], avatar=avatar)
+                             username=request.form['username'], phoneNumber=request.form['number'], avatar=avatar,
+                             address=request.form['address'], CCCD=request.form['CCCD'])
 
                 return redirect('/')
             except:
@@ -163,12 +164,24 @@ def test():
         loaiKhach = request.form.getlist('loaiKhach')
         ngayNhanPhong = request.form['ngayNhan']
         ngayTraPhong = request.form['ngayTra']
+        loaiPhong_id = request.form['loaiPhong_id']
+        tongTienKhachHang = request.form['tongTienKhachHang']
 
-        tkkh = dao.get_khach_hang_va_tai_khoan_by_id(current_user.id)
-        dao.load_khach_hang_dat_phong(name=name, address=address, phone=phone,
-                                CCCD=CCCD, loaiKhach_id=loaiKhach, khachHang_id=tkkh[0].KhachHang_id,
-                                ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong)
-        return redirect('/thanhToanDatPhong')
+        kt = dao.get_tinh_trang_phong(loaiPhong=loaiPhong_id)
+
+        try:
+            if len(kt) <= 0:
+                flash('Hết phòng, vui lòng chọn loại phòng khác', 'error')
+            else:
+                tkkh = dao.get_khach_hang_va_tai_khoan_by_id(current_user.id)
+                dao.load_khach_hang_dat_phong(name=name, address=address, phone=phone,
+                                    CCCD=CCCD, loaiKhach_id=loaiKhach, khachHang_id=tkkh[0].KhachHang_id,
+                                    ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong, loaiPhong_id=loaiPhong_id,
+                                    thanhTien=tongTienKhachHang)
+                flash('Đặt phòng thành công', 'success')
+            return redirect('/thanhToanDatPhong')
+        except:
+            flash('Đặt phòng thất bại', 'error')
 
     loaiPhong = dao.get_all_loai_phong()
     return render_template('test.html', loaiPhong=loaiPhong)

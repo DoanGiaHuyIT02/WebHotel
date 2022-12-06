@@ -11,29 +11,36 @@ def auth_user(username, password):
                              TaiKhoan.password.__eq__(password)).first()
 
 
-def register(name, username, password, phoneNumber, avatar):
+def register(name, username, password, phoneNumber, avatar, address, CCCD):
     password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
     u = TaiKhoan(name=name, username=username.strip(), password=password, phoneNumber=phoneNumber, avatar=avatar)
     db.session.add(u)
     db.session.commit()
 
+    kh = khachHang(name=name, address=address, phone=phoneNumber, CCCD=CCCD)
+    db.session.add(kh)
+    db.session.commit()
+
+    tk_kh = TaiKhoan_KhachHang(KhachHang_id=kh.MaKhachHang, taiKhoan_id=u.id)
+    db.session.add(tk_kh)
+    db.session.commit()
+
 
 def load_CTDSKH(name, phone, CCCD, address, loaiKhach_id, phieuThue_id):
-    DSKH = chiTiet_DSKhachHang(name=name, address=address, phone=phone, CCCD=CCCD, loaiKhach_id=loaiKhach_id,\
-                               phieuThue_id=phieuThue_id)
+    DSKH = chiTiet_DSKhachHang(name=name, address=address, phone=phone, CCCD=CCCD, loaiKhach_id=loaiKhach_id, phieuThue_id=phieuThue_id)
     db.session.add(DSKH)
 
 
-def load_khach_hang_dat_phong(name, phone, CCCD, address, loaiKhach_id, khachHang_id, ngayNhanPhong, ngayTraPhong):
-    print(khachHang_id)
-    pdp = phieuDatPhong(ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong, maKhachHang=khachHang_id)
-    db.session.add(pdp)
-    db.session.commit()
-    for l in range(len(name)):
-        c = chiTiet_DSKhachHang(name=name[l], address=address[l], phone=phone[l],
-                                CCCD=CCCD[l], loaiKhach_id=loaiKhach_id[l], maPhieuDatPhong=pdp.maPhieuDatPhong)
-        db.session.add(c)
-    db.session.commit()
+def load_khach_hang_dat_phong(name, phone, CCCD, address, loaiKhach_id, khachHang_id, ngayNhanPhong, ngayTraPhong, loaiPhong_id, thanhTien):
+        pdp = phieuDatPhong(ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong, loaiPhong_id=loaiPhong_id, maKhachHang=khachHang_id,
+                            thanhTien=thanhTien)
+        db.session.add(pdp)
+        db.session.commit()
+        for l in range(len(name)):
+            c = chiTiet_DSKhachHang(name=name[l], address=address[l], phone=phone[l],
+                                    CCCD=CCCD[l], loaiKhach_id=loaiKhach_id[l], maPhieuDatPhong=pdp.maPhieuDatPhong)
+            db.session.add(c)
+        db.session.commit()
 
 
 def load_loai_khach(loaiKhach):
@@ -58,6 +65,15 @@ def get_all_loai_phong():
 
 def get_all_so_phong():
     return ThongTinPhong.query.all()
+
+
+def get_tinh_trang_phong( loaiPhong=None ):
+    query = ThongTinPhong.query.filter(ThongTinPhong.tinhTrang.__eq__(True))
+
+    if loaiPhong:
+        query = query.filter(ThongTinPhong.loaiPhong_id.__eq__(loaiPhong))
+
+    return query.all()
 
 
 def get_all_images():
