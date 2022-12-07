@@ -9,8 +9,6 @@ function addRooms() {
     table = document.getElementById('table')
     btn_XacNhanPhong = document.getElementById('btn_XacNhanPhong')
 
-
-
     if (select_loaiPhong.value == 1) {
         lp = 3000000
     } else if (select_loaiPhong.value == 2) {
@@ -71,32 +69,43 @@ function addCus() {
     table1 = document.getElementById('table1')
     table2 = document.getElementById('table2')
 
+//Hàm tính toán ngày
+    const ngayBD = new Date(ngayNhanPhong.value)
+    const ngayKT = new Date(ngayTraPhong.value)
+
+    const oneDay = 1000 * 60 * 60 * 24;
+
+    const so = ngayKT.getTime() - ngayBD.getTime()
+    const soNgay = Math.round(so / oneDay)
+//Kết thúc tính ngày
+
+
    if (select_loaiPhong.value == 1) {
       if (select_LoaiKhach.value == 2) {
-            if (soluong.value == 3) {
-                lp = (3000000*0.25 + 3000000) * 1.5
-            } else {
-                lp = 3000000 * 1.5
-            }
+        if (soluong.value == 3) {
+            lp = (3000000*0.25 + 3000000) * 1.5 * soNgay
+        } else {
+            lp = 3000000 * 1.5 * soNgay
+        }
       } else {
-            if (soluong.value == 3) {
-                lp = 3000000*0.25 + 3000000
-            } else {
-                lp = 3000000
-            }
+        if (soluong.value == 3) {
+            lp = 3000000*0.25 + 3000000 * soNgay
+        } else {
+            lp = 3000000 * soNgay
+        }
       }
     } else if (select_loaiPhong.value == 2) {
         if (select_LoaiKhach.value == 2) {
             if (soluong.value == 3) {
-                lp = (4000000 * 0.25 + 4000000) * 1.5
+                lp = (4000000 * 0.25 + 4000000) * 1.5 * soNgay
             } else {
-                 lp = 4000000 * 1.5
+                 lp = 4000000 * 1.5 * soNgay
             }
         } else {
             if (soluong.value == 3) {
-                lp = 4000000 * 0.25 + 4000000
+                lp = 4000000 * 0.25 + 4000000 * soNgay
             } else {
-                 lp = 4000000
+                 lp = 4000000 * soNgay
             }
         }
     } else {
