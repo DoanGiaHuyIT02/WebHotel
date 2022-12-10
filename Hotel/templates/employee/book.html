@@ -1,26 +1,40 @@
 {% extends 'layout/base.html' %}
 {% block content %}
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+{% if category == 'success' %}
+<div class="alert alert-success text-center mt-3 text-center" style="width: 50%; margin: 16px auto;">{{ message }}</div>
+{% endif %}
+{% if category == 'error' %}
+<div class="alert alert-danger text-center mt-3 text-center" style="width: 50%; margin: 16px auto;">{{ message }}</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
 <h1 class="header_booking">ĐẶT PHÒNG</h1>
 
 
 <!--New customer -->
+
 <div>
     <div class="book_line_items">
         <div class="booking_line-item">
             <div id="margin" class="booking_line-item-margin">Số phòng:</div>
-            <select>
+            <select id="e_soPhong">
                 {% for p in soPhong %}
-                <option selected value="1">{{ p.soPhong }}</option>
+                <option selected value="{{ p.maPhong }}">{{ p.soPhong }}</option>
                 {% endfor %}
             </select>
         </div>
 
         <div class="select-Loai-Khach">
             <span>Loại phòng</span>
-            <select id="select-loaiPhong">
+            <select id="e_select_loaiPhong" name="LuaChon_loaiPhong">
                 {% for lp in loaiPhong %}
-                <option value="{{ lp.loaiPhongId }}">{{ lp.loaiPhong }}</option>
+                <option selected value="{{ lp.loaiPhongId }}">{{ lp.loaiPhong }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -31,18 +45,46 @@
             <div class="col-md-3">
                 <div class="date" id="#date1" data-target-input="nearest">
                     <input type="text" onfocus="(this.type='date')" onblur="(this.type = 'text')"
-                           class="form-control datetimepicker-input" id="e_ngayNhanPhong"
+                           class="form-control datetimepicker-input" id="e_ngayNhanPhong" required
                            placeholder="Ngày nhận phòng" data-target="#date1" data-toggle="datetimepicker"/>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="date" id="#date2" data-target-input="nearest">
-                    <input type="text" onfocus="(this.type='date')" onblur="(this.type = 'text')" id="e_ngayTraPhong"
-                           class="form-control datetimepicker-input" placeholder="Ngày trả phòng" data-target="#date2"
-                           data-toggle="datetimepicker"/>
+                    <input type="text" onfocus="(this.type='date')" onblur="(this.type = 'text')"
+                           id="e_ngayTraPhong"
+                           class="form-control datetimepicker-input" placeholder="Ngày trả phòng"
+                           data-target="#date2"
+                           data-toggle="datetimepicker" required/>
                 </div>
             </div>
         </div>
+    </div>
+
+    <span class="text-center">Thông tin người đặt phòng</span>
+    <div class="book_line_items">
+        <div class="booking_line-item booking_line-item1">
+            <span class="booking_line-item-margin">Khách hàng: </span>
+            <input type="text" required id="e_name_check_in" placeholder="Họ tên khách hàng" name="name"/>
+        </div>
+        <div class="booking_line-item">
+            <span class="booking_line-item-margin">Phone: </span>
+            <input type="text" required id="e_phone_check_in" placeholder="phone" name="phone"/>
+        </div>
+        <div class="booking_line-item">
+            <span class="booking_line-item-margin">CCCD: </span>
+            <input type="text" required id="e_CCCD_check_in" placeholder="CCCD" name="CCCD"/>
+        </div>
+        <div class="booking_line-item">
+            <span class="booking_line-item-margin">Địa chỉ: </span>
+            <input type="text" required id="e_address_check_in" placeholder="address" name="address"/>
+        </div>
+    </div>
+
+    <div class="book_line_items" style="padding: 20px 0 0">
+        <button type="button" id="btn_xacNhanPhong" class="btn btn-primary booking_line-item-margin"
+                onclick="datPhong()">Xác nhận
+        </button>
     </div>
 
 
@@ -55,11 +97,10 @@
         <div class="select-Loai-Khach booking_line-item">
             <span class="booking_line-item-margin">Loại khách: </span>
             <select id="e_select_LoaiKhach">
-                <option selected>Nội địa</option>
-                <option>Nước ngoài</option>
+                <option selected value="1">Nội địa</option>
+                <option value="2">Nước ngoài</option>
             </select>
         </div>
-
         <div class="booking_line-item">
             <span class="booking_line-item-margin">CCCD: </span>
             <input type="text" required id="e_CCCD" placeholder="CCCD" name="CCCD"/>
@@ -69,22 +110,28 @@
             <span class="booking_line-item-margin">Địa chỉ: </span>
             <input type="text" required id="e_address" placeholder="address" name="address"/>
         </div>
-        <button type="button" class="btn btn-primary booking_line-item-btns">X</button>
     </div>
 
 
     <div class="book_line_items">
-        <button type="button" class="btn btn-primary booking_line-item-margin" onclick="addCusOfEmloyee()">Thêm</button>
+        <button type="button" class="btn btn-primary booking_line-item-margin" id="addCus" onclick="addCusEmp()">
+            Thêm
+        </button>
     </div>
 
-    <div class="book_line_items book_line_items-right">
-        <button type="button" class="btn btn-primary booking_line-item-margin">Lưu nháp</button>
-        <button type="button" class="btn btn-primary booking_line-item-margin">Đặt phòng</button>
-    </div>
+
 </div>
+
+<form action="/employee/book" method="POST">
     <div class="thongTinKhachHang">
         <table class="table">
+            <tr class="table-row1" id="timeBook3">
+
+            </tr>
             <tr class="table-row1" id="timeBook">
+
+            </tr>
+            <tr class="table-row1" id="timeBook2">
 
             </tr>
             <tr>
@@ -93,13 +140,20 @@
                 <th>CCCD</th>
                 <th>Địa chỉ</th>
                 <th>Loại khách</th>
-                <th></th>
-                <th></th>
+                <th>Xóa</th>
             </tr>
             <tbody id="e_table">
             </tbody>
         </table>
     </div>
+    <div class="alert alert-info" id="e_tongTien">
+
+    </div>
+    <div class="book_line_items book_line_items-right">
+        <button type="button" class="btn btn-primary booking_line-item-margin">Lưu nháp</button>
+        <button type="submit" class="btn btn-primary booking_line-item-margin">Đặt phòng</button>
+    </div>
+</form>
 <!--End customer -->
 
 

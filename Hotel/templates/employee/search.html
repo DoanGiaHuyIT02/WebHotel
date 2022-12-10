@@ -33,14 +33,14 @@
         <tbody>
         {% for t in khachhang %}
         <tr>
-            <td>{{ t[1] }}</td>
+            <td id="hoTenNguoiDat">{{ t[1] }}</td>
             <td>{{ t[2] }}</td>
             <td>{{ t[3] }}</td>
 
             <td id="xemCacPhong">
                 <form>
                     <input hidden name="ma" value="{{ t[4] }}">
-                    <input type="submit" value="Xem phòng đã đặt" class="btn btn-info">
+                    <input type="button" onclick="showPhieuDatPhong({{ t[4] }})" id="lapPhieuDatPhong" value="Xem phiếu đặt phòng" class="btn btn-info"/>
                 </form>
 
             </td>
@@ -48,7 +48,12 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="tb2">
+    <table class="table table-bordered table2" id="table_PhieuDatPhong">
+
+    </table>
     <button type="button" class="btn btn-primary btn_phieu">Lập phiếu</button>
 </div>
-
+</div>
+<script src="{{ url_for('static', filename='js/addCustomerOfEmployee.js') }}"></script>
 {% endblock %}

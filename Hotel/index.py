@@ -121,8 +121,33 @@ def employee_lapphieuthuephong():
     return render_template('/employee/lapphieuthuephong.html')
 
 
-@app.route('/employee/book')
+@app.route('/employee/book', methods=['GET', 'POST'])
 def employee_book():
+
+    if request.method == 'POST':
+        e_name = request.form.getlist('name')
+        e_CCCD = request.form.getlist('CCCD')
+        e_address = request.form.getlist('address')
+        e_name_check_in = request.form['e_name_check_in']
+        e_CCCD_check_in = request.form['e_CCCD_check_in']
+        e_phone_check_in = request.form['e_phone_check_in']
+        e_address_check_in = request.form['e_address_check_in']
+        e_ngayNhanPhong = request.form['e_ngayNhanPhong']
+        e_ngayTraPhong = request.form['e_ngayTraPhong']
+        select_LoaiKhach_id = request.form.getlist('select_LoaiKhach_id')
+        e_select_loaiPhong_id = request.form['e_select_loaiPhong_id']
+        priceRoom = request.form['priceRoom']
+
+        try:
+            dao.load_nhan_vien_dat_phong(name=e_name, address=e_address,
+                                         CCCD=e_CCCD, loaiKhach_id=select_LoaiKhach_id, e_name=e_name_check_in,
+                                         e_address=e_address_check_in, e_phone=e_phone_check_in, e_CCCD=e_CCCD_check_in,
+                                         ngayNhanPhong=e_ngayNhanPhong, ngayTraPhong=e_ngayTraPhong,
+                                         loaiPhong_id=e_select_loaiPhong_id, thanhToan=priceRoom)
+            flash('Đặt phòng thành công', 'success')
+            return redirect('/employee/book')
+        except:
+            flash('Đặt phòng thất bại', 'error')
     loaiPhong = dao.get_all_loai_phong()
     soPhong = dao.get_all_so_phong()
     return render_template('/employee/book.html', loaiPhong=loaiPhong, soPhong=soPhong)
@@ -130,7 +155,7 @@ def employee_book():
 
 @app.route('/employee/pay')
 def employee_pay():
-    return render_template('/employee/payCustomer.html')
+    return render_template('/employee/pay.html')
 
 
 @login.user_loader
@@ -158,7 +183,6 @@ def thanh_toan():
 def test():
     if request.method == 'POST':
         name = request.form.getlist('name')
-        phone = request.form.getlist('phone')
         CCCD = request.form.getlist('CCCD')
         address = request.form.getlist('address')
         loaiKhach = request.form.getlist('loaiKhach')
@@ -174,7 +198,7 @@ def test():
                 flash('Hết phòng, vui lòng chọn loại phòng khác', 'error')
             else:
                 tkkh = dao.get_khach_hang_va_tai_khoan_by_id(current_user.id)
-                dao.load_khach_hang_dat_phong(name=name, address=address, phone=phone,
+                dao.load_khach_hang_dat_phong(name=name, address=address,
                                     CCCD=CCCD, loaiKhach_id=loaiKhach, khachHang_id=tkkh[0].KhachHang_id,
                                     ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong, loaiPhong_id=loaiPhong_id,
                                     thanhTien=tongTienKhachHang)
@@ -185,6 +209,25 @@ def test():
 
     loaiPhong = dao.get_all_loai_phong()
     return render_template('test.html', loaiPhong=loaiPhong)
+
+
+@app.route('/api/show_phieu_dat_phong/<int:ma_phieu_dat_phong>')
+def show_phieu_dat_phong(ma_phieu_dat_phong):
+    data = []
+    for c in dao.get_phieu_dat_phong_by_id(ma_phieu_dat_phong):
+        data.append({
+            "maPhieuDatPhong": c.maPhieuDatPhong,
+            "ngayNhanPhong": c.ngayNhanPhong,
+            "ngayTraPhong": c.NgayTraPhong,
+            "loaiPhong_id": c.loaiPhong_id,
+            "loaiKhach": c.loaiKhach_id,
+            "name": c.name,
+            "address": c.address,
+            "CCCD": c.CCCD,
+            "phone": c.phone
+        })
+
+    return jsonify(data)
 
 
 if __name__ == '__main__':

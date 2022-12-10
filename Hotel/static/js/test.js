@@ -29,9 +29,9 @@ function addRooms() {
             "ngayTraPhong": ngayTraPhong.value,
             "priceRoom": priceRoom
         })
+        btn_XacNhanPhong.style.display = 'none';
     } else if (ngayNhanPhong.value == '' || ngayTraPhong.value == '' ){
         btn_XacNhanPhong.style.display = 'block';
-
     }
 
     table.innerHTML = ''
@@ -48,14 +48,13 @@ function addRooms() {
     }
 
 
-    btn_XacNhanPhong.style.display = 'none';
+
 }
 
 ListAddCus = [];
 
 function addCus() {
     name1 = document.getElementById('name1')
-    phone = document.getElementById('phone')
     CCCD = document.getElementById('CCCD')
     address = document.getElementById('address')
     select_LoaiKhach = document.getElementById('select_LoaiKhach')
@@ -129,10 +128,9 @@ function addCus() {
 
 
 
-    if (name1.value != '' && phone.value != '' && CCCD.value != '' && address.value != '' && select_LoaiKhach.value != '') {
+    if (name1.value != '' && CCCD.value != '' && address.value != '' && select_LoaiKhach.value != '') {
         ListAddCus.push({
             "name1": name1.value,
-            "phone": phone.value,
             "CCCD": CCCD.value,
             "address": address.value,
             "select_LoaiKhach": select_LoaiKhach.options[select_LoaiKhach.selectedIndex].text,
@@ -144,7 +142,6 @@ function addCus() {
     }
 
     name1.value=''
-    phone.value=''
     CCCD.value=''
     address.value=''
     table1.innerHTML = ''
@@ -152,7 +149,6 @@ function addCus() {
         table1.innerHTML += `<tr>
                         <td>${ i+1 }</td>
                         <td ><input value="${ListAddCus[i].name1}" name="name"/></td>
-                        <td ><input value="${ListAddCus[i].phone}" name="phone"/></td>
                         <td ><input value="${ListAddCus[i].CCCD}" name="CCCD"/></td>
                         <td ><input value="${ListAddCus[i].address}" name="address"/></td>
                         <td ><input value="${ListAddCus[i].select_LoaiKhach}"/></td>

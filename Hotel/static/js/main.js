@@ -111,22 +111,6 @@
     
 })(jQuery);
 
-function xemCacPhong(maDatPhong) {
-    fetch('/api/get_all_loai_phong', {
-      method: "post",
-      dataType: 'json',
-      body: JSON.stringify({
-                "maDatPhong": maDatPhong
-            }),
-      headers: {
-                "Content-Type": "application/json"
-            }
-    }).then(res => res.json()).then(data => {
-        xemCacPhong = document.getElementById("xemCacPhong");
-        xemCacPhong.html = `<td>ạka</td>`
-    }).catch((err) => {
-      console.log(err)
-    })
-}
+
 
 

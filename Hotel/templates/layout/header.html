@@ -37,7 +37,7 @@
                         </button>
                         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div class="navbar-nav mr-auto py-0" style="align-items:center">
-                                <a href="{{ url_for('index') }}" class="nav-item nav-link active">Trang chủ</a>
+
                                 {% if current_user.is_authenticated and session['roles'] == 'UserRole.EMPLOYEE' %}
                                     <div class="dropdown" >
                                         <button type="button" class="btn dropdown-toggle nav-item"
@@ -46,20 +46,21 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="{{ url_for('employee_search')}}">Tra cứu</a></li>
-                                            <li><hr class="dropdown-divider"></hr></li>
+                                            <li><hr class="dropdown-divider"></li>
                                             <li><a class="dropdown-item" href="{{ url_for('employee_book')}}">Đặt phòng</a></li>
-                                            <li><hr class="dropdown-divider"></hr></li>
+                                            <li><hr class="dropdown-divider"></li>
                                             <li><a class="dropdown-item" href="{{ url_for('employee_lapphieuthuephong') }}">Lập phiếu thuê phòng</a></li>
-                                            <li><hr class="dropdown-divider"></hr></li>
+                                            <li><hr class="dropdown-divider"></li>
                                             <li><a class="dropdown-item" href="{{ url_for('employee_pay')}}">Lập hóa đơn</a></li>
                                         </ul>
                                     </div>
                                 {% else %}
-                                <a href="{{ url_for('services') }}" class="nav-item nav-link">Dịch vụ</a>
-                                <a href="{{ url_for('rooms') }}" class="nav-item nav-link">Đặt phòng</a>
-                                <a href="{{ url_for('contact') }}" class="nav-item nav-link">Liên hệ</a>
-                                <a href="{{ url_for('about') }}" class="nav-item nav-link">About us</a>
-                                <a href="{{ url_for('test') }}" class="nav-item nav-link">Test pay</a>
+                                    <a href="{{ url_for('index') }}" class="nav-item nav-link active">Trang chủ</a>
+                                    <a href="{{ url_for('services') }}" class="nav-item nav-link">Dịch vụ</a>
+                                    <a href="{{ url_for('rooms') }}" class="nav-item nav-link">Đặt phòng</a>
+                                    <a href="{{ url_for('contact') }}" class="nav-item nav-link">Liên hệ</a>
+                                    <a href="{{ url_for('about') }}" class="nav-item nav-link">About us</a>
+                                    <a href="{{ url_for('test') }}" class="nav-item nav-link">Test pay</a>
                                 {% endif %}
                             </div>
 

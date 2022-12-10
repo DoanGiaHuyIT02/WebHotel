@@ -38,6 +38,7 @@ class hinhAnhPhong(db.Model):
     hinhAnh = Column(String(100), nullable=False)
     loaiPhong_id = Column(Integer, ForeignKey(LoaiPhong.loaiPhongId), nullable=False)
 
+
 class ThongTinPhong(db.Model):
     __tablename__ = 'thongTinPhong'
     maPhong = Column(Integer,  primary_key=True, nullable=False, autoincrement=True)
@@ -144,7 +145,6 @@ class chiTiet_DSKhachHang(db.Model):
     machiTietDSKhachHang = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     name = Column(String(50), nullable=False)
     address = Column(String(200))
-    phone = Column(String(20))
     CCCD = Column(String(20))
     loaiKhach_id = Column(Integer, ForeignKey(LoaiKhach.loaiKhachId), nullable=False)
     maPhieuDatPhong = Column(Integer, ForeignKey(phieuDatPhong.maPhieuDatPhong), nullable=False)
@@ -281,11 +281,11 @@ if __name__ == '__main__':
         db.session.add_all([phieuTP1, phieuTP2, phieuTP3])
         db.session.commit()
 
-        ct_dsKH1 = chiTiet_DSKhachHang(name='Báo Hiếu', address='Tân Bình', phone='123456789',
+        ct_dsKH1 = chiTiet_DSKhachHang(name='Báo Hiếu', address='Tân Bình',
                                        CCCD='87545624', loaiKhach_id=1, maPhieuDatPhong=1)
-        ct_dsKH2 = chiTiet_DSKhachHang(name='Thành', address='Nguyễn Kiệm', phone='789556214',
+        ct_dsKH2 = chiTiet_DSKhachHang(name='Thành', address='Nguyễn Kiệm',
                                        CCCD='202556155', loaiKhach_id=1, maPhieuDatPhong=2)
-        ct_dsKH3 = chiTiet_DSKhachHang(name='Huy', address='Bình Tân', phone='6666666',
+        ct_dsKH3 = chiTiet_DSKhachHang(name='Huy', address='Bình Tân',
                                        CCCD='777777', loaiKhach_id=2, maPhieuDatPhong=3)
         db.session.add_all([ct_dsKH1, ct_dsKH2, ct_dsKH3])
         db.session.commit()

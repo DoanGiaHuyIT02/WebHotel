@@ -31,16 +31,33 @@ def load_CTDSKH(name, phone, CCCD, address, loaiKhach_id, phieuThue_id):
     db.session.add(DSKH)
 
 
-def load_khach_hang_dat_phong(name, phone, CCCD, address, loaiKhach_id, khachHang_id, ngayNhanPhong, ngayTraPhong, loaiPhong_id, thanhTien):
-        pdp = phieuDatPhong(ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong, loaiPhong_id=loaiPhong_id, maKhachHang=khachHang_id,
-                            thanhTien=thanhTien)
+def load_khach_hang_dat_phong(name, CCCD, address, loaiKhach_id, khachHang_id, ngayNhanPhong, ngayTraPhong,
+                              loaiPhong_id, thanhTien):
+        pdp = phieuDatPhong(ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong, loaiPhong_id=loaiPhong_id,
+                            maKhachHang=khachHang_id, thanhTien=thanhTien)
         db.session.add(pdp)
         db.session.commit()
         for l in range(len(name)):
-            c = chiTiet_DSKhachHang(name=name[l], address=address[l], phone=phone[l],
+            c = chiTiet_DSKhachHang(name=name[l], address=address[l],
                                     CCCD=CCCD[l], loaiKhach_id=loaiKhach_id[l], maPhieuDatPhong=pdp.maPhieuDatPhong)
             db.session.add(c)
         db.session.commit()
+
+
+def load_nhan_vien_dat_phong(name, CCCD, address, loaiKhach_id, e_name, e_address, e_phone, e_CCCD, ngayNhanPhong,
+                             ngayTraPhong, loaiPhong_id, thanhToan):
+    kh = khachHang(name=e_name, address=e_address, phone=e_phone, CCCD=e_CCCD)
+    db.session.add(kh)
+    db.session.commit()
+    pdp = phieuDatPhong(ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong, loaiPhong_id=loaiPhong_id,
+                        maKhachHang=kh.MaKhachHang, thanhTien=thanhToan)
+    db.session.add(pdp)
+    db.session.commit()
+    for e in range(len(name)):
+        c = chiTiet_DSKhachHang(name=name[e], address=address[e],
+                                CCCD=CCCD[e], loaiKhach_id=loaiKhach_id[e], maPhieuDatPhong=pdp.maPhieuDatPhong)
+        db.session.add(c)
+    db.session.commit()
 
 
 def load_loai_khach(loaiKhach):
@@ -63,11 +80,7 @@ def get_all_loai_phong():
     return LoaiPhong.query.all()
 
 
-def get_all_so_phong():
-    return ThongTinPhong.query.all()
-
-
-def get_tinh_trang_phong( loaiPhong=None ):
+def get_tinh_trang_phong(loaiPhong=None):
     query = ThongTinPhong.query.filter(ThongTinPhong.tinhTrang.__eq__(True))
 
     if loaiPhong:
@@ -86,14 +99,15 @@ def get_khach_hang_va_tai_khoan_by_id(taikhoan_id):
 
 
 def load_Khach_Hang(luaChon=None, thongTin=None):
-    query = db.session.query(khachHang.MaKhachHang, khachHang.name, phieuDatPhong.ngayNhanPhong, phieuDatPhong.ngayTraPhong, phieuDatPhong.maPhieuDatPhong)
-
+    query = db.session.query(khachHang.MaKhachHang, khachHang.name, phieuDatPhong.ngayNhanPhong,
+                             phieuDatPhong.ngayTraPhong, phieuDatPhong.maPhieuDatPhong)
     if luaChon:
         if luaChon == 'ten':
-            query = query.join(phieuDatPhong, phieuDatPhong.maKhachHang.__eq__(khachHang.MaKhachHang)).filter(khachHang.name.contains(thongTin))
-
+            query = query.join(phieuDatPhong, phieuDatPhong.maKhachHang.__eq__(khachHang.MaKhachHang))\
+                .filter(khachHang.name.contains(thongTin))
         if luaChon == 'sdt':
-            query = query.join(phieuDatPhong, phieuDatPhong.maKhachHang.__eq__(khachHang.MaKhachHang)).filter(khachHang.phone.contains(thongTin))
+            query = query.join(phieuDatPhong, phieuDatPhong.maKhachHang.__eq__(khachHang.MaKhachHang))\
+                .filter(khachHang.phone.contains(thongTin))
         if luaChon == 'cccd':
             query = query.join(phieuDatPhong, phieuDatPhong.maKhachHang.__eq__(khachHang.MaKhachHang)).filter(
                 khachHang.CCCD.contains(thongTin))
@@ -109,40 +123,17 @@ def cac_phong_get_id(phong_id):
     return ThongTinPhong.query.get(phong_id)
 
 
+def get_phieu_dat_phong_by_id(ma_phieu_dat_phong):
+    return db.session.query(phieuDatPhong.maPhieuDatPhong, phieuDatPhong.ngayNhanPhong, phieuDatPhong.ngayTraPhong,
+                            phieuDatPhong.loaiPhong_id, chiTiet_DSKhachHang.name, chiTiet_DSKhachHang.address,
+                            chiTiet_DSKhachHang.CCCD, chiTiet_DSKhachHang.phone, chiTiet_DSKhachHang.loaiKhach_id)\
+        .join(chiTiet_DSKhachHang, chiTiet_DSKhachHang.maPhieuDatPhong.__eq__(phieuDatPhong.maPhieuDatPhong))\
+        .join(LoaiKhach, LoaiKhach.loaiKhachId.__eq__(chiTiet_DSKhachHang.loaiKhach_id))\
+        .join(LoaiPhong, LoaiPhong.loaiPhongId.__eq__(phieuDatPhong.loaiPhong_id))\
+        .filter(phieuDatPhong.maPhieuDatPhong.__eq__(ma_phieu_dat_phong)).all()
 
 
-
-
-
-# def get_all_rooms_info():
-#     return ThongTinPhong.query.all()
-#
-#
-# def customer():
-#     return khachHang.query.all()
-#
-#
-# def bill():
-#     return hoaDon.query.all()
-#
-#
-# def bill_rooms_info():
-#     return hoaDon_ThongTinPhong.query.all()
-#
-#
-# def employee():
-#     return nhanVien.query.all()
-#
-#
-# def account_customer():
-#     return TaiKhoan_KhachHang.query.all()
-#
-#
-# def reservation_ticket():
-#     return phieuDatPhong.query.all()
-#
-#
-# def rent_ticket():
-#     return phieuThuePhong.query.all()
+def get_all_so_phong():
+    return ThongTinPhong.query.all()
 
 
