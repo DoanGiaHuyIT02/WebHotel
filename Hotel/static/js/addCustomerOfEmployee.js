@@ -199,5 +199,30 @@ function deleteRow3(r) {
   }
 }
 
+function show_so_phong(loaiPhong_id) {
+    fetch('/api/book/' + loaiPhong_id.value, {
+      method: "GET",
+      dataType: 'json',
+      ContentType: 'application/json'
+    }).then(res => res.json()).then(data => {
+        const soPhongArray = data.soPhongArr; // ['1','2','3']
+        console.log(soPhongArray.value)
+
+        var select = document.getElementById('e_soPhong');
+        select.innerHTML = "";
+
+        for (var i = 0; i<=soPhongArray.length - 1; i++){
+            var opt = document.createElement('option');
+            opt.value = soPhongArray[i];
+            opt.innerHTML = soPhongArray[i];
+            select.appendChild(opt);
+        }
+
+
+    }).catch((err) => {
+      console.log(err)
+    })
+}
+
 
 

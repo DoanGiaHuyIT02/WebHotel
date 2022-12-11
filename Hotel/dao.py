@@ -60,10 +60,10 @@ def load_nhan_vien_dat_phong(name, CCCD, address, loaiKhach_id, e_name, e_addres
     db.session.commit()
 
 
-def load_loai_khach(loaiKhach):
-    loaiKhach = LoaiKhach(loaiKhach=loaiKhach)
-    db.session.add(loaiKhach)
-    db.session.commit()
+# def load_loai_khach(loaiKhach):
+#     loaiKhach = LoaiKhach(loaiKhach=loaiKhach)
+#     db.session.add(loaiKhach)
+#     db.session.commit()
 
 
 def load_TTP_PDP(loaiPhong_id, phieuDatPhong_id):
@@ -98,6 +98,11 @@ def get_khach_hang_va_tai_khoan_by_id(taikhoan_id):
     return tk_kh
 
 
+def get_all_so_phong(loaiPhong_Id):
+    # Database => Model => Python App => Query (filter) id = loaiPhong_Id => List all()
+    return ThongTinPhong.query.filter(ThongTinPhong.loaiPhong_id.__eq__(loaiPhong_Id)).all()
+
+
 def load_Khach_Hang(luaChon=None, thongTin=None):
     query = db.session.query(khachHang.MaKhachHang, khachHang.name, phieuDatPhong.ngayNhanPhong,
                              phieuDatPhong.ngayTraPhong, phieuDatPhong.maPhieuDatPhong)
@@ -109,8 +114,8 @@ def load_Khach_Hang(luaChon=None, thongTin=None):
             query = query.join(phieuDatPhong, phieuDatPhong.maKhachHang.__eq__(khachHang.MaKhachHang))\
                 .filter(khachHang.phone.contains(thongTin))
         if luaChon == 'cccd':
-            query = query.join(phieuDatPhong, phieuDatPhong.maKhachHang.__eq__(khachHang.MaKhachHang)).filter(
-                khachHang.CCCD.contains(thongTin))
+            query = query.join(phieuDatPhong, phieuDatPhong.maKhachHang.__eq__(khachHang.MaKhachHang))\
+                .filter(khachHang.CCCD.contains(thongTin))
 
     return query.all()
 
@@ -133,7 +138,5 @@ def get_phieu_dat_phong_by_id(ma_phieu_dat_phong):
         .filter(phieuDatPhong.maPhieuDatPhong.__eq__(ma_phieu_dat_phong)).all()
 
 
-def get_all_so_phong():
-    return ThongTinPhong.query.all()
 
 

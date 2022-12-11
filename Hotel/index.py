@@ -68,6 +68,7 @@ def register():
 
 
 @app.route('/employee/login', methods=['get', 'post'])
+@annonynous_user
 def login_page():
     if request.method == 'POST':
         username = request.form['username']
@@ -149,8 +150,15 @@ def employee_book():
         except:
             flash('Đặt phòng thất bại', 'error')
     loaiPhong = dao.get_all_loai_phong()
-    soPhong = dao.get_all_so_phong()
-    return render_template('/employee/book.html', loaiPhong=loaiPhong, soPhong=soPhong)
+    return render_template('/employee/book.html', loaiPhong=loaiPhong)
+
+
+@app.route('/api/soPhong/<int:loaiPhong_id>', methods=['GET'])
+def load_so_phong(loaiPhong_id):
+    soPhong = dao.get_all_so_phong(loaiPhongID=loaiPhong_id)
+    return jsonify(
+        {'soPhong': soPhong}
+    )
 
 
 @app.route('/employee/pay')
@@ -170,12 +178,6 @@ def api_get_phong_dat():
     return jsonify(
         {'maPhong': phongDaDat.maPhong, 'soPhong': phongDaDat.soPhong}
     )
-
-
-@app.route('/thanh_toan')
-def thanh_toan():
-    loaiPhong = dao.get_all_loai_phong()
-    return render_template('payCustomer.html', loaiPhong=loaiPhong)
 
 
 @app.route('/thanhToanDatPhong', methods=['GET', 'POST'])
@@ -211,23 +213,19 @@ def test():
     return render_template('test.html', loaiPhong=loaiPhong)
 
 
-@app.route('/api/show_phieu_dat_phong/<int:ma_phieu_dat_phong>')
-def show_phieu_dat_phong(ma_phieu_dat_phong):
-    data = []
-    for c in dao.get_phieu_dat_phong_by_id(ma_phieu_dat_phong):
-        data.append({
-            "maPhieuDatPhong": c.maPhieuDatPhong,
-            "ngayNhanPhong": c.ngayNhanPhong,
-            "ngayTraPhong": c.NgayTraPhong,
-            "loaiPhong_id": c.loaiPhong_id,
-            "loaiKhach": c.loaiKhach_id,
-            "name": c.name,
-            "address": c.address,
-            "CCCD": c.CCCD,
-            "phone": c.phone
-        })
+@app.route('/api/book/<int:loaiPhong_id>', methods=['GET'])
+def api_so_phong(loaiPhong_id):
+    soPhongList = dao.get_all_so_phong(loaiPhong_Id=loaiPhong_id)
 
-    return jsonify(data)
+    # soPhongList => ['001', '002', '003']
+
+    soPhongId = []
+    for c in soPhongList:
+        soPhongId.append(c.soPhong)
+
+    return jsonify(
+        {'soPhongArr': soPhongId}
+    )
 
 
 if __name__ == '__main__':

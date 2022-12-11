@@ -30,6 +30,7 @@ class LoaiPhong(db.Model):
     thongTinPhong = relationship('ThongTinPhong', backref='loaiphong', lazy=True)
     hinhAnh = relationship('hinhAnhPhong', backref='loaiphong', lazy=True)
     phieuDatPhong_id = relationship('phieuDatPhong', backref='loaikhach', lazy=True)
+    phieuThuePhong_id = relationship('phieuThuePhong', backref='loaikhach', lazy=True)
 
 
 class hinhAnhPhong(db.Model):
@@ -66,6 +67,7 @@ class khachHang(db.Model):
     CCCD = Column(String(20))
     taiKhoanKhachHang_id = relationship('TaiKhoan_KhachHang', backref='khachhang', lazy=True)
     phieuDatPhong = relationship('phieuDatPhong', backref='khachhang', lazy=True)
+    phieuThuePhong = relationship('phieuThuePhong', backref='khachhang', lazy=True)
 
 
 class hoaDon(db.Model):
@@ -136,6 +138,9 @@ class phieuThuePhong(db.Model):
     maPhieuThuePhong = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     ngayNhanPhong = Column(DATETIME, nullable=False)
     ngayTraPhong = Column(DATETIME, nullable=False)
+    thanhTien = Column(String(20))
+    loaiPhong_id = Column(Integer, ForeignKey(LoaiPhong.loaiPhongId), nullable=False)
+    maKhachHang = Column(Integer, ForeignKey(khachHang.MaKhachHang), nullable=False)
     chiTiet_DSKH_PhieuThue = relationship('chiTiet_DSKH_PhieuThue', backref='phieuthuephong', lazy=True)
     ThongTinPhong_phieuThuePhong = relationship('ThongTinPhong_phieuThuePhong', backref='phieuthuephong', lazy=True)
 
@@ -187,7 +192,7 @@ if __name__ == '__main__':
                      active=True, user_role=UserRole.ADMIN)
         e = TaiKhoan(name='Kim Tài', username='tai', password=password, phoneNumber='0123456789',
                      avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
-                     active=True, user_role=UserRole.EMPLOYEE)
+                     active=True, user_role=UserRole.USER)
         e1 = TaiKhoan(name='Nguyên Thụy', username='thuy', password=password, phoneNumber='0123456789',
                      avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
                      active=True, user_role=UserRole.EMPLOYEE)
@@ -275,9 +280,12 @@ if __name__ == '__main__':
         db.session.add_all([phieuDP1, phieuDP2, phieuDP3])
         db.session.commit()
 
-        phieuTP1 = phieuThuePhong(ngayNhanPhong=datetime(2022, 12, 3), ngayTraPhong=datetime(2022, 12, 5))
-        phieuTP2 = phieuThuePhong(ngayNhanPhong=datetime(2022, 12, 4), ngayTraPhong=datetime(2022, 12, 6))
-        phieuTP3 = phieuThuePhong(ngayNhanPhong=datetime(2022, 12, 5), ngayTraPhong=datetime(2022, 12, 7))
+        phieuTP1 = phieuThuePhong(ngayNhanPhong=datetime(2022, 12, 3), ngayTraPhong=datetime(2022, 12, 5), maKhachHang=1,
+                                  loaiPhong_id=1, thanhTien='3500000')
+        phieuTP2 = phieuThuePhong(ngayNhanPhong=datetime(2022, 12, 4), ngayTraPhong=datetime(2022, 12, 6), maKhachHang=1,
+                                  loaiPhong_id=1, thanhTien='3500000')
+        phieuTP3 = phieuThuePhong(ngayNhanPhong=datetime(2022, 12, 5), ngayTraPhong=datetime(2022, 12, 7), maKhachHang=1,
+                                  loaiPhong_id=1, thanhTien='3500000')
         db.session.add_all([phieuTP1, phieuTP2, phieuTP3])
         db.session.commit()
 
