@@ -117,9 +117,16 @@ def employee_search():
     return render_template('/employee/search.html')
 
 
-@app.route('/employee/lapphieuthuephong')
-def employee_lapphieuthuephong():
-    return render_template('/employee/lapphieuthuephong.html')
+@app.route('/employee/lapphieuthuephong/<int:phieuDatPhong_id>')
+def employee_lapphieuthuephong(phieuDatPhong_id):
+    phieuDatPhong = dao.get_phieu_dat_phong_by_id(ma_phieu_dat_phong=phieuDatPhong_id)
+
+    return render_template('/employee/lapphieuthuephong.html', phieuDatPhong=phieuDatPhong)
+
+
+@app.route('/employee/phieuThuePhong')
+def phieuThuePhong():
+    return render_template('/employee/lapPhieuThuePhong.html')
 
 
 @app.route('/employee/book', methods=['GET', 'POST'])
@@ -226,6 +233,15 @@ def api_so_phong(loaiPhong_id):
     return jsonify(
         {'soPhongArr': soPhongId}
     )
+
+
+# @app.route('/api/phieuDatPhong/<int:ma_phieu_dat_phong>', methods=['GET'])
+# def aip_phieu_dat_phong(ma_phieu_dat_phong):
+#     phieuDatPhong_obj = dao.get_phieu_dat_phong_by_id(ma_phieu_dat_phong=ma_phieu_dat_phong)
+#
+#     return jsonify(
+#         {'phieuDatPhong_obj': phieuDatPhong_obj}
+#     )
 
 
 if __name__ == '__main__':

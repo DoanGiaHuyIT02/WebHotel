@@ -29,8 +29,8 @@ class LoaiPhong(db.Model):
     hinhAnhChinh = Column(String(100), nullable=False)
     thongTinPhong = relationship('ThongTinPhong', backref='loaiphong', lazy=True)
     hinhAnh = relationship('hinhAnhPhong', backref='loaiphong', lazy=True)
-    phieuDatPhong_id = relationship('phieuDatPhong', backref='loaikhach', lazy=True)
-    phieuThuePhong_id = relationship('phieuThuePhong', backref='loaikhach', lazy=True)
+    phieuDatPhong_id = relationship('phieuDatPhong', backref='loaiphong', lazy=True)
+    phieuThuePhong_id = relationship('phieuThuePhong', backref='loaiphong', lazy=True)
 
 
 class hinhAnhPhong(db.Model):

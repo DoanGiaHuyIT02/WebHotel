@@ -60,12 +60,6 @@ def load_nhan_vien_dat_phong(name, CCCD, address, loaiKhach_id, e_name, e_addres
     db.session.commit()
 
 
-# def load_loai_khach(loaiKhach):
-#     loaiKhach = LoaiKhach(loaiKhach=loaiKhach)
-#     db.session.add(loaiKhach)
-#     db.session.commit()
-
-
 def load_TTP_PDP(loaiPhong_id, phieuDatPhong_id):
     TTP_PDP = ThongTinPhong_phieuDatPhong(phieuDatPhong_id=phieuDatPhong_id, loaiPhong_id=loaiPhong_id)
     db.session.add(TTP_PDP)
@@ -131,10 +125,11 @@ def cac_phong_get_id(phong_id):
 def get_phieu_dat_phong_by_id(ma_phieu_dat_phong):
     return db.session.query(phieuDatPhong.maPhieuDatPhong, phieuDatPhong.ngayNhanPhong, phieuDatPhong.ngayTraPhong,
                             phieuDatPhong.loaiPhong_id, chiTiet_DSKhachHang.name, chiTiet_DSKhachHang.address,
-                            chiTiet_DSKhachHang.CCCD, chiTiet_DSKhachHang.phone, chiTiet_DSKhachHang.loaiKhach_id)\
+                            chiTiet_DSKhachHang.CCCD, chiTiet_DSKhachHang.loaiKhach_id, khachHang.name, LoaiKhach.loaiKhach, LoaiPhong.loaiPhong)\
         .join(chiTiet_DSKhachHang, chiTiet_DSKhachHang.maPhieuDatPhong.__eq__(phieuDatPhong.maPhieuDatPhong))\
         .join(LoaiKhach, LoaiKhach.loaiKhachId.__eq__(chiTiet_DSKhachHang.loaiKhach_id))\
         .join(LoaiPhong, LoaiPhong.loaiPhongId.__eq__(phieuDatPhong.loaiPhong_id))\
+        .join(khachHang, khachHang.MaKhachHang.__eq__(phieuDatPhong.maKhachHang))\
         .filter(phieuDatPhong.maPhieuDatPhong.__eq__(ma_phieu_dat_phong)).all()
 
 

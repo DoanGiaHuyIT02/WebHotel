@@ -27,20 +27,20 @@
             <th>Tên khách hàng</th>
             <th>Ngày nhận phòng</th>
             <th>Ngày trả phòng</th>
-            <th>Các phòng đặt</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
         {% for t in khachhang %}
         <tr>
-            <td id="hoTenNguoiDat">{{ t[1] }}</td>
+            <td id="{{t[0]}}">{{ t[1] }}</td>
             <td>{{ t[2] }}</td>
             <td>{{ t[3] }}</td>
 
             <td id="xemCacPhong">
                 <form>
                     <input hidden name="ma" value="{{ t[4] }}">
-                    <input type="button" onclick="showPhieuDatPhong({{ t[4] }})" id="lapPhieuDatPhong" value="Xem phiếu đặt phòng" class="btn btn-info"/>
+                    <a href="/employee/lapphieuthuephong/{{ t[4] }}" class="btn btn-primary">Lập phiếu thuê</a>
                 </form>
 
             </td>

@@ -1,53 +1,48 @@
 {% extends 'layout/base.html' %}
 {% block content %}
 
-
+<div class="text-center mt-5 mb-5">
+    <input type="text" placeholder="Nhập thông tin khách hàng"/>
+    <input type="button" value="Lập phiếu" class="btn btn-primary"/>
+</div>
+{% if phieuDatPhong %}
 <div class="tb2">
     <table class="table table-bordered table2">
         <thead>
-            <tr>
-                <th colspan="5">PHIẾU THUÊ PHÒNG</th>
-            </tr>
+        <tr>
+            <th colspan="5">PHIẾU THUÊ PHÒNG</th>
+        </tr>
         </thead>
         <tbody>
-            <tr class="table-row1">
-                <td colspan="3">Các phòng đặt:</td>
-                <td colspan="2">Các phòng đặt:</td>
-            </tr>
-            <tr class="table-row1">
-                 <td colspan="3">Ngày nhận phòng:</td>
-                <td colspan="2">Ngày trả phòng:</td>
-            </tr>
-            <tr>
-                <td class="col10">STT</td>
-                <td class="col25" >Khách hàng</td>
-                <td class="col15">Loại khách</td>
-                <td class="col25">CCCD</td>
-                <td class="col25">Địa chỉ</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Doe</td>
-                <td>jad</td>
-                <td>đa</td>
-                <td>j</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
-            </tr>
+        <tr class="table-row1">
+            <td colspan="3">Người đặt phòng: {{ phieuDatPhong[0][8] }}</td>
+            {% for kh in phieuDatPhong %}
+            <td colspan="2">Các phòng đặt: {{ kh[10] }}</td>
+            {% endfor %}
+        </tr>
+        <tr class="table-row1">
+            <td colspan="3">Ngày nhận phòng: {{ phieuDatPhong[0][1] }}</td>
+            <td colspan="2">Ngày trả phòng: {{ phieuDatPhong[0][2] }}</td>
+        </tr>
+        <tr>
+            <td class="col10">STT</td>
+            <td class="col25">Khách hàng</td>
+            <td class="col15">Loại khách</td>
+            <td class="col25">CCCD</td>
+            <td class="col25">Địa chỉ</td>
+        </tr>
+        {% for kh in phieuDatPhong %}
+        <tr>
+            <td>{{ phieuDatPhong.index(kh) + 1 }}</td>
+            <td>{{ kh[4] }}</td>
+            <td>{{ kh[9] }}</td>
+            <td>{{ kh[6] }}</td>
+            <td>{{ kh[5] }}</td>
+        </tr>
+        {% endfor %}
         </tbody>
     </table>
-      <button type="button" class="btn btn-primary btnXuatPhieu">Xuất phiếu</button>
+    <button type="button" class="btn btn-primary btnXuatPhieu">Xuất phiếu</button>
 </div>
+{% endif %}
 {% endblock %}
