@@ -1,5 +1,6 @@
 from Hotel.models import TaiKhoan, LoaiPhong, hinhAnhPhong, ThongTinPhong, khachHang, LoaiKhach,\
-    nhanVien, TaiKhoan_KhachHang, phieuDatPhong, phieuThuePhong, ThongTinPhong_phieuDatPhong, chiTiet_DSKhachHang
+    nhanVien, TaiKhoan_KhachHang, phieuDatPhong, phieuThuePhong, ThongTinPhong_phieuDatPhong, chiTiet_DSKhachHang,\
+    chiTiet_DSKH_PhieuThue
 from Hotel import db
 import hashlib
 
@@ -57,6 +58,19 @@ def load_nhan_vien_dat_phong(name, CCCD, address, loaiKhach_id, e_name, e_addres
         c = chiTiet_DSKhachHang(name=name[e], address=address[e],
                                 CCCD=CCCD[e], loaiKhach_id=loaiKhach_id[e], maPhieuDatPhong=pdp.maPhieuDatPhong)
         db.session.add(c)
+    db.session.commit()
+
+
+def get_phieu_thue_phong(name, CCCD, address, loaiKhach_id, ngayNhanPhong, ngayTraPhong, loaiPhong_id, thanhTien):
+    ptp = phieuThuePhong(ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong, loaiPhong_id=loaiPhong_id,
+                         maKhachHang=loaiKhach_id, thanhTien=thanhTien)
+    db.session.add(ptp)
+    db.session.commit()
+
+    for kh in range(len(name)):
+        kh = chiTiet_DSKH_PhieuThue(name=name[kh], address=address[kh], CCCD=CCCD[kh], loaiKhach_id=loaiKhach_id[kh],
+                                    maPhieuThuePhong=ptp.maPhieuThuePhong)
+        db.session.add(kh)
     db.session.commit()
 
 
@@ -125,12 +139,16 @@ def cac_phong_get_id(phong_id):
 def get_phieu_dat_phong_by_id(ma_phieu_dat_phong):
     return db.session.query(phieuDatPhong.maPhieuDatPhong, phieuDatPhong.ngayNhanPhong, phieuDatPhong.ngayTraPhong,
                             phieuDatPhong.loaiPhong_id, chiTiet_DSKhachHang.name, chiTiet_DSKhachHang.address,
-                            chiTiet_DSKhachHang.CCCD, chiTiet_DSKhachHang.loaiKhach_id, khachHang.name, LoaiKhach.loaiKhach, LoaiPhong.loaiPhong)\
+                            chiTiet_DSKhachHang.CCCD, chiTiet_DSKhachHang.loaiKhach_id, khachHang.name,
+                            LoaiKhach.loaiKhach, LoaiPhong.loaiPhong, phieuDatPhong.thanhTien)\
         .join(chiTiet_DSKhachHang, chiTiet_DSKhachHang.maPhieuDatPhong.__eq__(phieuDatPhong.maPhieuDatPhong))\
         .join(LoaiKhach, LoaiKhach.loaiKhachId.__eq__(chiTiet_DSKhachHang.loaiKhach_id))\
         .join(LoaiPhong, LoaiPhong.loaiPhongId.__eq__(phieuDatPhong.loaiPhong_id))\
         .join(khachHang, khachHang.MaKhachHang.__eq__(phieuDatPhong.maKhachHang))\
         .filter(phieuDatPhong.maPhieuDatPhong.__eq__(ma_phieu_dat_phong)).all()
+
+
+
 
 
 

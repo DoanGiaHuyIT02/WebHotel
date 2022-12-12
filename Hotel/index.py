@@ -146,12 +146,16 @@ def employee_book():
         e_select_loaiPhong_id = request.form['e_select_loaiPhong_id']
         priceRoom = request.form['priceRoom']
 
+        p = priceRoom[0: len(priceRoom) - 1]
+
+        price = float(p.replace('.', ''))
+
         try:
             dao.load_nhan_vien_dat_phong(name=e_name, address=e_address,
                                          CCCD=e_CCCD, loaiKhach_id=select_LoaiKhach_id, e_name=e_name_check_in,
                                          e_address=e_address_check_in, e_phone=e_phone_check_in, e_CCCD=e_CCCD_check_in,
                                          ngayNhanPhong=e_ngayNhanPhong, ngayTraPhong=e_ngayTraPhong,
-                                         loaiPhong_id=e_select_loaiPhong_id, thanhToan=priceRoom)
+                                         loaiPhong_id=e_select_loaiPhong_id, thanhToan=price)
             flash('Đặt phòng thành công', 'success')
             return redirect('/employee/book')
         except:
@@ -199,6 +203,9 @@ def test():
         ngayTraPhong = request.form['ngayTra']
         loaiPhong_id = request.form['loaiPhong_id']
         tongTienKhachHang = request.form['tongTienKhachHang']
+        p = tongTienKhachHang[0: len(tongTienKhachHang) - 1]
+
+        price = float(p.replace('.', ''))
 
         kt = dao.get_tinh_trang_phong(loaiPhong=loaiPhong_id)
 
@@ -210,7 +217,7 @@ def test():
                 dao.load_khach_hang_dat_phong(name=name, address=address,
                                     CCCD=CCCD, loaiKhach_id=loaiKhach, khachHang_id=tkkh[0].KhachHang_id,
                                     ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong, loaiPhong_id=loaiPhong_id,
-                                    thanhTien=tongTienKhachHang)
+                                    thanhTien=price)
                 flash('Đặt phòng thành công', 'success')
             return redirect('/thanhToanDatPhong')
         except:
@@ -218,6 +225,34 @@ def test():
 
     loaiPhong = dao.get_all_loai_phong()
     return render_template('test.html', loaiPhong=loaiPhong)
+
+
+@app.route('/employee/lap_phieu_thue_phong', methods=['GET', 'POST'])
+def lap_phieu_thue_phong():
+    if request.method == 'POST':
+        name = request.form.getlist('name')
+        CCCD = request.form.getlist('CCCD')
+        address = request.form.getlist('address')
+        loaiKhach_id = request.form.getlist('loaiKhach_id')
+        ngayNhanPhong = request.form['ngayNhan']
+        ngayTraPhong = request.form['ngayTra']
+        loaiPhong_id = request.form['loaiPhong_id']
+        thanhTien = request.form['thanhTien']
+
+        p = thanhTien[0: len(thanhTien) - 1]
+
+        price = float(p.replace('.', ''))
+
+        try:
+            dao.get_phieu_thue_phong(name=name, address=address, CCCD=CCCD, loaiKhach_id=loaiKhach_id,
+                                     ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong,
+                                     loaiPhong_id=loaiPhong_id, thanhTien=price)
+            flash('Lưu phiếu thành công', 'success')
+            return redirect('/employee/lap_phieu_thue_phong')
+        except:
+            flash('Đặt phòng thất bại', 'error')
+
+    return render_template('/employee/lapphieuthuephong.html')
 
 
 @app.route('/api/book/<int:loaiPhong_id>', methods=['GET'])
@@ -233,15 +268,6 @@ def api_so_phong(loaiPhong_id):
     return jsonify(
         {'soPhongArr': soPhongId}
     )
-
-
-# @app.route('/api/phieuDatPhong/<int:ma_phieu_dat_phong>', methods=['GET'])
-# def aip_phieu_dat_phong(ma_phieu_dat_phong):
-#     phieuDatPhong_obj = dao.get_phieu_dat_phong_by_id(ma_phieu_dat_phong=ma_phieu_dat_phong)
-#
-#     return jsonify(
-#         {'phieuDatPhong_obj': phieuDatPhong_obj}
-#     )
 
 
 if __name__ == '__main__':

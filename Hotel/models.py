@@ -126,7 +126,7 @@ class phieuDatPhong(db.Model):
     maPhieuDatPhong = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     ngayNhanPhong = Column(DATE, nullable=False)
     ngayTraPhong = Column(DATE, nullable=False)
-    thanhTien = Column(String(20))
+    thanhTien = Column(Float(20), nullable=False)
     loaiPhong_id = Column(Integer, ForeignKey(LoaiPhong.loaiPhongId), nullable=False)
     maKhachHang = Column(Integer, ForeignKey(khachHang.MaKhachHang), nullable=False)
     chiTiet_DSKhachHang = relationship('chiTiet_DSKhachHang', backref='phieudatphong', lazy=True)
@@ -138,7 +138,7 @@ class phieuThuePhong(db.Model):
     maPhieuThuePhong = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     ngayNhanPhong = Column(DATETIME, nullable=False)
     ngayTraPhong = Column(DATETIME, nullable=False)
-    thanhTien = Column(String(20))
+    thanhTien = Column(Float(20), nullable=False)
     loaiPhong_id = Column(Integer, ForeignKey(LoaiPhong.loaiPhongId), nullable=False)
     maKhachHang = Column(Integer, ForeignKey(khachHang.MaKhachHang), nullable=False)
     chiTiet_DSKH_PhieuThue = relationship('chiTiet_DSKH_PhieuThue', backref='phieuthuephong', lazy=True)
@@ -160,7 +160,6 @@ class chiTiet_DSKH_PhieuThue(db.Model):
     chiTiet_DSKH_PhieuThue_ID = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     name = Column(String(50), nullable=False)
     address = Column(String(200))
-    phone = Column(String(20))
     CCCD = Column(String(20))
     loaiKhach_id = Column(Integer, ForeignKey(LoaiKhach.loaiKhachId), nullable=False)
     maPhieuThuePhong = Column(Integer, ForeignKey(phieuThuePhong.maPhieuThuePhong), nullable=False)
@@ -272,20 +271,20 @@ if __name__ == '__main__':
         db.session.commit()
 
         phieuDP1 = phieuDatPhong(ngayNhanPhong=datetime(2022, 12, 3), ngayTraPhong=datetime(2022, 12, 5), maKhachHang=1,
-                                 loaiPhong_id=1, thanhTien='3500000')
+                                 loaiPhong_id=1, thanhTien=3500000)
         phieuDP2 = phieuDatPhong(ngayNhanPhong=datetime(2022, 12, 4), ngayTraPhong=datetime(2022, 12, 6), maKhachHang=2,
-                                 loaiPhong_id=2, thanhTien='4000000')
+                                 loaiPhong_id=2, thanhTien=4000000)
         phieuDP3 = phieuDatPhong(ngayNhanPhong=datetime(2022, 12, 5), ngayTraPhong=datetime(2022, 12, 7), maKhachHang=3,
-                                 loaiPhong_id=3, thanhTien='5000000')
+                                 loaiPhong_id=3, thanhTien=5000000)
         db.session.add_all([phieuDP1, phieuDP2, phieuDP3])
         db.session.commit()
 
         phieuTP1 = phieuThuePhong(ngayNhanPhong=datetime(2022, 12, 3), ngayTraPhong=datetime(2022, 12, 5), maKhachHang=1,
-                                  loaiPhong_id=1, thanhTien='3500000')
+                                  loaiPhong_id=1, thanhTien=3500000)
         phieuTP2 = phieuThuePhong(ngayNhanPhong=datetime(2022, 12, 4), ngayTraPhong=datetime(2022, 12, 6), maKhachHang=1,
-                                  loaiPhong_id=1, thanhTien='3500000')
+                                  loaiPhong_id=1, thanhTien=3500000)
         phieuTP3 = phieuThuePhong(ngayNhanPhong=datetime(2022, 12, 5), ngayTraPhong=datetime(2022, 12, 7), maKhachHang=1,
-                                  loaiPhong_id=1, thanhTien='3500000')
+                                  loaiPhong_id=1, thanhTien=3500000)
         db.session.add_all([phieuTP1, phieuTP2, phieuTP3])
         db.session.commit()
 

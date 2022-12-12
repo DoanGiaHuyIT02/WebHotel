@@ -1,48 +1,83 @@
 {% extends 'layout/base.html' %}
 {% block content %}
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+{% if category == 'success' %}
+<div class="alert alert-success text-center mt-3 text-center" style="width: 50%; margin: 16px auto;">{{ message }}</div>
+{% endif %}
+{% if category == 'error' %}
+<div class="alert alert-danger text-center mt-3 text-center" style="width: 50%; margin: 16px auto;">{{ message }}</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
 <div class="text-center mt-5 mb-5">
     <input type="text" placeholder="Nhập thông tin khách hàng"/>
     <input type="button" value="Lập phiếu" class="btn btn-primary"/>
 </div>
-{% if phieuDatPhong %}
-<div class="tb2">
-    <table class="table table-bordered table2">
-        <thead>
-        <tr>
-            <th colspan="5">PHIẾU THUÊ PHÒNG</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="table-row1">
-            <td colspan="3">Người đặt phòng: {{ phieuDatPhong[0][8] }}</td>
+<form action="/employee/lap_phieu_thue_phong" method="POST">
+    {% if phieuDatPhong %}
+    <div class="tb2">
+        <table class="table table-bordered table2">
+            <thead>
+            <tr>
+                <th colspan="5">PHIẾU THUÊ PHÒNG</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="table-row1">
+                <td colspan="3">Người đặt phòng: <input class="text-center" readonly
+                            style="border: none; background-color: #fff; outline: none" value="{{ phieuDatPhong[0][8] }}"
+                           name="nguoiDatPhong"/></td>
+                <td colspan="2">Các phòng đặt:
+                        <input class="text-center" readonly
+                            style="border: none; background-color: #fff; outline: none" value="{{ phieuDatPhong[0][10] }}"
+                           name="cacPhongDat"/>
+                </td>
+            </tr>
+            <tr class="table-row1">
+                <td colspan="3">Ngày nhận phòng: <input class="text-center" readonly
+                            style="border: none; background-color: #fff; outline: none" value="{{ phieuDatPhong[0][1] }}"
+                           name="ngayNhan"/></td>
+                <td colspan="2">Ngày trả phòng: <input class="text-center" readonly
+                            style="border: none; background-color: #fff; outline: none" value="{{ phieuDatPhong[0][2] }}"
+                           name="ngayTra"/></td>
+            </tr>
+            <tr>
+                <td class="col10">STT</td>
+                <td class="col25">Khách hàng</td>
+                <td class="col15">Loại khách</td>
+                <td class="col25">CCCD</td>
+                <td class="col25">Địa chỉ</td>
+            </tr>
             {% for kh in phieuDatPhong %}
-            <td colspan="2">Các phòng đặt: {{ kh[10] }}</td>
+            <tr>
+                <td>{{ phieuDatPhong.index(kh) + 1 }}</td>
+                <td><input class="text-center" readonly style="border: none; background-color: #fff; outline: none" value="{{ kh[4] }}"
+                           name="name"/></td>
+                <td><input class="text-center" readonly style="border: none; background-color: #fff; outline: none" value="{{ kh[9] }}"
+                           name="loaiKhach"/></td>
+                <td><input class="text-center" readonly style="border: none; background-color: #fff; outline: none" value="{{ kh[6] }}"
+                           name="CCCD"/></td>
+                <td><input class="text-center" readonly style="border: none; background-color: #fff; outline: none" value="{{ kh[5] }}"
+                           name="address"/></td>
+                <div style="display: none"><input value="{{ kh[7] }}" name="loaiKhach_id"/></div>
+                <div style="display: none"><input value="{{ kh[3] }}" name="loaiPhong_id"/></div>
+            </tr>
             {% endfor %}
-        </tr>
-        <tr class="table-row1">
-            <td colspan="3">Ngày nhận phòng: {{ phieuDatPhong[0][1] }}</td>
-            <td colspan="2">Ngày trả phòng: {{ phieuDatPhong[0][2] }}</td>
-        </tr>
-        <tr>
-            <td class="col10">STT</td>
-            <td class="col25">Khách hàng</td>
-            <td class="col15">Loại khách</td>
-            <td class="col25">CCCD</td>
-            <td class="col25">Địa chỉ</td>
-        </tr>
-        {% for kh in phieuDatPhong %}
-        <tr>
-            <td>{{ phieuDatPhong.index(kh) + 1 }}</td>
-            <td>{{ kh[4] }}</td>
-            <td>{{ kh[9] }}</td>
-            <td>{{ kh[6] }}</td>
-            <td>{{ kh[5] }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <button type="button" class="btn btn-primary btnXuatPhieu">Xuất phiếu</button>
-</div>
-{% endif %}
+            <tr class="table-row1">
+                <td class="text-center" colspan="5">Thành Tiền:
+                    <input class="text-center" readonly style="border: none; background-color: #fff; outline: none"
+                           value="{{ phieuDatPhong[0][11] }}" name="thanhTien"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary btnXuatPhieu">Luu phiếu</button>
+    </div>
+    {% endif %}
+</form>
 {% endblock %}
