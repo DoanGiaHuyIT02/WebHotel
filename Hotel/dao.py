@@ -1,6 +1,6 @@
 from Hotel.models import TaiKhoan, LoaiPhong, hinhAnhPhong, ThongTinPhong, khachHang, LoaiKhach, \
     nhanVien, TaiKhoan_KhachHang, phieuDatPhong, phieuThuePhong, ThongTinPhong_phieuDatPhong, chiTiet_DSKhachHang, \
-    chiTiet_DSKH_PhieuThue, hoaDon_ThongTinPhong
+    chiTiet_DSKH_PhieuThue, hoaDon_ThongTinPhong, hoaDon
 from Hotel import db, app
 from sqlalchemy import func
 from sqlalchemy.sql import extract
@@ -64,6 +64,12 @@ def load_nhan_vien_dat_phong(name, CCCD, address, loaiKhach_id, e_name, e_addres
     db.session.commit()
 
 
+def load_hoa_don(maPhieuThuePhong, tongTien):
+    hoa_don = hoaDon(maPhieuThuePhong=maPhieuThuePhong, TongTien=tongTien)
+    db.session.add(hoa_don)
+    db.session.commit()
+
+
 def get_phieu_thue_phong(name, CCCD, address, loaiKhach_id, ngayNhanPhong, ngayTraPhong, loaiPhong_id, thanhTien):
     ptp = phieuThuePhong(ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong, loaiPhong_id=loaiPhong_id,
                          maKhachHang=loaiKhach_id, thanhTien=thanhTien)
@@ -74,12 +80,6 @@ def get_phieu_thue_phong(name, CCCD, address, loaiKhach_id, ngayNhanPhong, ngayT
         kh = chiTiet_DSKH_PhieuThue(name=name[kh], address=address[kh], CCCD=CCCD[kh], loaiKhach_id=loaiKhach_id[kh],
                                     maPhieuThuePhong=ptp.maPhieuThuePhong)
         db.session.add(kh)
-    db.session.commit()
-
-
-def load_TTP_PDP(loaiPhong_id, phieuDatPhong_id):
-    TTP_PDP = ThongTinPhong_phieuDatPhong(phieuDatPhong_id=phieuDatPhong_id, loaiPhong_id=loaiPhong_id)
-    db.session.add(TTP_PDP)
     db.session.commit()
 
 
@@ -131,21 +131,17 @@ def load_Khach_Hang(luaChon=None, thongTin=None):
     return query.all()
 
 
-def tra_cuu_phieu_thue_phong(luaChon=None, thongTin=None):
-    query = db.session.query(khachHang.MaKhachHang, khachHang.name, phieuThuePhong.ngayNhanPhong,
-                             phieuThuePhong.ngayTraPhong, phieuThuePhong.maPhieuThuePhong)
-    if luaChon:
-        if luaChon == 'ten':
-            query = query.join(phieuThuePhong, phieuThuePhong.maKhachHang.__eq__(khachHang.MaKhachHang)) \
-                .filter(khachHang.name.contains(thongTin))
-        if luaChon == 'sdt':
-            query = query.join(phieuThuePhong, phieuThuePhong.maKhachHang.__eq__(khachHang.MaKhachHang)) \
-                .filter(khachHang.phone.contains(thongTin))
-        if luaChon == 'cccd':
-            query = query.join(phieuThuePhong, phieuThuePhong.maKhachHang.__eq__(khachHang.MaKhachHang)) \
-                .filter(khachHang.CCCD.contains(thongTin))
+def get_phieu_thue_by_id(maPhieuThue):
+    return phieuThuePhong.query.get(maPhieuThue)
 
-    return query.all()
+
+def get_khach_hang_theo_phieu_thue(khachHang_id):
+    return khachHang.query.get(khachHang_id)
+
+
+def hoa_don(maPhieuThue):
+    hoadon = hoaDon.query.filter(hoaDon.maHoaDon.__eq__(maPhieuThue)).first()
+    return hoadon
 
 
 def phieu_dat_phong_by_khach_hang_id(khachhang_id):
@@ -154,6 +150,10 @@ def phieu_dat_phong_by_khach_hang_id(khachhang_id):
 
 def cac_phong_get_id(phong_id):
     return ThongTinPhong.query.get(phong_id)
+
+
+def get_loai_phong_id(loaiPhong_id):
+    return LoaiPhong.query.get(loaiPhong_id)
 
 
 def get_phieu_dat_phong_by_id(ma_phieu_dat_phong):
@@ -166,12 +166,6 @@ def get_phieu_dat_phong_by_id(ma_phieu_dat_phong):
         .join(LoaiPhong, LoaiPhong.loaiPhongId.__eq__(phieuDatPhong.loaiPhong_id)) \
         .join(khachHang, khachHang.MaKhachHang.__eq__(phieuDatPhong.maKhachHang)) \
         .filter(phieuDatPhong.maPhieuDatPhong.__eq__(ma_phieu_dat_phong)).all()
-
-
-# def count_room_by_cate():
-#    return db.session.query(LoaiPhong.loaiPhongId, LoaiPhong.loaiPhong, func.count(ThongTinPhong.maPhong))\
-#        .join(ThongTinPhong, ThongTinPhong.loaiPhong_id.__eq__(LoaiPhong.loaiPhongId), isouter=True) \
-#        .group_by(LoaiPhong.loaiPhongId).order_by(LoaiPhong.loaiPhong).all()
 
 
 def stats_revenue_by_prod(year=None, month=None):
@@ -211,9 +205,6 @@ def total_doanh_thu(month=None, year=None):
 
     return query.all()
 
-# def test():
-#     t = phieuThuePhong.query.filter(func.year(phieuThuePhong.ngayTraPhong) == 2022)
-#     return t.all()
 
 if __name__ == '__main__':
     with app.app_context():

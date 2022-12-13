@@ -120,18 +120,40 @@ def employee_search():
 @app.route('/employee/laphoadon', methods=['GET', 'POST'])
 def employee_pay():
     if request.method == 'POST':
-        thongTin = request.form['thongTin']
-        luaChon = request.form['luaChon']
+        maPhieuThue = request.form['maPhieuThue']
+        is_paid = False
+        khach_hang = None
+        if maPhieuThue != '':
+            kiemTra_hoadon = dao.hoa_don(maPhieuThue)
+            if kiemTra_hoadon:
+                is_paid = True
+                return render_template('/employee/pay.html', is_paid=is_paid)
+            else:
+                is_paid = False
 
-        khachhang = dao.tra_cuu_phieu_thue_phong(luaChon=luaChon, thongTin=thongTin)
-        list = []
-        for l in khachhang:
-            list.append(l[4])
+            phieuThue = dao.get_phieu_thue_by_id(maPhieuThue)
+            loaiPhong_phieuThue = dao.get_loai_phong_id(phieuThue.loaiPhong_id)
+            if phieuThue is not None:
+                khach_hang = dao.get_khach_hang_theo_phieu_thue(phieuThue.maKhachHang)
 
-        return render_template('/employee/pay.html', khachhang=khachhang, list=list)
-    if request.args.get("ma"):
-        cacphong = dao.cac_phong_get_id(request.args.get("ma"))
-        return render_template('/employee/pay.html', cacphong=cacphong)
+        return render_template('/employee/pay.html', khach_hang=khach_hang, phieuThue=phieuThue,
+                               loaiPhong_phieuThue=loaiPhong_phieuThue, is_paid=is_paid)
+    return render_template('/employee/pay.html')
+
+
+@app.route('/employee/luuHoaDon', methods=['GET', 'POST'])
+def luu_hoa_don():
+    if request.method == 'POST':
+        maPhieuThuePhong = request.form['maPhieuThuePhong']
+        tongTien = request.form['tongTien']
+        price = tongTien[0: len(tongTien) - 2]
+
+        try:
+            dao.load_hoa_don(maPhieuThuePhong=maPhieuThuePhong, tongTien=price)
+            flash('Lưu hóa đơn thành công', 'success')
+            return redirect('/employee/laphoadon')
+        except:
+            flash('Đặt phòng thất bại', 'error')
     return render_template('/employee/pay.html')
 
 

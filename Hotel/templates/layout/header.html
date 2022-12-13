@@ -1,96 +1,87 @@
-  <!-- Header Start -->
-        <div class="container-fluid bg-dark px-0">
-            <div class="row gx-0">
-                <div class="col-lg-3 bg-dark d-none d-lg-block">
-                    <a href="{{ url_for('index') }}" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
-                        <h1 class="m-0 text-primary text-uppercase">La Parisienne</h1>
-                    </a>
-                </div>
-                <div class="col-lg-9">
-                    <div class="row gx-0 bg-white d-none d-lg-flex">
-                        <div class="col-lg-7 px-5 text-start">
-                            <div class="h-100 d-inline-flex align-items-center py-2 me-4">
-                                <i class="fa fa-envelope text-primary me-2"></i>
-                                <p class="mb-0">info@example.com</p>
-                            </div>
-                            <div class="h-100 d-inline-flex align-items-center py-2">
-                                <i class="fa fa-phone-alt text-primary me-2"></i>
-                                <p class="mb-0">+012 345 6789</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-5 px-5 text-end">
-                            <div class="d-inline-flex align-items-center py-2">
-                                <a class="me-3" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="me-3" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="me-3" href=""><i class="fab fa-linkedin-in"></i></a>
-                                <a class="me-3" href=""><i class="fab fa-instagram"></i></a>
-                                <a class="" href=""><i class="fab fa-youtube"></i></a>
-                            </div>
-                        </div>
+<!-- Header Start -->
+<div class="container-fluid bg-dark px-0">
+    <div class="row gx-0">
+        <div class="col-lg-3 bg-dark d-none d-lg-block">
+            <a href="{{ url_for('index') }}"
+               class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
+                <h1 class="m-0 text-primary text-uppercase">La Parisienne</h1>
+            </a>
+        </div>
+        <div class="col-lg-9">
+            <div class="row gx-0 bg-white d-none d-lg-flex">
+                <div class="col-lg-7 px-5 text-start">
+                    <div class="h-100 d-inline-flex align-items-center py-2 me-4">
+                        <i class="fa fa-envelope text-primary me-2"></i>
+                        <p class="mb-0">info@example.com</p>
                     </div>
-                    <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
-                        <a href="{{ url_for('index') }}" class="navbar-brand d-block d-lg-none">
-                            <h1 class="m-0 text-primary text-uppercase">La Parisienne</h1>
-                        </a>
-                        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                            <div class="navbar-nav mr-auto py-0" style="align-items:center">
-
-                                {% if current_user.is_authenticated and session['roles'] == 'UserRole.EMPLOYEE' %}
-                                    <div class="dropdown" >
-                                        <button type="button" class="btn dropdown-toggle nav-item"
-                                                data-bs-toggle="dropdown" style="outline: none;color:#Fea116">
-                                            Chức năng
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="{{ url_for('employee_search')}}">Tra cứu</a></li>
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="{{ url_for('employee_book')}}">Đặt phòng</a></li>
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="{{ url_for('phieuThuePhong') }}">Lập phiếu thuê phòng</a></li>
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="{{ url_for('employee_pay')}}">Lập hóa đơn</a></li>
-                                        </ul>
-                                    </div>
-                                {% else %}
-                                    <a href="{{ url_for('index') }}" class="nav-item nav-link active">Trang chủ</a>
-                                    <a href="{{ url_for('services') }}" class="nav-item nav-link">Dịch vụ</a>
-                                    <a href="{{ url_for('rooms') }}" class="nav-item nav-link">Đặt phòng</a>
-                                    <a href="{{ url_for('contact') }}" class="nav-item nav-link">Liên hệ</a>
-                                    <a href="{{ url_for('about') }}" class="nav-item nav-link">About us</a>
-                                {% if current_user.is_authenticated %}
-                                    <a href="{{ url_for('pay_customer') }}" class="nav-item nav-link">Thanh toán</a>
-                                {% endif %}
-                                {% endif %}
-                            </div>
-
-                            {% if current_user.is_authenticated %}
-                            <div class="btn-login">
-                                <a href="#">
-                                    <img src="{{ current_user.avatar }}" width="40" class="rounded-circle" alt="{{ current_user.name }}" />
-                                    {{ current_user.name }}
-                                </a>
-
-                                <button type="button" class="btn btn-primary btn-DK-DN">
-                                    <a href="{{ url_for('logout_my_user') }}">Đăng xuất</a>
-                                </button>
-                            </div>
-                            {% else %}
-                            <div class="btn-login">
-                                <button type="button" class="btn btn-primary btn-DK-DN btn-OpenLogin">
-                                    <a href="{{ url_for('register') }}">Đăng ký</a>
-                                </button>
-                                <button type="button" class="btn btn-primary btn-DK-DN">
-                                    <a href="{{ url_for('login_page') }}">Đăng nhập</a>
-                                </button>
-                            </div>
-                            {% endif %}
-
-                        </div>
-                    </nav>
+                    <div class="h-100 d-inline-flex align-items-center py-2">
+                        <i class="fa fa-phone-alt text-primary me-2"></i>
+                        <p class="mb-0">+012 345 6789</p>
+                    </div>
+                </div>
+                <div class="col-lg-5 px-5 text-end">
+                    <div class="d-inline-flex align-items-center py-2">
+                        <a class="me-3" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="me-3" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="me-3" href=""><i class="fab fa-linkedin-in"></i></a>
+                        <a class="me-3" href=""><i class="fab fa-instagram"></i></a>
+                        <a class="" href=""><i class="fab fa-youtube"></i></a>
+                    </div>
                 </div>
             </div>
+            <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
+                <a href="{{ url_for('index') }}" class="navbar-brand d-block d-lg-none">
+                    <h1 class="m-0 text-primary text-uppercase">La Parisienne</h1>
+                </a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav mr-auto py-0" style="align-items:center">
+
+                        {% if current_user.is_authenticated and session['roles'] == 'UserRole.EMPLOYEE' %}
+                            <a class="nav-item nav-link" href="{{ url_for('employee_search')}}">Tra cứu</a>
+                            <a class="nav-item nav-link" href="{{ url_for('employee_book')}}">Đặt phòng</a>
+                            <a class="nav-item nav-link" href="{{ url_for('phieuThuePhong') }}">Lập phiếu thuê phòng</a>
+                            <a class="nav-item nav-link" href="{{ url_for('employee_pay')}}">Lập hóa đơn</a>
+                        {% else %}
+                            <a href="{{ url_for('index') }}" class="nav-item nav-link">Trang chủ</a>
+                            <a href="{{ url_for('services') }}" class="nav-item nav-link">Dịch vụ</a>
+                            <a href="{{ url_for('rooms') }}" class="nav-item nav-link">Đặt phòng</a>
+                            <a href="{{ url_for('contact') }}" class="nav-item nav-link">Liên hệ</a>
+                            <a href="{{ url_for('about') }}" class="nav-item nav-link">About us</a>
+                        {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('pay_customer') }}" class="nav-item nav-link">Thanh toán</a>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+
+                    {% if current_user.is_authenticated %}
+                    <div class="btn-login">
+                        <a href="#">
+                            <img src="{{ current_user.avatar }}" width="40" class="rounded-circle"
+                                 alt="{{ current_user.name }}"/>
+                            {{ current_user.name }}
+                        </a>
+
+                        <button type="button" class="btn btn-primary btn-DK-DN">
+                            <a href="{{ url_for('logout_my_user') }}">Đăng xuất</a>
+                        </button>
+                    </div>
+                    {% else %}
+                    <div class="btn-login">
+                        <button type="button" class="btn btn-primary btn-DK-DN btn-OpenLogin">
+                            <a href="{{ url_for('register') }}">Đăng ký</a>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-DK-DN">
+                            <a href="{{ url_for('login_page') }}">Đăng nhập</a>
+                        </button>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </nav>
         </div>
+    </div>
+</div>
 <!-- Hearder End-->

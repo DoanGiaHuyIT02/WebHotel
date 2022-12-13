@@ -1,75 +1,63 @@
 {% extends 'layout/base.html' %}
 {% block content %}
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+{% if category == 'success' %}
+<div class="alert alert-success text-center mt-3 text-center" style="width: 50%; margin: 16px auto;">{{ message }}</div>
+{% endif %}
+{% if category == 'error' %}
+<div class="alert alert-danger text-center mt-3 text-center" style="width: 50%; margin: 16px auto;">{{ message }}</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
 
 <form action="/employee/laphoadon" method="post">
     <div class="form-TraCuu">
-        <div  >
-            <span>Tra cứu theo</span>
-            <select id="select" name="luaChon">
-                <option selected value="ten">Tên</option>
-                <option value="sdt">SĐT</option>
-                <option value="cccd">Số CCCD</option>
-            </select>
+        <div style="padding: 40px 0">
+            <span>Nhập mã phiếu thuê: </span>
+            <input style="line-height: 2rem; margin-left: 20px; width: 200px" type="number" name="maPhieuThue"/>
         </div>
-        <span>Nhập thông tin</span>
-        <input type="text" id="text" name="thongTin">
-        <div class="btn-TraCuu">
-            <button type="submit" class="btn btn-primary btn1">Tra cứu</button>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary btn1">Tìm</button>
+    </div>
+</form>
+<form action="/employee/luuHoaDon" method="POST">
+    {% if khach_hang %}
+    <!--Table -->
+    <div class="container mt-3">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th colspan="5">HÓA ĐƠN THANH TOÁN</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="table-row1">
+                <td colspan="3">Họ tên: {{khach_hang.name}}</td>
+                <td colspan="2">Phòng thuê: {{loaiPhong_phieuThue.loaiPhong}}</td>
+            </tr>
+            <tr class="table-row1">
+                <div style="display: none"><input value="{{phieuThue.maPhieuThuePhong}}" name="maPhieuThuePhong"/></div>
+                <td colspan="3">Ngày nhận phòng: {{phieuThue.ngayNhanPhong}}</td>
+                <td colspan="2">Ngày trả phòng: {{phieuThue.ngayTraPhong}}</td>
+            </tr>
+            <tr class="table-row1">
+                <td colspan="5">Tổng tiền: {{"{:,.0f}".format(phieuThue.thanhTien)}} VNĐ</td>
+                <div style="display: none"><input value="{{phieuThue.thanhTien}}" name="tongTien"/></div>
+            </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn1">Lưu hóa đơn</button>
+            <button type="button" class="btn btn-primary btn1">Xuất phiếu</button>
         </div>
     </div>
 </form>
-<div class="table_search-customer" id="table1">
-    <table class="table table-bordered table-sm table1_1">
-
-        <thead>
-        <tr>
-            <th>Tên khách hàng</th>
-            <th>Ngày nhận phòng</th>
-            <th>Ngày trả phòng</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for t in khachhang %}
-        <tr>
-            <td id="{{t[0]}}">{{ t[1] }}</td>
-            <td>{{ t[2] }}</td>
-            <td>{{ t[3] }}</td>
-            <td></td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
-
-
-<!--Table -->
-
-<div class="container mt-3">
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th colspan="5">HÓA ĐƠN THANH TOÁN</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="table-row1">
-            <td colspan="3">Họ tên:</td>
-            <td colspan="2">Phòng thuê:</td>
-        </tr>
-        <tr class="table-row1">
-            <td colspan="3">Ngày nhận phòng:</td>
-            <td colspan="2">Ngày trả phòng:</td>
-        </tr>
-        <tr class="table-row1">
-            <td colspan="5">Tổng tiền:</td>
-        </tr>
-
-        </tbody>
-    </table>
-</div>
 <!--End table -->
-
+{% endif %}
 
 {% endblock %}
