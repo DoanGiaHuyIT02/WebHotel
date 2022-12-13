@@ -1,5 +1,5 @@
 from Hotel.models import TaiKhoan, LoaiPhong, hinhAnhPhong, ThongTinPhong, khachHang, LoaiKhach, \
-    nhanVien, TaiKhoan_KhachHang, phieuDatPhong, phieuThuePhong, ThongTinPhong_phieuDatPhong, chiTiet_DSKhachHang, \
+    nhanVien, TaiKhoan_KhachHang, phieuDatPhong, phieuThuePhong, chiTiet_DSKhachHang, \
     chiTiet_DSKH_PhieuThue, hoaDon_ThongTinPhong, hoaDon
 from Hotel import db, app
 from sqlalchemy import func
@@ -70,9 +70,9 @@ def load_hoa_don(maPhieuThuePhong, tongTien):
     db.session.commit()
 
 
-def get_phieu_thue_phong(name, CCCD, address, loaiKhach_id, ngayNhanPhong, ngayTraPhong, loaiPhong_id, thanhTien):
+def get_phieu_thue_phong(name, CCCD, address, maKhachHang, ngayNhanPhong, ngayTraPhong, loaiPhong_id, thanhTien, loaiKhach_id):
     ptp = phieuThuePhong(ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong, loaiPhong_id=loaiPhong_id,
-                         maKhachHang=loaiKhach_id, thanhTien=thanhTien)
+                         maKhachHang=maKhachHang, thanhTien=thanhTien)
     db.session.add(ptp)
     db.session.commit()
 
@@ -160,7 +160,7 @@ def get_phieu_dat_phong_by_id(ma_phieu_dat_phong):
     return db.session.query(phieuDatPhong.maPhieuDatPhong, phieuDatPhong.ngayNhanPhong, phieuDatPhong.ngayTraPhong,
                             phieuDatPhong.loaiPhong_id, chiTiet_DSKhachHang.name, chiTiet_DSKhachHang.address,
                             chiTiet_DSKhachHang.CCCD, chiTiet_DSKhachHang.loaiKhach_id, khachHang.name,
-                            LoaiKhach.loaiKhach, LoaiPhong.loaiPhong, phieuDatPhong.thanhTien) \
+                            LoaiKhach.loaiKhach, LoaiPhong.loaiPhong, phieuDatPhong.thanhTien, phieuDatPhong.maKhachHang) \
         .join(chiTiet_DSKhachHang, chiTiet_DSKhachHang.maPhieuDatPhong.__eq__(phieuDatPhong.maPhieuDatPhong)) \
         .join(LoaiKhach, LoaiKhach.loaiKhachId.__eq__(chiTiet_DSKhachHang.loaiKhach_id)) \
         .join(LoaiPhong, LoaiPhong.loaiPhongId.__eq__(phieuDatPhong.loaiPhong_id)) \

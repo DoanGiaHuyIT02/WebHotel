@@ -47,8 +47,6 @@ class ThongTinPhong(db.Model):
     tinhTrang = Column(Boolean, nullable=False, default=True)
     loaiPhong_id = Column(Integer, ForeignKey(LoaiPhong.loaiPhongId), nullable=False)
     hoaDon_ThongTinPhong = relationship('hoaDon_ThongTinPhong', backref='thontinphong', lazy=True)
-    ThongTinPhong_phieuDatPhong = relationship('ThongTinPhong_phieuDatPhong', backref='thontinphong', lazy=True)
-    ThongTinPhong_phieuThuePhong = relationship('ThongTinPhong_phieuThuePhong', backref='thontinphong', lazy=True)
 
 
 class LoaiKhach(db.Model):
@@ -56,6 +54,7 @@ class LoaiKhach(db.Model):
     loaiKhachId = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     loaiKhach = Column(String(50))
     ChiTiet_DSKH = relationship('chiTiet_DSKhachHang', backref='loaikhach', lazy=True)
+    ChiTiet_DSKH_phieuthue = relationship('chiTiet_DSKH_PhieuThue', backref='loaikhach', lazy=True)
 
 
 class khachHang(db.Model):
@@ -116,7 +115,6 @@ class phieuDatPhong(db.Model):
     loaiPhong_id = Column(Integer, ForeignKey(LoaiPhong.loaiPhongId), nullable=False)
     maKhachHang = Column(Integer, ForeignKey(khachHang.MaKhachHang), nullable=False)
     chiTiet_DSKhachHang = relationship('chiTiet_DSKhachHang', backref='phieudatphong', lazy=True)
-    ThongTinPhong_phieuDatPhong = relationship('ThongTinPhong_phieuDatPhong', backref='phieudatphong', lazy=True)
 
 
 class phieuThuePhong(db.Model):
@@ -128,7 +126,6 @@ class phieuThuePhong(db.Model):
     loaiPhong_id = Column(Integer, ForeignKey(LoaiPhong.loaiPhongId), nullable=False)
     maKhachHang = Column(Integer, ForeignKey(khachHang.MaKhachHang), nullable=False)
     chiTiet_DSKH_PhieuThue = relationship('chiTiet_DSKH_PhieuThue', backref='phieuthuephong', lazy=True)
-    ThongTinPhong_phieuThuePhong = relationship('ThongTinPhong_phieuThuePhong', backref='phieuthuephong', lazy=True)
     hoaDon_id = relationship('hoaDon', backref='phieuthuephong', lazy=True)
 
 
@@ -150,20 +147,6 @@ class chiTiet_DSKH_PhieuThue(db.Model):
     CCCD = Column(String(20))
     loaiKhach_id = Column(Integer, ForeignKey(LoaiKhach.loaiKhachId), nullable=False)
     maPhieuThuePhong = Column(Integer, ForeignKey(phieuThuePhong.maPhieuThuePhong), nullable=False)
-
-
-class ThongTinPhong_phieuDatPhong(db.Model):
-    __tablename__ = 'ThongTinPhong_phieuDatPhong'
-    ThongTinPhong_phieuDatPhong_id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    maPhieuDatPhong = Column(Integer, ForeignKey(phieuDatPhong.maPhieuDatPhong), nullable=False)
-    maPhong = Column(Integer, ForeignKey(ThongTinPhong.maPhong), nullable=False)
-
-
-class ThongTinPhong_phieuThuePhong(db.Model):
-    __tablename__ = 'ThongTinPhong_phieuThuePhong'
-    ThongTinPhong_phieuThuePhong_id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    maPhieuThuePhong = Column(Integer, ForeignKey(phieuThuePhong.maPhieuThuePhong), nullable=False)
-    maPhong = Column(Integer, ForeignKey(ThongTinPhong.maPhong), nullable=False)
 
 
 class hoaDon(db.Model):
@@ -317,19 +300,6 @@ if __name__ == '__main__':
         db.session.add_all([hd_ttp1, hd_ttp2, hd_ttp3])
         db.session.commit()
 
-        pdt_tdp1 = ThongTinPhong_phieuDatPhong(maPhieuDatPhong=1, maPhong=1)
-        pdt_tdp2 = ThongTinPhong_phieuDatPhong(maPhieuDatPhong=1, maPhong=2)
-        pdt_tdp3 = ThongTinPhong_phieuDatPhong(maPhieuDatPhong=2, maPhong=3)
-        pdt_tdp4 = ThongTinPhong_phieuDatPhong(maPhieuDatPhong=2, maPhong=4)
-        db.session.add_all([pdt_tdp1, pdt_tdp2, pdt_tdp3, pdt_tdp4])
-        db.session.commit()
-
-        pdt_ttp1 = ThongTinPhong_phieuThuePhong(maPhieuThuePhong=1, maPhong=1)
-        pdt_ttp2 = ThongTinPhong_phieuThuePhong(maPhieuThuePhong=1, maPhong=2)
-        pdt_ttp3 = ThongTinPhong_phieuThuePhong(maPhieuThuePhong=2, maPhong=3)
-        pdt_ttp4 = ThongTinPhong_phieuThuePhong(maPhieuThuePhong=2, maPhong=4)
-        db.session.add_all([pdt_ttp1, pdt_ttp2, pdt_ttp3, pdt_ttp4])
-        db.session.commit()
 
         tk_kh = TaiKhoan_KhachHang(KhachHang_id=1, taiKhoan_id=4)
         tk_kh1 = TaiKhoan_KhachHang(KhachHang_id=2, taiKhoan_id=5)

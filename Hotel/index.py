@@ -259,6 +259,7 @@ def lap_phieu_thue_phong():
         CCCD = request.form.getlist('CCCD')
         address = request.form.getlist('address')
         loaiKhach_id = request.form.getlist('loaiKhach_id')
+        maKhachHang = request.form['maKhachHang']
         ngayNhanPhong = request.form['ngayNhan']
         ngayTraPhong = request.form['ngayTra']
         loaiPhong_id = request.form['loaiPhong_id']
@@ -269,9 +270,9 @@ def lap_phieu_thue_phong():
         price = float(p.replace('.', ''))
 
         try:
-            dao.get_phieu_thue_phong(name=name, address=address, CCCD=CCCD, loaiKhach_id=loaiKhach_id,
+            dao.get_phieu_thue_phong(name=name, address=address, CCCD=CCCD, maKhachHang=maKhachHang,
                                      ngayNhanPhong=ngayNhanPhong, ngayTraPhong=ngayTraPhong,
-                                     loaiPhong_id=loaiPhong_id, thanhTien=price)
+                                     loaiPhong_id=loaiPhong_id, thanhTien=price, loaiKhach_id=loaiKhach_id)
             flash('Lưu phiếu thành công', 'success')
             return redirect('/employee/lap_phieu_thue_phong')
         except:
