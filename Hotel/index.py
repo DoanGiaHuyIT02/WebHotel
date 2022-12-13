@@ -117,6 +117,24 @@ def employee_search():
     return render_template('/employee/search.html')
 
 
+@app.route('/employee/laphoadon', methods=['GET', 'POST'])
+def employee_pay():
+    if request.method == 'POST':
+        thongTin = request.form['thongTin']
+        luaChon = request.form['luaChon']
+
+        khachhang = dao.tra_cuu_phieu_thue_phong(luaChon=luaChon, thongTin=thongTin)
+        list = []
+        for l in khachhang:
+            list.append(l[4])
+
+        return render_template('/employee/pay.html', khachhang=khachhang, list=list)
+    if request.args.get("ma"):
+        cacphong = dao.cac_phong_get_id(request.args.get("ma"))
+        return render_template('/employee/pay.html', cacphong=cacphong)
+    return render_template('/employee/pay.html')
+
+
 @app.route('/employee/lapphieuthuephong/<int:phieuDatPhong_id>')
 def employee_lapphieuthuephong(phieuDatPhong_id):
     phieuDatPhong = dao.get_phieu_dat_phong_by_id(ma_phieu_dat_phong=phieuDatPhong_id)
@@ -131,7 +149,6 @@ def phieuThuePhong():
 
 @app.route('/employee/book', methods=['GET', 'POST'])
 def employee_book():
-
     if request.method == 'POST':
         e_name = request.form.getlist('name')
         e_CCCD = request.form.getlist('CCCD')
@@ -172,28 +189,14 @@ def load_so_phong(loaiPhong_id):
     )
 
 
-@app.route('/employee/pay')
-def employee_pay():
-    return render_template('/employee/pay.html')
-
-
 @login.user_loader
 def load_user(user_id):
     return dao.get_user_by_id(user_id)
 
 
-@app.route('/api_get_phong_dat/')
-def api_get_phong_dat():
-    data = request.json
-    phongDaDat = dao.get_all_loai_phong(data['maDatPhong'])
-    return jsonify(
-        {'maPhong': phongDaDat.maPhong, 'soPhong': phongDaDat.soPhong}
-    )
-
-
 @app.route('/thanhToanDatPhong', methods=['GET', 'POST'])
 @login_required
-def test():
+def pay_customer():
     if request.method == 'POST':
         name = request.form.getlist('name')
         CCCD = request.form.getlist('CCCD')
@@ -224,7 +227,7 @@ def test():
             flash('Đặt phòng thất bại', 'error')
 
     loaiPhong = dao.get_all_loai_phong()
-    return render_template('test.html', loaiPhong=loaiPhong)
+    return render_template('payCustomer.html', loaiPhong=loaiPhong)
 
 
 @app.route('/employee/lap_phieu_thue_phong', methods=['GET', 'POST'])

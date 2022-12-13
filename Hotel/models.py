@@ -70,20 +70,6 @@ class khachHang(db.Model):
     phieuThuePhong = relationship('phieuThuePhong', backref='khachhang', lazy=True)
 
 
-class hoaDon(db.Model):
-    __tablename__ = 'HoaDon'
-    maHoaDon = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    TongTien = Column(Float, nullable=False)
-    hoaDon_ThongTinPhong = relationship('hoaDon_ThongTinPhong', backref='hoadon', lazy=True)
-
-
-class hoaDon_ThongTinPhong(db.Model):
-    __tablename__ = 'hoaDon_ThongTinPhong'
-    hoaDon_ThongTinPhong_id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    maHoaDon = Column(Integer, ForeignKey(hoaDon.maHoaDon), nullable=False)
-    maPhong = Column(Integer, ForeignKey(ThongTinPhong.maPhong), nullable=False)
-
-
 class TaiKhoan(BaseModel, UserMixin):
     __tablename__ = 'taikhoan'
     # taiKhoan_id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
@@ -143,6 +129,7 @@ class phieuThuePhong(db.Model):
     maKhachHang = Column(Integer, ForeignKey(khachHang.MaKhachHang), nullable=False)
     chiTiet_DSKH_PhieuThue = relationship('chiTiet_DSKH_PhieuThue', backref='phieuthuephong', lazy=True)
     ThongTinPhong_phieuThuePhong = relationship('ThongTinPhong_phieuThuePhong', backref='phieuthuephong', lazy=True)
+    hoaDon_id = relationship('hoaDon', backref='phieuthuephong', lazy=True)
 
 
 class chiTiet_DSKhachHang(db.Model):
@@ -179,6 +166,21 @@ class ThongTinPhong_phieuThuePhong(db.Model):
     maPhong = Column(Integer, ForeignKey(ThongTinPhong.maPhong), nullable=False)
 
 
+class hoaDon(db.Model):
+    __tablename__ = 'HoaDon'
+    maHoaDon = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    TongTien = Column(Float, nullable=False)
+    maPhieuThuePhong = Column(Integer, ForeignKey(phieuThuePhong.maPhieuThuePhong), unique=True, nullable=False)
+    hoaDon_ThongTinPhong = relationship('hoaDon_ThongTinPhong', backref='hoadon', lazy=True)
+
+
+class hoaDon_ThongTinPhong(db.Model):
+    __tablename__ = 'hoaDon_ThongTinPhong'
+    hoaDon_ThongTinPhong_id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    maHoaDon = Column(Integer, ForeignKey(hoaDon.maHoaDon), nullable=False)
+    maPhong = Column(Integer, ForeignKey(ThongTinPhong.maPhong), nullable=False)
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.drop_all()
@@ -186,22 +188,28 @@ if __name__ == '__main__':
 
         import hashlib
         password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest())
-        u = TaiKhoan(name='Huy', username='huy', password=password, phoneNumber='0123456789',
+        u = TaiKhoan(name='Đoàn Gia Huy', username='huy', password=password, phoneNumber='0123456789',
                      avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
                      active=True, user_role=UserRole.ADMIN)
-        e = TaiKhoan(name='Kim Tài', username='tai', password=password, phoneNumber='0123456789',
-                     avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
-                     active=True, user_role=UserRole.USER)
         e1 = TaiKhoan(name='Nguyên Thụy', username='thuy', password=password, phoneNumber='0123456789',
                      avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
                      active=True, user_role=UserRole.EMPLOYEE)
         e2 = TaiKhoan(name='Đức Hiếu', username='hieu', password=password, phoneNumber='0123456789',
                      avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
                      active=True, user_role=UserRole.EMPLOYEE)
-        c = TaiKhoan(name='thanh', username='thanh', password=password, phoneNumber='0123456789',
+        c = TaiKhoan(name='Minh Thành', username='thanh', password=password, phoneNumber='0123456789',
                      avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
                      active=True, user_role=UserRole.USER)
-        db.session.add_all([u, e, e1, e2, c])
+        c2 = TaiKhoan(name='Kim Tài', username='tai', password=password, phoneNumber='0123456789',
+                     avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
+                     active=True, user_role=UserRole.USER)
+        c3 = TaiKhoan(name='Trần Đức Hiếu', username='hieu1', password=password, phoneNumber='0123456789',
+                      avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
+                      active=True, user_role=UserRole.USER)
+        c4 = TaiKhoan(name='Quang Tới', username='toi', password=password, phoneNumber='0123456789',
+                      avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg',
+                      active=True, user_role=UserRole.USER)
+        db.session.add_all([u,e1, e2, c, c2, c3, c4])
         db.session.commit()
 
         lp1 = LoaiPhong(loaiPhong='Standard Single', moTa='Phòng tiêu chuẩn, đơn giản với mức giá trung bình',
@@ -233,8 +241,8 @@ if __name__ == '__main__':
         db.session.add_all([lk1, lk2])
         db.session.commit()
 
-        k1 = khachHang(name='Gia Huy', address='371 Nguyễn Kiệm', phone='01234536', CCCD='1456789')
-        k2 = khachHang(name='Minh Thành', address='483 Nguyễn Kiệm', phone='01233456', CCCD='14567895653')
+        k1 = khachHang(name="Minh Thành", address='371 Nguyễn Kiệm', phone='01234536', CCCD='1456789')
+        k2 = khachHang(name='Kim Tài', address='483 Nguyễn Kiệm', phone='01233456', CCCD='14567895653')
         k3 = khachHang(name='Đức Hiếu', address='456 Nguyễn Kiệm', phone='01232456', CCCD='14567898132')
         k4 = khachHang(name='Quang Tới', address='459 Nguyễn Kiệm', phone='01523456', CCCD='1456789568')
         db.session.add_all([k1, k2, k3, k4])
@@ -297,9 +305,9 @@ if __name__ == '__main__':
         db.session.add_all([ct_dsKH1, ct_dsKH2, ct_dsKH3])
         db.session.commit()
 
-        hd1 = hoaDon(TongTien='2500000')
-        hd2 = hoaDon(TongTien='2500000')
-        hd3 = hoaDon(TongTien='2500000')
+        hd1 = hoaDon(TongTien='2500000', maPhieuThuePhong=1)
+        hd2 = hoaDon(TongTien='2500000', maPhieuThuePhong=2)
+        hd3 = hoaDon(TongTien='2500000', maPhieuThuePhong=3)
         db.session.add_all([hd1, hd2, hd3])
         db.session.commit()
 
@@ -323,8 +331,11 @@ if __name__ == '__main__':
         db.session.add_all([pdt_ttp1, pdt_ttp2, pdt_ttp3, pdt_ttp4])
         db.session.commit()
 
-        tk_kh = TaiKhoan_KhachHang(KhachHang_id=1, taiKhoan_id=5)
-        db.session.add(tk_kh)
+        tk_kh = TaiKhoan_KhachHang(KhachHang_id=1, taiKhoan_id=4)
+        tk_kh1 = TaiKhoan_KhachHang(KhachHang_id=2, taiKhoan_id=5)
+        tk_kh2 = TaiKhoan_KhachHang(KhachHang_id=3, taiKhoan_id=6)
+        tk_kh3 = TaiKhoan_KhachHang(KhachHang_id=4, taiKhoan_id=7)
+        db.session.add_all([tk_kh, tk_kh1, tk_kh2, tk_kh3])
         db.session.commit()
 
 

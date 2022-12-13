@@ -10,7 +10,7 @@ function addRooms() {
     btn_XacNhanPhong = document.getElementById('btn_XacNhanPhong')
 
     if (select_loaiPhong.value == 1) {
-        lp = 3000000
+        lp = 3500000
     } else if (select_loaiPhong.value == 2) {
         lp = 4000000
     } else {
@@ -82,15 +82,15 @@ function addCus() {
    if (select_loaiPhong.value == 1) {
       if (select_LoaiKhach.value == 2) {
         if (soluong.value == 3) {
-            lp = (3000000*0.25 + 3000000) * 1.5 * soNgay
+            lp = (3500000*0.25 + 3500000) * 1.5 * soNgay
         } else {
             lp = 3000000 * 1.5 * soNgay
         }
       } else {
         if (soluong.value == 3) {
-            lp = 3000000*0.25 + 3000000 * soNgay
+            lp = 3500000*0.25 + 3500000 * soNgay
         } else {
-            lp = 3000000 * soNgay
+            lp = 3500000 * soNgay
         }
       }
     } else if (select_loaiPhong.value == 2) {
@@ -185,5 +185,9 @@ function deleteRow2(r) {
   if (confirm("Bạn có chắc muốn xóa!") == true) {
         document.getElementById("table1").deleteRow(i-1);
   }
+}
+
+function thongBaoXacNhan() {
+    alert('Bạn đã chắc chắn đặt phòng !!!!')
 }
 

@@ -2,4 +2,61 @@
 
 {% block body %}
 <h1 class="text-center text-success">THỐNG KÊ - BÁO CÁO</h1>
+
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+        <table class="table">
+            <tr>
+                <th>STT</th>
+                <th>Loại phòng</th>
+                <th>Doanh thu</th>
+                <th>Số lượt thuê</th>
+                <th>Tỷ lệ</th>
+            </tr>
+            {% for s in stats %}
+            <tr>
+                <td>{{ stats.index(s) + 1 }}</td>
+                <td>{{ s[0] }}</td>
+                <td>{{ "{:,.0f}".format(s[1]) }} VNĐ</td>
+                <td>{{ s[2] }}</td>
+                <td>{{ "{:,.0f}".format(s[2] * 100 / tongSoPhong[0][0]) }} %</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="5">Tổng doanh thu: {{ "{:,.0f}".format(tongDoanhThu[0][0]) }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <form>
+            <div class="select-Loai-Khach">
+                <span>Thông tin thống kê</span>
+                <div class="mt-2 mb-2">
+                    <input type="number" name="month" min="1" max="12" style="width: 200px" placeholder="Nhập tháng..."/>
+                </div>
+                <div class="mt-2 mb-2">
+                    <input type="number" name="year" min="2000" style="width: 200px" placeholder="Nhập năm..."/>
+                </div>
+            </div>
+            <div>
+                <input type="submit" value="Lọc dữ liệu" class="btn btn-info"/>
+            </div>
+        </form>
+        <canvas id="revenueStats"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/my-chart.js') }}"></script>
+<script>
+    let data = [], labels = [];
+    {% for s in stats %}
+        data.push({{ s[2] }})
+        labels.push('{{ s[1] }}')
+    {% endfor %}
+    window.onload = function() {
+        drawRevenueStats(labels, data)
+    }
+
+</script>
 {% endblock %}

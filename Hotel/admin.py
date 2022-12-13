@@ -1,12 +1,10 @@
-from Hotel import db, app
+from Hotel import db, app, dao
 from Hotel.models import ThongTinPhong, UserRole, LoaiPhong, TaiKhoan, hinhAnhPhong
-from flask_admin import Admin, BaseView, expose
+from flask_admin import Admin, BaseView, expose, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
-from flask import redirect
+from flask import redirect, request
 from flask_login import logout_user, current_user
 import hashlib
-
-admin = Admin(app=app, name="Trang quản trị", template_mode='bootstrap4')
 
 
 class AuthenticatedModelView(ModelView):
@@ -17,12 +15,6 @@ class AuthenticatedModelView(ModelView):
 class AuthenticatedView(BaseView):
     def is_accessible(self):
         return current_user.is_authenticated
-
-
-class StatsView(AuthenticatedView):
-    @expose('/')
-    def index(self):
-        return self.render('admin/stats.html')
 
 
 class LogoutView(AuthenticatedView):
@@ -43,6 +35,27 @@ class accountView(AuthenticatedModelView):
         db.session.commit()
         return True
 
+
+class StatsView(AuthenticatedView):
+    @expose('/')
+    def index(self):
+        stats = dao.stats_revenue_by_prod(month=request.args.get('month'), year=request.args.get('year'))
+        tongSoPhong = dao.count_loai_phong_trong_phieu_thue_phong(month=request.args.get('month'),
+                                                                  year=request.args.get('year'))
+        tongDoanhThu = dao.total_doanh_thu(month=request.args.get('month'), year=request.args.get('year'))
+        return self.render('admin/stats.html', stats=stats, tongSoPhong=tongSoPhong,
+                           tongDoanhThu=tongDoanhThu)
+
+# ,LuaChon_loaiPhong=request.args.get('LuaChon_loaiPhong'),
+
+# class MyAdminView(AdminIndexView):
+#    @expose('/')
+#    def index(self):
+#        stats = dao.count_room_by_cate()
+#        return self.render('admin/index.html', stats=stats)
+
+
+admin = Admin(app=app, name="Trang quản trị", template_mode='bootstrap4')
 
 admin.add_view(AuthenticatedModelView(ThongTinPhong, db.session, name='Thông tin phòng'))
 admin.add_view(accountView(TaiKhoan, db.session, name='Tài khoản'))

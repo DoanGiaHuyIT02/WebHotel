@@ -30,15 +30,15 @@ function addCusEmp() {
    if (e_select_loaiPhong.value == 1) {
       if (e_select_LoaiKhach.value == 2) {
         if (ListAddCusEmp.length == 3) {
-            lp = (3000000*0.25 + 3000000) * 1.5 * soNgay
+            lp = (3500000*0.25 + 3500000) * 1.5 * soNgay
         } else {
-            lp = 3000000 * 1.5 * soNgay
+            lp = 3500000 * 1.5 * soNgay
         }
       } else {
         if (ListAddCusEmp.length == 3) {
-            lp = 3000000*0.25 + 3000000 * soNgay
+            lp = 3500000*0.25 + 3500000 * soNgay
         } else {
-            lp = 3000000 * soNgay
+            lp = 3500000 * soNgay
         }
       }
     } else if (e_select_loaiPhong.value == 2) {
