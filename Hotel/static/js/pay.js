@@ -39,10 +39,10 @@ function addRooms() {
         table.innerHTML += `<tr>
                         <td>${ i+1 }</td>
                         <td>${ListRoomCus[i].select_loaiPhong}</td>
-                        <div style="visibility: hidden;"><input value="${ListRoomCus[i].select_loaiPhong_id}" name="loaiPhong_id"/></div>
+                        <div style="visibility: hidden;"><input class="text-center" style="border: none; background-color: #fff" value="${ListRoomCus[i].select_loaiPhong_id}" name="loaiPhong_id"/></div>
                         <td>${ListRoomCus[i].priceRoom}</td>
-                        <td><input value="${ListRoomCus[i].ngayNhanPhong}" name="ngayNhan"/></td>
-                        <td><input value="${ListRoomCus[i].ngayTraPhong}" name="ngayTra"/></td>
+                        <td><input readonly class="text-center" style="border: none; background-color: #fff; outline: none" value="${ListRoomCus[i].ngayNhanPhong}" name="ngayNhan"/></td>
+                        <td><input readonly class="text-center" style="border: none; background-color: #fff; outline: none" value="${ListRoomCus[i].ngayTraPhong}" name="ngayTra"/></td>
                         <td><button class="btn btn-danger" type="button" onclick="deleteRow1(this)">X</button></td>
                     </tr>`
     }
@@ -148,17 +148,17 @@ function addCus() {
     for (let i = 0; i < ListAddCus.length; i++){
         table1.innerHTML += `<tr>
                         <td>${ i+1 }</td>
-                        <td ><input value="${ListAddCus[i].name1}" name="name"/></td>
-                        <td ><input value="${ListAddCus[i].CCCD}" name="CCCD"/></td>
-                        <td ><input value="${ListAddCus[i].address}" name="address"/></td>
-                        <td ><input value="${ListAddCus[i].select_LoaiKhach}"/></td>
+                        <td ><input readonly class="text-center" style="border: none; background-color: #fff; outline: none" value="${ListAddCus[i].name1}" name="name"/></td>
+                        <td ><input readonly class="text-center" style="border: none; background-color: #fff; outline: none" value="${ListAddCus[i].CCCD}" name="CCCD"/></td>
+                        <td ><input readonly class="text-center" style="border: none; background-color: #fff; outline: none" value="${ListAddCus[i].address}" name="address"/></td>
+                        <td ><input readonly class="text-center" style="border: none; background-color: #fff; outline: none" value="${ListAddCus[i].select_LoaiKhach}"/></td>
                         <div style="visibility: hidden;"><input value="${ListAddCus[i].select_LoaiKhach_id}" name="loaiKhach"/></div>
                         <td><button class="btn btn-danger" type="button" onclick="deleteRow2(this)">X</button></td>
                     </tr>`
     }
 
     tongTien.innerHTML = ''
-    tongTien.innerHTML += `<h3>Tổng tiền: <span class="cart-amount"><input name="tongTienKhachHang" value="${priceRoom}"/></span> VNĐ
+    tongTien.innerHTML += `<h3>Tổng tiền: <span class="cart-amount"><input readonly class="text-center" style="border: none; background-color: #cff4fc; outline: none" name="tongTienKhachHang" value="${priceRoom}"/></span> VNĐ
                         </h3>`
 
     if (soluong.value == ListAddCus.length) {

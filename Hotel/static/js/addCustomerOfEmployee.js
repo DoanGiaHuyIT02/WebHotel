@@ -199,6 +199,10 @@ function deleteRow3(r) {
   }
 }
 
+function thongBaoXacNhan1() {
+    alert('Bạn đã chắc chắn đặt phòng !!!!')
+}
+
 function show_so_phong(loaiPhong_id) {
     fetch('/api/book/' + loaiPhong_id.value, {
       method: "GET",
@@ -224,20 +228,7 @@ function show_so_phong(loaiPhong_id) {
     })
 }
 
-function show_phieu_dat_phong(PhieuDatPhong_id) {
-    console.log(PhieuDatPhong_id.value)
-    fetch('/api/phieuDatPhong/' + PhieuDatPhong_id.value, {
-      method: "GET",
-      dataType: 'json',
-      ContentType: 'application/json'
-    }).then(res => res.json()).then(data => {
-        alert('1')
 
-
-    }).catch((err) => {
-      console.log(err)
-    })
-}
 
 
 
