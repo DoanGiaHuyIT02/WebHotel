@@ -21,15 +21,6 @@
 
 <div>
     <div class="book_line_items">
-        <div class="booking_line-item">
-            <div id="margin" class="booking_line-item-margin">Số phòng:</div>
-            <select id="e_soPhong">
-                {% for p in soPhong %}
-                <option selected value="{{ p.maPhong }}">{{ p.soPhong }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
         <div class="select-Loai-Khach">
             <span>Loại phòng</span>
             <select id="e_select_loaiPhong" name="LuaChon_loaiPhong" onchange="show_so_phong(this)">
@@ -41,6 +32,15 @@
                 <option selected value="-1">-- Chon loai phong --</option>
             </select>
         </div>
+        <div class="booking_line-item">
+            <div id="margin" class="booking_line-item-margin">Số phòng:</div>
+            <select id="e_soPhong">
+                {% for p in soPhong %}
+                <option selected value="{{ p.maPhong }}">{{ p.soPhong }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
     </div>
 
     <div class="col-md-10">
