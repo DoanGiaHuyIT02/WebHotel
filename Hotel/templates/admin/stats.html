@@ -19,11 +19,19 @@
                 <td>{{ s[0] }}</td>
                 <td>{{ "{:,.0f}".format(s[1]) }} VNĐ</td>
                 <td>{{ s[2] }}</td>
+                {% if tongSoPhong[0][0] == 0 %}
+                <td >0 </td>
+                {% else %}
                 <td>{{ "{:,.0f}".format(s[2] * 100 / tongSoPhong[0][0]) }} %</td>
+                {% endif %}
             </tr>
             {% endfor %}
             <tr>
+                {% if tongDoanhThu[0][0] == None %}
+                <td colspan="5">Tổng doanh thu: 0 </td>
+                {% else %}
                 <td colspan="5">Tổng doanh thu: {{ "{:,.0f}".format(tongDoanhThu[0][0]) }}</td>
+                {% endif %}
             </tr>
         </table>
     </div>

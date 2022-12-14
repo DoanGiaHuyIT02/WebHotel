@@ -41,7 +41,7 @@ class hinhAnhPhong(db.Model):
 
 
 class ThongTinPhong(db.Model):
-    __tablename__ = 'thongTinPhong'
+    __tablename__ = 'thongtinphong'
     maPhong = Column(Integer,  primary_key=True, nullable=False, autoincrement=True)
     soPhong = Column(String(50), nullable=False)
     tinhTrang = Column(Boolean, nullable=False, default=True)
@@ -107,7 +107,7 @@ class TaiKhoan_KhachHang(db.Model):
 
 
 class phieuDatPhong(db.Model):
-    __tablename__ = 'phieuDatPhong'
+    __tablename__ = 'phieudatphong'
     maPhieuDatPhong = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     ngayNhanPhong = Column(DATE, nullable=False)
     ngayTraPhong = Column(DATE, nullable=False)
@@ -118,7 +118,7 @@ class phieuDatPhong(db.Model):
 
 
 class phieuThuePhong(db.Model):
-    __tablename__ = 'phieuThuePhong'
+    __tablename__ = 'phieuthuephong' # Luu y: ten ban phai giong y chang
     maPhieuThuePhong = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     ngayNhanPhong = Column(DATETIME, nullable=False)
     ngayTraPhong = Column(DATETIME, nullable=False)
@@ -130,7 +130,7 @@ class phieuThuePhong(db.Model):
 
 
 class chiTiet_DSKhachHang(db.Model):
-    __tablename__ = 'chiTiet_DSKhachHang'
+    __tablename__ = 'chitiet_dskhachhang'
     machiTietDSKhachHang = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     name = Column(String(50), nullable=False)
     address = Column(String(200))
@@ -140,7 +140,7 @@ class chiTiet_DSKhachHang(db.Model):
 
 
 class chiTiet_DSKH_PhieuThue(db.Model):
-    __tablename__ = 'chiTiet_dskh_phieuthue'
+    __tablename__ = 'chitiet_dskh_phieuthue'
     chiTiet_DSKH_PhieuThue_ID = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     name = Column(String(50), nullable=False)
     address = Column(String(200))
@@ -150,7 +150,7 @@ class chiTiet_DSKH_PhieuThue(db.Model):
 
 
 class hoaDon(db.Model):
-    __tablename__ = 'HoaDon'
+    __tablename__ = 'hoadon'
     maHoaDon = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     TongTien = Column(Float, nullable=False)
     maPhieuThuePhong = Column(Integer, ForeignKey(phieuThuePhong.maPhieuThuePhong), unique=True, nullable=False)
@@ -158,7 +158,7 @@ class hoaDon(db.Model):
 
 
 class hoaDon_ThongTinPhong(db.Model):
-    __tablename__ = 'hoaDon_ThongTinPhong'
+    __tablename__ = 'hoadon_thongtinphong'
     hoaDon_ThongTinPhong_id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     maHoaDon = Column(Integer, ForeignKey(hoaDon.maHoaDon), nullable=False)
     maPhong = Column(Integer, ForeignKey(ThongTinPhong.maPhong), nullable=False)
